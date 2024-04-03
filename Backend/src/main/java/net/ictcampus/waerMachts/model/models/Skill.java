@@ -1,11 +1,11 @@
 package net.ictcampus.waerMachts.model.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Entity
 public class Skill {
@@ -27,6 +27,12 @@ public class Skill {
     public void setId_skill(Integer id_skill) {
         this.id_skill = id_skill;
     }
+
+    @OneToMany(mappedBy = "User")
+            @JsonBackReference
+    Set<UserSkill> skillsByUser;
+
+
 }
 
 
