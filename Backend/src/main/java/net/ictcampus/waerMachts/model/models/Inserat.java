@@ -41,6 +41,7 @@ public class Inserat {
     @NotBlank
     private String bewertungstext;
     @OneToMany(mappedBy = "Inserat")
+    @JsonBackReference
     Set<Skill> skills;
 
     public int getId() {
