@@ -1,5 +1,6 @@
 package net.ictcampus.waerMachts.model.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -12,8 +13,7 @@ import java.util.Set;
 public class User {
     @Id
     private Long id;
-    @NotBlank
-    @NotNull
+
     private String username;
     @NotBlank
     @NotNull
@@ -23,10 +23,11 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String passwort;
     @ManyToOne
-    @JoinColumn(name="id_ort")
+    @JoinColumn(name = "id_ort")
     private Ort ort;
 
-    @OneToMany(mappedBy = "user_id")
+    @OneToMany(mappedBy = "User")
+    @JsonBackReference
     private Set<UserSkill> skills;
 
     public User() {
