@@ -33,7 +33,7 @@ public class UserService {
     public void update (User user){
         Iterable<User> users = findAll();
         for (User u : users) {
-            if (u.getId().equals(user.getId())) {
+            if (u.getId_user().equals(user.getId_user())) {
                 user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 userRepository.save(user);
                 return;

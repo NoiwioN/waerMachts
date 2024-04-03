@@ -13,7 +13,7 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id_user;
 
     private String username;
     @NotBlank
@@ -25,8 +25,6 @@ public class User {
     private String password;
     @ManyToOne
     @JoinColumn(name = "ort_id")
-    @JsonBackReference
-
     private Ort ort;
 
     @OneToMany(mappedBy = "user")
@@ -36,12 +34,12 @@ public class User {
     public User() {
     }
 
-    public Long getId() {
-        return id;
+    public Long getId_user() {
+        return id_user;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_user(Long id) {
+        this.id_user = id;
     }
 
     public String getUsername() {
