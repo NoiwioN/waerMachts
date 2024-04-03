@@ -3,7 +3,6 @@ package net.ictcampus.waerMachts.controller.security;
 
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.ictcampus.waerMachts.controller.services.UserService;
 import net.ictcampus.waerMachts.model.models.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,12 +17,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 import static net.ictcampus.waerMachts.controller.security.SecurityConstants.*;
+import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
-
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;

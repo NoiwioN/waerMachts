@@ -34,7 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     // Alle URLs werden gespert nur Sign-up mit der Post methode ist immer erlaubt
     // und alle Swagger Dokumentations URLs
     // Wenn man dann Authentifiziert ist werden die anderen freigeschalten
-/*    @Override
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
                 .antMatchers(HttpMethod.GET, API_DOCUMENTATION_URLS).permitAll()
@@ -44,11 +44,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()))
                 // this disables session creation on Spring Security
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-    }*/
+    }
+/*
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests().anyRequest().permitAll();
     }
+*/
 
     // Dein mitgegebenes Passwort wird gehasht
     @Override
