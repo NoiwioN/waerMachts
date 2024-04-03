@@ -17,6 +17,10 @@ public class Skill {
     @NotNull
     private String name;
 
+    @OneToMany(mappedBy = "User")
+    @JsonBackReference
+    Set<UserSkill> skillsByUser;
+
 
     // getter and setter
 
@@ -28,11 +32,21 @@ public class Skill {
         this.id_skill = id_skill;
     }
 
-    @OneToMany(mappedBy = "User")
-            @JsonBackReference
-    Set<UserSkill> skillsByUser;
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public Set<UserSkill> getSkillsByUser() {
+        return skillsByUser;
+    }
+
+    public void setSkillsByUser(Set<UserSkill> skillsByUser) {
+        this.skillsByUser = skillsByUser;
+    }
 }
 
 
