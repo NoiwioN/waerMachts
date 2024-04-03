@@ -1,4 +1,4 @@
-package net.ictcampus.waerMachts.model;
+package net.ictcampus.waerMachts.model.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
