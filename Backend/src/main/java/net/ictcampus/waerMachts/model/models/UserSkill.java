@@ -12,12 +12,12 @@ public class UserSkill {
     private Integer id_user_skill;
 
     @ManyToOne
-    @JsonBackReference
+
     @JoinColumn(name="user_id")
     User user;
 
     @ManyToOne
-    @JsonBackReference
+
     @JoinColumn(name="skill_id")
     Skill skill;
 

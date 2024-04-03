@@ -13,7 +13,7 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_user;
+    private Integer id_user;
 
     private String username;
     @NotBlank
@@ -28,17 +28,17 @@ public class User {
     private Ort ort;
 
     @OneToMany(mappedBy = "user")
-    @JsonBackReference
+    @JsonBackReference(value = "user_skills")
     private Set<UserSkill> skills;
 
     public User() {
     }
 
-    public Long getId_user() {
+    public Integer getId_user() {
         return id_user;
     }
 
-    public void setId_user(Long id) {
+    public void setId_user(Integer id) {
         this.id_user = id;
     }
 
