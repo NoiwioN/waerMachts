@@ -34,7 +34,7 @@ public class UserService {
         Iterable<User> users = findAll();
         for (User u : users) {
             if (u.getId().equals(user.getId())) {
-                user.setPasswort(bCryptPasswordEncoder.encode(user.getPasswort()));
+                user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 userRepository.save(user);
                 return;
             }
@@ -42,7 +42,7 @@ public class UserService {
         throw new RuntimeException("User doesn't exist");
     }
     public void signUp(User user) {
-        user.setPasswort(bCryptPasswordEncoder.encode(user.getPasswort()));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
     public void deleteById(Integer id) {

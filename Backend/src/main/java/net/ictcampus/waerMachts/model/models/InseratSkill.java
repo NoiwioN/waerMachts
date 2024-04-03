@@ -1,6 +1,7 @@
 package net.ictcampus.waerMachts.model.models;
 
 import javax.persistence.*;
+@Entity
 
 public class InseratSkill {
     @Id

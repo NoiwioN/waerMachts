@@ -60,11 +60,12 @@ public class UserController {
         }
     }
 
-    @PostMapping(consumes = "application/json")
+    @PostMapping(consumes = "application/json",path = "/sign-up")
     public void signUp(@Validated @RequestBody User user) {
         try {
             userService.signUp(user);
         } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Benutzer konnte nicht erstellt werden");
         }
     }

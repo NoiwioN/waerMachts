@@ -1,6 +1,5 @@
 package net.ictcampus.waerMachts.controller.services;
 
-import net.ictcampus.waerMachts.model.repositories.UserRepository;
 import net.ictcampus.waerMachts.model.models.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(email);
         }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPasswort(),
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
                 emptyList());
     }
 }

@@ -40,9 +40,9 @@ public class Inserat {
     private float bewertung;
     @NotBlank
     private String bewertungstext;
-    @OneToMany(mappedBy = "Inserat")
+    @OneToMany(mappedBy = "inserat")
     @JsonBackReference
-    Set<Skill> skills;
+    Set<InseratSkill> skills;
 
     public int getId() {
         return id;
@@ -138,5 +138,13 @@ public class Inserat {
 
     public void setBewertungstext(String bewertungstext) {
         this.bewertungstext = bewertungstext;
+    }
+
+    public Set<InseratSkill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(Set<InseratSkill> skills) {
+        this.skills = skills;
     }
 }

@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 import static net.ictcampus.waerMachts.controller.security.SecurityConstants.*;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -37,7 +38,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             creds.getUsername(),
-                            creds.getPasswort(),
+                            creds.getPassword(),
                             new ArrayList<>()));
         } catch (IOException e) {
             throw new RuntimeException(e);
