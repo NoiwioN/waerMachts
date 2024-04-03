@@ -1,4 +1,4 @@
-package net.ictcampus.waerMachts.model;
+package net.ictcampus.waerMachts.model.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
