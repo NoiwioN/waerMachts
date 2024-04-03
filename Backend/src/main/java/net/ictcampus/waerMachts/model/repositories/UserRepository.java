@@ -1,4 +1,4 @@
-package net.ictcampus.waerMachts.controller.repositories;
+package net.ictcampus.waerMachts.model.repositories;
 
 import org.springframework.stereotype.Repository;
 
