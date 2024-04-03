@@ -25,6 +25,8 @@ public class User {
     private String password;
     @ManyToOne
     @JoinColumn(name = "ort_id")
+    @JsonBackReference
+
     private Ort ort;
 
     @OneToMany(mappedBy = "user")
