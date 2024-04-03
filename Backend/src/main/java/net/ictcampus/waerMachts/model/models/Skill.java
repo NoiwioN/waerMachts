@@ -17,7 +17,7 @@ public class Skill {
     @NotNull
     private String name;
 
-    @OneToMany(mappedBy = "User")
+    @OneToMany(mappedBy = "skill")
     @JsonBackReference
     Set<UserSkill> skillsByUser;
 

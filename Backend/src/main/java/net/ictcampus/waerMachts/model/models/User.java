@@ -12,6 +12,7 @@ import java.util.Set;
 @Entity
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String username;
@@ -21,12 +22,14 @@ public class User {
     @NotBlank
     @NotNull
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String passwort;
+    private String password;
     @ManyToOne
-    @JoinColumn(name = "id_ort")
+    @JoinColumn(name = "ort_id")
+    @JsonBackReference
+
     private Ort ort;
 
-    @OneToMany(mappedBy = "User")
+    @OneToMany(mappedBy = "user")
     @JsonBackReference
     private Set<UserSkill> skills;
 
@@ -57,12 +60,12 @@ public class User {
         this.email = email;
     }
 
-    public String getPasswort() {
-        return passwort;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswort(String passwort) {
-        this.passwort = passwort;
+    public void setPassword(String passwort) {
+        this.password = passwort;
     }
 
     public Ort getOrt() {

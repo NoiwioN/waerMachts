@@ -1,26 +1,19 @@
 package net.ictcampus.waerMachts.controller.configurations;
 
 
-import net.ictcampus.waerMachts.controller.security.JWTAuthenticationFilter;
-import net.ictcampus.waerMachts.controller.security.JWTAuthorizationFilter;
 import net.ictcampus.waerMachts.controller.services.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
-
-import static net.ictcampus.waerMachts.controller.security.SecurityConstants.FORTESTONLYPLEASEDELETEMEVERYIMPORTANT;
-import static net.ictcampus.waerMachts.controller.security.SecurityConstants.*;
 
 @Configuration
 @EnableWebSecurity
@@ -37,7 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     // Alle URLs werden gespert nur Sign-up mit der Post methode ist immer erlaubt
     // und alle Swagger Dokumentations URLs
     // Wenn man dann Authentifiziert ist werden die anderen freigeschalten
-    @Override
+/*    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
                 .antMatchers(HttpMethod.GET, API_DOCUMENTATION_URLS).permitAll()
@@ -47,6 +40,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()))
                 // this disables session creation on Spring Security
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    }*/
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.cors().and().csrf().disable().authorizeRequests().anyRequest().permitAll();
     }
 
     // Dein mitgegebenes Passwort wird gehasht
