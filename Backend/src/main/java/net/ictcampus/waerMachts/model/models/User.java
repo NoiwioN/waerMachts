@@ -2,6 +2,7 @@ package net.ictcampus.waerMachts.model.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.core.SpringVersion;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -15,6 +16,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_user;
 
+    private String user_bild;
+    private Boolean premium_user;
     private String username;
     @NotBlank
     @NotNull
@@ -40,6 +43,22 @@ public class User {
 
     public void setId_user(Integer id) {
         this.id_user = id;
+    }
+
+    public String getUser_bild() {
+        return user_bild;
+    }
+
+    public void setUser_bild(String user_bild) {
+        this.user_bild = user_bild;
+    }
+
+    public Boolean getPremium_user() {
+        return premium_user;
+    }
+
+    public void setPremium_user(Boolean premium_user) {
+        this.premium_user = premium_user;
     }
 
     public String getUsername() {
