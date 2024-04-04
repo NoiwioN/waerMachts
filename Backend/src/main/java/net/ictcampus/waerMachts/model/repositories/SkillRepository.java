@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SkillRepository extends CrudRepository<Skill,Integer> {
+
     @Query("SELECT s FROM Skill s WHERE s.name LIKE CONCAT('%', :name, '%')")
     Iterable<Skill> findByName(@Param("name") String name);
 

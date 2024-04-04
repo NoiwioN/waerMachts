@@ -5,6 +5,8 @@ import net.ictcampus.waerMachts.model.repositories.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class SkillService {
     private final SkillRepository skillRepository;
@@ -16,5 +18,7 @@ public SkillService(SkillRepository skillRepository) {
 
     public Iterable<Skill> findAll() {return skillRepository.findAll();}
 
-    public Iterable<Skill> findbyName(String name) {return skillRepository.findByName(name);}
+    public Iterable<Skill> findByName(String name) {return skillRepository.findByName(name);}
+
+    public Optional<Skill> findById(Integer id) {return skillRepository.findById(id);}
 }
