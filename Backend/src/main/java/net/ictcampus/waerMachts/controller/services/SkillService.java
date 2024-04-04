@@ -21,4 +21,10 @@ public SkillService(SkillRepository skillRepository) {
     public Iterable<Skill> findByName(String name) {return skillRepository.findByName(name);}
 
     public Optional<Skill> findById(Integer id) {return skillRepository.findById(id);}
+
+    public void insert(Skill newSkill) {skillRepository.save(newSkill);}
+
+    public void update(Skill skill) {skillRepository.save(skill);}
+
+    public void deleteById(Integer id) {skillRepository.deleteById(id);}
 }
