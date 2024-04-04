@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(path = "/inserate")
@@ -25,14 +26,58 @@ public class InseratController {
         this.inseratService = inseratService;
     }
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "New Genre Created")
+       public void create(@Valid @RequestBody Inserat Inserat) {
+        try {
+            inseratService.create(Inserat);
+        } catch (RuntimeException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Conflict occurred");
+        }
+    }
+
     @GetMapping
     @ResponseStatus(HttpStatus.FOUND)
-    @Operation(summary = "Find Inserat")
+    @Operation(summary = "Get alle Inserate")
     public Iterable<Inserat> findAll() {
         try {
             return inseratService.findAll();
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
+        }
+    }
+
+    @GetMapping(path = "{id}")
+    @Operation(summary = "Suche nach ID")
+    @ResponseStatus(HttpStatus.OK)
+       public Inserat findById(@Valid @PathVariable Integer id) {
+        try {
+            return inseratService.findById(id);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Genre not found");
+        }
+    }
+
+    @PutMapping
+    @Operation(summary = "Update Genre")
+    @ResponseStatus(HttpStatus.OK)
+    public void update(@Valid @RequestBody Inserat Inserat) {
+        try {
+            inseratService.update(Inserat);
+        } catch (RuntimeException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Conflict occurred");
+        }
+    }
+
+    @DeleteMapping
+    @Operation(summary = "Delete a Genre")
+    @ResponseStatus(HttpStatus.OK)
+        public void deleteById(@Valid @PathVariable Integer id) {
+        try {
+            inseratService.deleteById(id);
+        } catch (RuntimeException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Genre Id not found");
         }
     }
 }
