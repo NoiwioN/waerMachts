@@ -1,24 +1,24 @@
 import {getJSON, deleteJSON, putJSON, postJSON, BASE_URL} from "./index";
 
-const URL = `${BASE_URL}/inserate`;
+const INSERATE_URL = `${BASE_URL}/inserate`;
 
 const InserateAPI = {
-    readAll() {
-        return getJSON(`${URL}`);
+    findAll() {
+        return getJSON(INSERATE_URL)
     },
-    read(id){
-        return getJSON(`${URL}`);
+    findById(inseratId) {
+        return getJSON(`${INSERATE_URL}/${inseratId}`)
     },
-    update(inserat, token) {
-        const data = putJSON(`${BASE_URL}/inserate/edit${id}`, {body: inserat, token});
-        return data;
+    create(inserat, token) {
+        const data = postJSON(INSERATE_URL, { body: inserat, token }, true)
+        return data
     },
-    register(user) {
-        const data = postJSON(`${BASE_URL}/inserate/sign-up`, {body: user}, true);
+    update(inserat, inseratId, token) {
+        const data = putJSON(`${INSERATE_URL}/${inseratId}`, {body: inserat, token}, true);
         return data;
     },
     delete(inserat, token) {
-        const data = deleteJSON(`${BASE_URL}/inserate/${inserat.id}`, {token}, true);
+        const data = deleteJSON(`${INSERATE_URL}/${inserat.id}`, {token}, true);
         return data;
     }
 }

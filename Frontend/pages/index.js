@@ -1,29 +1,24 @@
 import React from 'react';
 import InserateAPI from "../lib/api/inserate";
+import Inserate from "../Components/Inserate";
 
-export default function homePage ({inserat}) {
+export default function homePage({inserate}) {
     return (
-        <div>
-            <h1>{inserat.id}</h1>
-            <p>CHF  {inserat.preis}</p>
-        </div>
+        <>
+            {inserate.map((inserat)=>{
+                return(
+                    <div key={inserat.id}>
+                        <p>{JSON.stringify(inserat)}</p>
+                    </div>
+                )
+            })}
+        </>
     )
 }
-export async function getStaticProps(context) {
-    const id = context.params.id;
-    //gets the cats ids
-    const inserat = await InserateAPI.read(id);
-    return {
-        props: {inserat}, revalidate: 10
-    };
-}
 
-export async function getStaticPaths() {
-    const inserate = await InserateAPI.readAll();
-    const paths = inserate.map(inserate => (
-        {
-            params: {id: inserate.id.toString()}
-        })
-    );
-    return {paths, fallback: true};
+export async function getStaticProps(context) {
+    const inserate = await InserateAPI.findAll();
+    return {
+        props: {inserate}, revalidate: 10
+    };
 }
