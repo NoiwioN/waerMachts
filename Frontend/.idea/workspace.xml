@@ -5,30 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b3a4c0f2-9a1f-4ff9-891a-6edb9b5cdd69" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Backend/waerMachts/waerMachts/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend/waerMachts/waerMachts/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend/waerMachts/waerMachts/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend/waerMachts/waerMachts/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend/waerMachts/waerMachts/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend/waerMachts/waerMachts/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend/waerMachts/waerMachts/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend/waerMachts/waerMachts/src/main/java/net/ictcampus/waerMachts/WaerMachtsApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend/waerMachts/waerMachts/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend/waerMachts/waerMachts/src/test/java/net/ictcampus/waerMachts/WaerMachtsApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/OLDApp.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/OLD_reportWebVitals.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/OLD_setupTests.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/logo.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/logo192.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/logo512.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/robots.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Backend/src/main/java/net/ictcampus/waerMachts/model/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Backend/src/main/java/net/ictcampus/waerMachts/model/models/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,9 +15,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2eaJNKq9big2Ocw0RJfkLwbeCu4" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -50,8 +27,9 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "dev",
-    "last_opened_file_path": "C:/Projects/waerMachts/Frontend",
+    "git-widget-placeholder": "Home__Inserate",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/olsenl/Projekte/WaerMachts/waerMachts/Frontend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -78,6 +56,7 @@
       <option name="presentableId" value="Default" />
       <updated>1712136713846</updated>
       <workItem from="1712136714920" duration="512000" />
+      <workItem from="1712234574352" duration="10000" />
     </task>
     <servers />
   </component>
