@@ -13,7 +13,6 @@ public class Inserat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_inserat;
-    @NotBlank
     private String darstellungs_bild;
     @ManyToOne
     @JoinColumn(name = "auftraggeber_id")
@@ -21,22 +20,15 @@ public class Inserat {
     @ManyToOne
     @JoinColumn(name = "auftragnehmer_id")
     private User auftragnehmer_id;
-    @NotBlank
     private boolean fertig_status;
-    @NotBlank
     private String art;
-    @NotBlank
     private double preis;
     @ManyToOne
     @JoinColumn(name = "ort_id")
     private Ort ort;
-    @NotBlank
     private LocalDate erstellt_am;
-    @NotBlank
     private LocalDate fertig_am;
-    @NotBlank
     private Float bewertung;
-    @NotBlank
     private String bewertungstext;
     @OneToMany(mappedBy = "inserat")
     @JsonBackReference

@@ -1,10 +1,6 @@
 package net.ictcampus.waerMachts.controller.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import net.ictcampus.waerMachts.controller.services.InseratService;
 import net.ictcampus.waerMachts.model.models.Inserat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(path = "/inserate")
@@ -25,14 +22,58 @@ public class InseratController {
         this.inseratService = inseratService;
     }
 
+    @PostMapping(consumes = "application/json",path = "/sign-up")
+    @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "New Genre Created")
+       public void signUp(@Valid @RequestBody Inserat Inserat) {
+        try {
+            inseratService.signUp(Inserat);
+        } catch (RuntimeException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Conflict occurred");
+        }
+    }
+
     @GetMapping
     @ResponseStatus(HttpStatus.FOUND)
-    @Operation(summary = "Find Inserat")
+    @Operation(summary = "Get alle Inserate")
     public Iterable<Inserat> findAll() {
         try {
             return inseratService.findAll();
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
+        }
+    }
+
+    @GetMapping(path = "{id}")
+    @Operation(summary = "Suche nach ID")
+    @ResponseStatus(HttpStatus.OK)
+       public Inserat findById(@Valid @PathVariable Integer id) {
+        try {
+            return inseratService.findById(id);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Genre not found");
+        }
+    }
+
+    @PutMapping(consumes = "application/json", path = "{id}")
+    @Operation(summary = "Update Genre")
+    @ResponseStatus(HttpStatus.OK)
+    public void update(@Valid @RequestBody Inserat Inserat) {
+        try {
+            inseratService.update(Inserat);
+        } catch (RuntimeException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Conflict occurred");
+        }
+    }
+
+    @DeleteMapping(path = "{id}")
+    @Operation(summary = "Delete a Genre")
+    @ResponseStatus(HttpStatus.OK)
+        public void deleteById(@Valid @PathVariable Integer id) {
+        try {
+            inseratService.deleteById(id);
+        } catch (RuntimeException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Genre Id not found");
         }
     }
 }
