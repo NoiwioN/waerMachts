@@ -22,7 +22,7 @@ public class InseratController {
         this.inseratService = inseratService;
     }
 
-    @PostMapping
+    @PostMapping(consumes = "application/json",path = "/sign-up")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "New Genre Created")
        public void signUp(@Valid @RequestBody Inserat Inserat) {
@@ -55,7 +55,7 @@ public class InseratController {
         }
     }
 
-    @PutMapping
+    @PutMapping(consumes = "application/json", path = "{id}")
     @Operation(summary = "Update Genre")
     @ResponseStatus(HttpStatus.OK)
     public void update(@Valid @RequestBody Inserat Inserat) {
@@ -66,7 +66,7 @@ public class InseratController {
         }
     }
 
-    @DeleteMapping
+    @DeleteMapping(path = "{id}")
     @Operation(summary = "Delete a Genre")
     @ResponseStatus(HttpStatus.OK)
         public void deleteById(@Valid @PathVariable Integer id) {
