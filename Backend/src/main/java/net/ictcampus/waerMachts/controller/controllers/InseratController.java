@@ -1,10 +1,6 @@
 package net.ictcampus.waerMachts.controller.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import net.ictcampus.waerMachts.controller.services.InseratService;
 import net.ictcampus.waerMachts.model.models.Inserat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +25,9 @@ public class InseratController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "New Genre Created")
-       public void create(@Valid @RequestBody Inserat Inserat) {
+       public void signUp(@Valid @RequestBody Inserat Inserat) {
         try {
-            inseratService.create(Inserat);
+            inseratService.signUp(Inserat);
         } catch (RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Conflict occurred");
         }

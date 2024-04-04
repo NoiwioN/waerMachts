@@ -16,7 +16,7 @@ public class InseratService {
         this.inseratRepository = inseratRepository;
     }
 
-    public void create(Inserat inserat){
+    public void signUp(Inserat inserat){
         inseratRepository.save(inserat);
     }
 
@@ -29,11 +29,9 @@ public class InseratService {
         Optional<Inserat> genre = inseratRepository.findById(id);
         return genre.orElseThrow(EntityNotFoundException::new);
     }
-
     public void update(Inserat inserat){
         inseratRepository.save(inserat);
     }
-
     public void deleteById(Integer id){
         inseratRepository.deleteById(id);
     }
