@@ -15,6 +15,10 @@ public class Ort {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_ort;
 
+    @NotBlank
+    @NotNull
+    private String name;
+
     @OneToMany
     @JsonBackReference(value = "ort_users")
     private Set<User> users = new HashSet<>();
