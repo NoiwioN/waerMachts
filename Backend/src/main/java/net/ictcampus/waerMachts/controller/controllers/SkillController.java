@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -52,4 +53,25 @@ public class SkillController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Skill not found");
         }
     }
+
+    @PutMapping(consumes = "application/json")
+    @Operation(summary = "Updates a Skill")
+    public void update(@Valid @RequestBody Skill skill) {
+        try{
+            skillService.update(skill);
+        } catch (RuntimeException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Skill could not be updated");
+
+        }
+    }
+
+    @DeleteMapping(path = "{id}")
+    public void delete(@PathVariable Integer id){
+        try{
+            skillService.deleteById(id);
+        } catch (RuntimeException e){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Skill could not be deleted");
+        }
+    }
+
 }
