@@ -22,7 +22,7 @@ public class InseratController {
         this.inseratService = inseratService;
     }
 
-    @PostMapping(consumes = "application/json",path = "/sign-up")
+    @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "New Genre Created")
        public void signUp(@Valid @RequestBody Inserat Inserat) {
@@ -73,6 +73,7 @@ public class InseratController {
         try {
             inseratService.deleteById(id);
         } catch (RuntimeException e) {
+            System.out.println(e);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Genre Id not found");
         }
     }
