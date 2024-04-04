@@ -9,6 +9,9 @@ const OrteAPI = {
     read(id) {
         return getJSON(`${URL}/${id}`)
     },
+    findByUserId(userId){
+      return getJSON(`${URL}?userId=${userId}`)
+    },
     create(ort, token) {
         const data = postJSON(`${URL}`, { body: ort, token }, true)
     },
