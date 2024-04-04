@@ -17,7 +17,7 @@ public class Ort {
 
     @NotBlank
     @NotNull
-    private String name;
+    private String ort;
 
     @OneToMany
     @JsonBackReference(value = "ort_users")
@@ -66,11 +66,11 @@ public class Ort {
         this.strasse = strasse;
     }
 
-    public String getName() {
-        return name;
+    public String getOrt() {
+        return ort;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setOrt(String name) {
+        this.ort = name;
     }
 }
