@@ -65,4 +65,12 @@ public class Ort {
     public void setStrasse(String strasse) {
         this.strasse = strasse;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
