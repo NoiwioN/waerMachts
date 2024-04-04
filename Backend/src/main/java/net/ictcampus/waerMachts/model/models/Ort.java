@@ -16,7 +16,7 @@ public class Ort {
     private Integer id_ort;
 
     @OneToMany
-    @JsonBackReference
+    @JsonBackReference(value = "ort_users")
     private Set<User> users = new HashSet<>();
 
     @NotBlank

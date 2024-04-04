@@ -21,10 +21,11 @@ public class UserController {
     }
 
     @GetMapping(path = "{id}")
-    public User findById(@PathVariable String id) {
+    public User findById(@PathVariable Integer id) {
         try {
-            return userService.findByEmail(id);
+            return userService.findById(id);
         } catch (EntityNotFoundException e) {
+            System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Benutzer wurde nicht gefunden");
         }
     }
@@ -51,7 +52,7 @@ public class UserController {
     }
 
     @PutMapping(consumes = "application/json", path = "{id}")
-    public void update(@Valid @RequestBody User user, @RequestParam Integer id) {
+    public void update(@Valid @RequestBody User user, @PathVariable Integer id) {
         try {
             userService.findById(id);
             userService.update(user);

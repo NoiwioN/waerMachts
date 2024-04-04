@@ -1,12 +1,10 @@
 package net.ictcampus.waerMachts.model.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -14,7 +12,7 @@ public class Inserat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id_inserate;
     @NotBlank
     private String darstellungs_bild;
     @ManyToOne
@@ -44,12 +42,12 @@ public class Inserat {
     @JsonBackReference
     Set<InseratSkill> skills;
 
-    public int getId() {
-        return id;
+    public Integer getId_inserate() {
+        return id_inserate;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId_inserate(Integer id_inserate) {
+        this.id_inserate = id_inserate;
     }
 
     public String getDarstellungs_bild() {
