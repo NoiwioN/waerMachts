@@ -37,7 +37,7 @@
     "Node.js.UserProfileUserData.js.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Home__Inserate",
+    "git-widget-placeholder": "dev",
     "last_opened_file_path": "C:/Projects/waerMachts/Frontend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -65,8 +65,6 @@
       <option name="presentableId" value="Default" />
       <updated>1712136713846</updated>
       <workItem from="1712136714920" duration="1151000" />
-      <workItem from="1712234857924" duration="64000" />
-      <workItem from="1712242230457" duration="722000" />
     </task>
     <servers />
   </component>
