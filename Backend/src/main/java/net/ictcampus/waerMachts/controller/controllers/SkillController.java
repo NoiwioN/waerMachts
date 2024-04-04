@@ -54,6 +54,25 @@ public class SkillController {
         }
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(consumes = "application/json")
+    @Operation(summary = "Create a new Skill")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Skill was created successfully", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Skill.class)) }),
+            @ApiResponse(responseCode = "409", description = "Skill could not be created", content = @Content) })
+    public void insert(@Valid @RequestBody Skill newSkill) {
+        try {
+            skillService.insert(newSkill);
+        } catch (RuntimeException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, " Skill could not be added");
+        }
+    }
+
+
+
+
+
     @PutMapping(consumes = "application/json")
     @Operation(summary = "Updates a Skill")
     public void update(@Valid @RequestBody Skill skill) {
