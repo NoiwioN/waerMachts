@@ -12,7 +12,7 @@ public class Inserat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_inserate;
+    private Integer id_inserat;
     @NotBlank
     private String darstellungs_bild;
     @ManyToOne
@@ -35,19 +35,19 @@ public class Inserat {
     @NotBlank
     private LocalDate fertig_am;
     @NotBlank
-    private float bewertung;
+    private Float bewertung;
     @NotBlank
     private String bewertungstext;
     @OneToMany(mappedBy = "inserat")
     @JsonBackReference
     Set<InseratSkill> skills;
 
-    public Integer getId_inserate() {
-        return id_inserate;
+    public Integer getId_inserat() {
+        return id_inserat;
     }
 
-    public void setId_inserate(Integer id_inserate) {
-        this.id_inserate = id_inserate;
+    public void setId_inserat(Integer id_inserate) {
+        this.id_inserat = id_inserate;
     }
 
     public String getDarstellungs_bild() {
@@ -122,11 +122,11 @@ public class Inserat {
         this.fertig_am = fertig_am;
     }
 
-    public float getBewertung() {
+    public Float getBewertung() {
         return bewertung;
     }
 
-    public void setBewertung(float bewertung) {
+    public void setBewertung(Float bewertung) {
         this.bewertung = bewertung;
     }
 
