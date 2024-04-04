@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface InseratSkillRepository extends CrudRepository<InseratSkill, Integer> {
 
-    @Query("select s.id_skill from Skill s join InseratSkill as inskill on s.id_skill=inskill.skill_id where inskill.skill_id=:id")
-    Iterable<Integer> findSkillIdsByInserate(@Param("id") Integer id);
+    @Query("select s from  InseratSkill as inskill join inskill.skill s  on s.id_skill=inskill.skill_id join inskill.inserat i on i.id_inserat=inskill.inserat_id  where inskill.inserat_id=:id")
+    Iterable<Skill> findSkillIdsByInserate(@Param("id") Integer id);
 }

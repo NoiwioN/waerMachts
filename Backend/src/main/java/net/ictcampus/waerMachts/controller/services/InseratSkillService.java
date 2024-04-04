@@ -26,12 +26,7 @@ public class InseratSkillService {
     }
 
     public Iterable<Skill> findSkillsByInserat(Integer id){
-        Iterable<Skill> skills = inseratSkillRepository.findSkillIdsByInserate(id).forEach(skillId -> {
-            Optional<Skill> skill=  skillRepository.findById(skillId);
-            skills.add(skill);
-        });
-        return skills;
-
+        return inseratSkillRepository.findSkillIdsByInserate(id);
     }
 
     public Iterable<InseratSkill> findAll(){
