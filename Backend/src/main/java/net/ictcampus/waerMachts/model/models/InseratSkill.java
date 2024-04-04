@@ -1,12 +1,23 @@
 package net.ictcampus.waerMachts.model.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 @Entity
 
 public class InseratSkill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_inserat_skill;
+
+    @NotNull
+    @NotBlank
+    private Integer inserat_id;
+
+    @NotNull
+    @NotBlank
+    private Integer skill_id;
 
     @ManyToOne
     @JoinColumn(name="inserat_id")
