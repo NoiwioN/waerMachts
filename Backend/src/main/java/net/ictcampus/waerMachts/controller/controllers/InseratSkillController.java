@@ -1,13 +1,11 @@
 package net.ictcampus.waerMachts.controller.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
-import net.ictcampus.waerMachts.controller.services.InseratService;
 import net.ictcampus.waerMachts.controller.services.InseratSkillService;
-import net.ictcampus.waerMachts.model.models.Inserat;
 import net.ictcampus.waerMachts.model.models.InseratSkill;
+import net.ictcampus.waerMachts.model.models.Skill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -43,9 +41,10 @@ public class InseratSkillController {
         try {
             if (inseratId!= null) {
 
-                return inseratSkillService.findSkillsByInserat(inseratId);
+                return inseratSkillService.findSkillsByInseratId(inseratId);
             }
             else{
+//
                 return inseratSkillService.findAll();
             }
 

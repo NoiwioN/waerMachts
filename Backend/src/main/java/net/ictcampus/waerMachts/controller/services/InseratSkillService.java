@@ -25,7 +25,7 @@ public class InseratSkillService {
         inseratSkillRepository.save(inseratSkill);
     }
 
-    public Iterable<Skill> findSkillsByInserat(Integer id){
+    public Iterable<Skill> findSkillsByInseratId(Integer id){
         return inseratSkillRepository.findSkillIdsByInserate(id);
     }
 
