@@ -5,34 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b3a4c0f2-9a1f-4ff9-891a-6edb9b5cdd69" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/api/Skill.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/testSkill.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/build-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/.next/build-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/client-development/0.pack.gz" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/client-development/0.pack.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/client-development/index.pack.gz" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/client-development/index.pack.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/client-development/index.pack.gz.old" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/client-development/index.pack.gz.old" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/0.pack.gz" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/0.pack.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/cache/webpack/server-development/index.pack.gz" beforeDir="false" afterPath="$PROJECT_DIR$/.next/cache/webpack/server-development/index.pack.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/server/_error.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/_error.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/server/middleware-build-manifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/middleware-build-manifest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/server/middleware-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/middleware-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/server/pages-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/pages-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/server/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/pages/_app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/server/pages/_document.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/pages/_document.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/server/pages/_error.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/pages/_error.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/server/vendor-chunks/@swc.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/vendor-chunks/@swc.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/server/vendor-chunks/next.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/vendor-chunks/next.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/server/webpack-runtime.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/server/webpack-runtime.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/static/chunks/_error.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/static/chunks/_error.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/static/chunks/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/static/chunks/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/static/chunks/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/static/chunks/pages/_app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/static/chunks/pages/_error.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/static/chunks/pages/_error.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/static/chunks/polyfills.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/static/chunks/polyfills.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/static/chunks/react-refresh.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/static/chunks/react-refresh.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/static/chunks/webpack.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/static/chunks/webpack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/static/development/_buildManifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/.next/static/development/_buildManifest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.next/trace" beforeDir="false" afterPath="$PROJECT_DIR$/.next/trace" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/testSkill.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/testSkill.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +21,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="dev" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectColorInfo">{
@@ -64,13 +43,13 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "feature__api__skill",
-    "last_opened_file_path": "C:/Projects/frondend/WisdomOfMetis",
+    "last_opened_file_path": "C:/Projects/projektraining/waerMachts/Frontend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Program Files (x86)\\JetBrains\\WebStorm 2023.3.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2023.3.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -92,6 +71,7 @@
       <updated>1712136713846</updated>
       <workItem from="1712136714920" duration="1151000" />
       <workItem from="1712236210169" duration="4621000" />
+      <workItem from="1712299373267" duration="1506000" />
     </task>
     <servers />
   </component>
