@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b3a4c0f2-9a1f-4ff9-891a-6edb9b5cdd69" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Components/Inserate.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Backend/src/main/java/net/ictcampus/waerMachts/controller/controllers/InseratController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Backend/src/main/java/net/ictcampus/waerMachts/controller/controllers/InseratController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/api/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/api/inserate.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/api/inserate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +19,9 @@
         <option value="JavaScript File" />
       </list>
     </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/dev" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -81,7 +81,7 @@
       <updated>1712136713846</updated>
       <workItem from="1712136714920" duration="1151000" />
       <workItem from="1712234857924" duration="64000" />
-      <workItem from="1712242230457" duration="722000" />
+      <workItem from="1712242230457" duration="1377000" />
     </task>
     <servers />
   </component>
