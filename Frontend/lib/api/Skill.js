@@ -7,7 +7,7 @@ const SkillAPI = {
     },
 
     create (skill){
-        return postJSON(USER_URL, {body:skill},true)
+        return postJSON(SKILL_URL, {body:skill},true)
     },
     update(skill,skillId, token){
         return putJSON(`${SKILL_URL}/${skillId}`,{body:skill, token}, true)
