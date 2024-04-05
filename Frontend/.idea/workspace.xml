@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3a4c0f2-9a1f-4ff9-891a-6edb9b5cdd69" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Components/UserProfileUserData.js" beforeDir="false" afterPath="$PROJECT_DIR$/Components/UserProfileUserData.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/api/orte.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/api/orte.js" afterDir="false" />
-    </list>
+    <list default="true" id="b3a4c0f2-9a1f-4ff9-891a-6edb9b5cdd69" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,7 +34,7 @@
     "Node.js.UserProfileUserData.js.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feature__apiorte",
+    "git-widget-placeholder": "dev",
     "last_opened_file_path": "C:/Projects/waerMachts/Frontend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -54,6 +50,7 @@
       <map>
         <entry key="com.intellij.reactbuddy.reactComponents" value="false" />
         <entry key="com.intellij.reactbuddy.reactInspector" value="false" />
+        <entry key="com.intellij.reactbuddy.storybook" value="false" />
       </map>
     </option>
   </component>
@@ -66,6 +63,7 @@
       <option name="presentableId" value="Default" />
       <updated>1712136713846</updated>
       <workItem from="1712136714920" duration="1151000" />
+      <workItem from="1712297491065" duration="489000" />
     </task>
     <servers />
   </component>
