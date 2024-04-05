@@ -9,6 +9,11 @@ const emptyUser = {
     premium_user:false,
     user_bild:""
 }
+const emptyOrt={
+    ort_id:"",
+    ort:"",
+    PLZ:"",
+}
 
 export default function UserRegistration(){
     const [user, setUser] = useState(emptyUser)
