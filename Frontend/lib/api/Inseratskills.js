@@ -6,7 +6,9 @@ const InseratskillsAPI = {
     readAll() {
         return getJSON(`${URL}`)
     },
-
+    findSkillsByInseratId(inseratId) {
+        return getJSON(`${URL}?inseratId=${inseratId}`)
+    },
     read(id) {
         return getJSON(`${URL}/${id}`)
     },
