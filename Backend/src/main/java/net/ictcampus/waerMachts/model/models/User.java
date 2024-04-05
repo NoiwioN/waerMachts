@@ -22,8 +22,7 @@ public class User {
     @NotBlank
     @NotNull
     private String email;
-    @NotBlank
-    @NotNull
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @ManyToOne
@@ -100,4 +99,5 @@ public class User {
     public void setSkills(Set<UserSkill> skills) {
         this.skills = skills;
     }
+
 }
