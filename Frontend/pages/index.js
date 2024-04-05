@@ -1,18 +1,22 @@
 import React from 'react';
 import InserateAPI from "../lib/api/inserate";
-import Inserate from "../Components/Inserate";
+import Inserat from "../Components/Inserat";
+
 
 export default function homePage({inserate}) {
     return (
-        <>
+        <div className={"grid"}>
             {inserate.map((inserat)=>{
                 return(
-                    <div key={inserat.id}>
-                        <p>{JSON.stringify(inserat)}</p>
+                    <div key={`inserat-${inserat.id_inserat}`} className={"inserat-container"}>
+
+
+                        {/*<p>{JSON.stringify(inserat)}</p>*/}
+                        <Inserat props={inserat}/>
                     </div>
                 )
             })}
-        </>
+        </div>
     )
 }
 
