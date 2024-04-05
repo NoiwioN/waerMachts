@@ -1,11 +1,20 @@
 .grid{
+    height: 80vh;
+    /*margin: auto;*/
+    width: 100vw;
     display:grid;
     grid-template-columns: auto auto auto auto;
+    gap: 1em;
+    overflow-y: scroll;
+    grid-auto-rows: 35vh;
+    justify-content: center;
+
 
 }
 
 .inserat-container{
     position:relative;
+    height: 35vh;
 }
 
 body {
