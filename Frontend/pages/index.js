@@ -1,6 +1,5 @@
 import React from 'react';
 import InserateAPI from "../lib/api/inserate";
-import Inserate from "../Components/Inserate";
 
 export default function homePage({inserate}) {
     return (
