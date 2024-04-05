@@ -36,9 +36,14 @@ public class InseratController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get alle Inserate")
-    public Iterable<Inserat> findAll() {
+    public Iterable<Inserat> findAllByIdentifier(@RequestParam(required = false)Integer auftragnehmerId) {
         try {
-            return inseratService.findAll();
+            if(auftragnehmerId!=null){
+                return inseratService.findInserateByUserId(auftragnehmerId);
+            }else{
+                return inseratService.findAll();
+            }
+
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
         }
