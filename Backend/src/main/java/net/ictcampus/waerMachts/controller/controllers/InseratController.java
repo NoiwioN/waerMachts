@@ -34,7 +34,7 @@ public class InseratController {
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get alle Inserate")
     public Iterable<Inserat> findAll() {
         try {

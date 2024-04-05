@@ -26,6 +26,8 @@ public class User {
     @NotNull
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
+    private String strasse;
     @ManyToOne
     @JoinColumn(name = "ort_id")
     private Ort ort;
@@ -85,6 +87,14 @@ public class User {
         this.password = passwort;
     }
 
+    public String getStrasse() {
+        return strasse;
+    }
+
+    public void setStrasse(String strasse) {
+        this.strasse = strasse;
+    }
+
     public Ort getOrt() {
         return ort;
     }
@@ -100,4 +110,5 @@ public class User {
     public void setSkills(Set<UserSkill> skills) {
         this.skills = skills;
     }
+
 }

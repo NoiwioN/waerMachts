@@ -27,9 +27,7 @@ public class Ort {
     @NotNull
     private Integer PLZ;
 
-    @NotBlank
-    @NotNull
-    private String strasse;
+
 
 
 
@@ -58,13 +56,7 @@ public class Ort {
         this.PLZ = PLZ;
     }
 
-    public String getStrasse() {
-        return strasse;
-    }
 
-    public void setStrasse(String strasse) {
-        this.strasse = strasse;
-    }
 
     public String getOrt() {
         return ort;
