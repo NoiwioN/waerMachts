@@ -99,21 +99,20 @@ export default function createInseratePage({skill}) {
                             placeholder="Beschreibung"/>
                 </div>
                 <label htmlFor="title">Skill</label>
+                <label htmlFor="skill"></label>
                 <div>
-                    <select>
+                    <input list="skills" name="skill" id="skill" placeholder={"skill"}/>
+                    <datalist id="skills">
                         {skill.map((skill) => {
                             return (
-                                <option>
-                                    <div key={skill.id}>
-
+                                <option key={skill.id}>
+                                    <>
                                         <p>{skill.name}</p>
-
-                                    </div>
+                                    </>
                                 </option>
                             )
                         })}
-                        <option><input type={"text"} name="beschreibung" placeholder="Beschreibung"/></option>
-                    </select>
+                    </datalist>
                 </div>
                 <label htmlFor="title">Art der Arbeit</label>
                 <div>
