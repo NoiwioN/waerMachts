@@ -31,11 +31,11 @@ export default function UserProfileUserData() {
 
     useEffect(() => {
         const getUser = async () => {
-            const response = await UserAPI.findById(1)
+            const response = await UserAPI.findById(2)
             setUser(response)
         }
         const getOrt = async () => {
-            const response= await OrteAPI.findByUserId(1);
+            const response= await OrteAPI.findByUserId(2);
             setOrt(response)
         }
         const getInserate=async ()=>{
@@ -55,6 +55,7 @@ export default function UserProfileUserData() {
             <p>Durchschnitt: {bewertung.durchschnitt}</p>
             <img alt={"Profilbild"} src={user.user_bild}/>
             <p>{ort.plz} {ort.ort}</p>
+            <p>{user.strasse}</p>
             <p>{user.username}</p>
             <p>{user.email}</p>
         </>
