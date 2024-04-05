@@ -30,6 +30,10 @@ public class UserService {
         Optional<User> user = userRepository.findUserByEmail(email);
         return user.orElseThrow(EntityNotFoundException::new);
     }
+    public User findByName(String name){
+        User user  = userRepository.findUserByUsername(name);
+        return user;
+    }
     public void update (User user){
         Iterable<User> users = findAll();
         for (User u : users) {

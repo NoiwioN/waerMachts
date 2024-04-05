@@ -31,25 +31,38 @@ public class UserController {
     }
 
     @GetMapping
-    public Iterable<User> findAll(@RequestParam(required = false) String email) {
-        if (email != null) {
-            try {
-                User user = userService.findByEmail(email);
-                ArrayList<User> u = new ArrayList<>();
-                u.add(user);
-                return u;
-            } catch (EntityNotFoundException e) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Benutzer wurde nicht gefunden");
-            }
-        } else {
+    public Iterable<User> findAll(@RequestParam(required = false) String email,@RequestParam(required = false) String name) {
+        if ((email!=null&&name!=null)||(email==null&&name==null)) {
             try {
                 return userService.findAll();
             } catch (EntityNotFoundException e) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Benutzer wurde nicht gefunden");
             }
         }
-
+        if (email != null) {
+            try {
+                System.out.println("UserMail:");
+                System.out.println(email);
+                User user = userService.findByEmail(email);
+                System.out.println(user.getUsername());
+                ArrayList<User> u = new ArrayList<>();
+                u.add(user);
+                return u;
+            } catch (EntityNotFoundException e) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Benutzer wurde nicht gefunden");
+            }
+        }else  {
+            try {
+                User user = userService.findByName(name);
+                ArrayList<User> u = new ArrayList<>();
+                u.add(user);
+                return u;
+            } catch (EntityNotFoundException e) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Benutzer wurde nicht gefunden");
+            }
+        }
     }
+
 
     @PutMapping(consumes = "application/json", path = "{id}")
     public void update(@Valid @RequestBody User user, @PathVariable Integer id) {
