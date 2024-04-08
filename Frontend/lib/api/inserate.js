@@ -9,6 +9,9 @@ const InserateAPI = {
     findByAuftragnehmerId(auftragnehmerId){
         return getJSON(`${INSERATE_URL}?auftragnehmerId=${auftragnehmerId}`)
     },
+    findAuftraggeberByInseratId(inseratId){
+        return getJSON(`${INSERATE_URL}?inseratId=${inseratId}`)
+    },
     findById(inseratId) {
         return getJSON(`${INSERATE_URL}/${inseratId}`)
     },
