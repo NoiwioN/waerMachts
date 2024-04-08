@@ -31,15 +31,15 @@ export default function UserProfileUserData() {
 
     useEffect(() => {
         const getUser = async () => {
-            const response = await UserAPI.findById(2)
+            const response = await UserAPI.findById(4)
             setUser(response)
         }
         const getOrt = async () => {
-            const response= await OrteAPI.findByUserId(2);
+            const response= await OrteAPI.findByUserId(4);
             setOrt(response)
         }
         const getInserate=async ()=>{
-            const response= await InserateAPI.findByAuftragnehmerId(2)
+            const response= await InserateAPI.findByAuftragnehmerId(4)
             setInserate(response)
         }
         getOrt()

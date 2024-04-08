@@ -25,6 +25,7 @@ const emptyUser = {
 }
 
 export default function UserRegistration() {
+    const [file, setFile] = useState(" ")
     const [user, setUser] = useState(emptyUser)
     const [ortLokal, setOrtLokal] = useState(emptyOrt)
     const [loading, setLoading] = useState(false)
@@ -34,6 +35,19 @@ export default function UserRegistration() {
             ...prevState,
             [name]: value
         }))
+    }
+    const handleChangeFile = (e)=>{
+        const localFile= e.target.files[0]
+        setFile(localFile)
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const base64Image = event.target.result;
+            setUser(prevState => ({
+                ...prevState,
+                user_bild: base64Image
+            }))
+        }
+       reader.readAsDataURL(localFile);
     }
     const handleChangeOrt = (e) => {
         const {name, value} = e.target
@@ -81,6 +95,7 @@ export default function UserRegistration() {
         }
         doLogin().then(() => {
             setLoading(false)
+            console.log(user.user_bild)
         }, () => {
             console.log("Nope")
         })
@@ -90,6 +105,16 @@ export default function UserRegistration() {
         <div>
             <form>
                 <h2>Register</h2>
+                <div>
+                    <label htmlFor={"user_bild"}>Profilbild: </label>
+                    <input
+                        onChange={handleChangeFile}
+                        type={"file"}
+                        name={"user_bild"}
+
+                    />
+                    <img src={file} alt={"Profilbild"}/>
+                </div>
                 <div>
                     <input onChange={handleChangeUser} type="text"
                            name="username"
