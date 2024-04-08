@@ -1,0 +1,24 @@
+.UPD{
+    width:40vw;
+    overflow:hidden;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1em auto;
+
+}
+
+.UPD img{
+    border-radius:50%;
+    width: 33%;
+    align-self: center
+}
+
+.UPD Link{
+    align-self: baseline;
+}
+
+.bewertung{
+    margin-top: 0;
+    font-size:small;
+}
