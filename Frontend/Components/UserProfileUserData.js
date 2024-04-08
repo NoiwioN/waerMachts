@@ -18,6 +18,7 @@ export default function UserProfileUserData() {
     useEffect(() => {
         let gesamt=0;
         if(!inserate) return;
+        setBewertung({durchschnitt: 0, anzahl: 0})
         inserate.map(inserat=>{
             if(inserat.bewertung){
                 gesamt+=inserat.bewertung;
@@ -36,31 +37,35 @@ export default function UserProfileUserData() {
 
 
     useEffect(() => {
-
-        const getUser = async () => {
-            const response = await UserAPI.findByName(!router.query.username? "Anna Musterfrau": router.query.username );
-            setUser(response[0])
-        }
-     /*   const getUser = async () => {
-            const response = await UserAPI.findById(4)
-            setUser(response)
+        if (!session) {
+            return;
         }
 
-      */
         const getOrt = async () => {
-            const response= await OrteAPI.findByUserId(4);
+            const response= await OrteAPI.findByUserId(user.id_user);
             setOrt(response)
         }
+        getOrt()
+    }, [user]);
+
+
+
+    useEffect(() => {
+        if (!session) {
+            return;
+        }
+        const getUser = async () => {
+            const response = await UserAPI.findByName(!router.query.username? session.userLoginData.username: router.query.username );
+            setUser(response[0])
+        }
         const getInserate=async ()=>{
-            const response= await InserateAPI.findByAuftragnehmerId(!router.query.username? 2: null)
+            const response= await InserateAPI.findByAuftragnehmerId(!router.query.username? session.userLoginData.id_user: null)
             setInserate(response)
         }
-        getOrt()
         getUser()
         getInserate()
 
-
-    }, []);
+    }, [session]);
 
     return ort&&user&&inserate ? (
         <>
