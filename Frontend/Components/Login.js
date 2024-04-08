@@ -4,11 +4,12 @@ import UserAPI from "../lib/api/Users";
 import {useGlobalContext} from "../store";
 import UsersAPI from "../lib/api/Users";
 import {useRouter} from "next/router";
+import {toast} from "react-toastify";
 export default function Login() {
     const {login} = useGlobalContext();
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
-    const [Errors, setErrors] = useState("Ungültige Angaben")
+    const [errors, setErrors] = useState("Formular muss ausgefüllt werden")
 
     const defaultLogin = {
         email: "",
@@ -32,39 +33,53 @@ export default function Login() {
             ...prevState,
             [name]: value
         }))
+        validateUser()
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
         const prepareUser = async () => {
             setIsLoading(true)
-            validateUser()
-            const response = await UsersAPI.findByEmail(user.email)
-            const responseUser = await response[0]
-            responseUser.password = user.password;
-            return responseUser;
+            try{
+                const response = await UsersAPI.findByEmail(user.email)
+                const responseUser = await response[0]
+                responseUser.password = user.password;
+                return responseUser;
+            }catch(e){
+                //catches error
+                console.error(e);
+            }
 
         }
         const handleLogin = async (userLoginData) => {
-            const response = await UserAPI.login(userLoginData)
-            const accessToken = response.accessToken
-            login({accessToken, userLoginData})
+            try{
+                const response = await UserAPI.login(userLoginData)
+                const accessToken = response.accessToken
+                login({accessToken, userLoginData})
+                toast.success("Erfolgreich eingeloggt")
+                await router.push("/")
+            }catch(e){
+                //catches error
+                console.error(e);
+                if (e)
+                //gets the exact error which occurred
+                toast.error(errors);
+                setIsLoading(false);
+            }
+
         }
         const doItAll = async () => {
             const myUser = await prepareUser();
-            await handleLogin(myUser)
-            setIsLoading(false)
-            await router.push("/")
+            await handleLogin(myUser).then(() => {
+                setIsLoading(false)
+            })
         }
         doItAll()
-
     }
 
     const validateUser = () => {
         if (!user.email) setErrors("Keine E-Mail angegeben")
-        else if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(user.email)) setErrors("Ungültige E-Mail Angaben")
         if (!user.password) setErrors("Kein Passwort eingegeben")
-        else if(user.password.length()< 8) setErrors("Password muss mindestens 8 Zeichen lang sein")
     }
 
     return (
@@ -83,7 +98,7 @@ export default function Login() {
                 </div>
                 <div>
                     <p>Noch keinen Accoount?</p>
-                    <Link href="/">Registrieren</Link>
+                    <Link href="/registrieren">Registrieren</Link>
                 </div>
                 <button disabled={isLoading}>
                     {isLoading ? "...Loading" : "Login"}

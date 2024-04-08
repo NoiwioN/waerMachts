@@ -7,6 +7,7 @@
  *
  *
  */
+import 'react-toastify/dist/ReactToastify.css'
 function createFetchFunction(method) {
     return async (url, params, expectNoBody = false) => {
         const _params = {
