@@ -48,13 +48,13 @@ export default function UserProfileUserData() {
             setUser(response[0])
         }
      /*   const getUser = async () => {
-            const response = await UserAPI.findById(2)
+            const response = await UserAPI.findById(4)
             setUser(response)
         }
       */
         console.log(user)
         const getOrt = async () => {
-            const response= await OrteAPI.findByUserId(2);
+            const response= await OrteAPI.findByUserId(4);
             setOrt(response)
         }
         const getInserate=async ()=>{
