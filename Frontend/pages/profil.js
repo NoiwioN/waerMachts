@@ -5,14 +5,15 @@ import UserProfileRechts from "../Components/UserProfileRechts";
 
 export default function profilPage() {
     return (
-    <>
-        <div className={styles.leftSide}>
-            <div></div>
-            <UserProfileUserData/>
-            <UserProfileRechts/>
-        </div>
+        <div className={styles.profilePage}>
+            <div className={styles.leftSide}>
 
-    </>
+                <UserProfileUserData/>
+
+            </div>
+            <div className={styles.rightSide}><UserProfileRechts/></div>
+
+        </div>
     )
 
 }
