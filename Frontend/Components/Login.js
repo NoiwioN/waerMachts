@@ -38,7 +38,7 @@ export default function Login() {
         const prepareUser = async () => {
             setIsLoading(true)
             validateUser()
-            const response = await UsersAPI.findUserByEmail(user.email)
+            const response = await UsersAPI.findByEmail(user.email)
             const responseUser = await response[0]
             responseUser.password = user.password;
             return responseUser;
