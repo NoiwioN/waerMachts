@@ -18,6 +18,7 @@ export default function UserProfileUserData() {
     useEffect(() => {
         let gesamt=0;
         if(!inserate) return;
+        setBewertung({durchschnitt: 0, anzahl: 0})
         inserate.map(inserat=>{
             if(inserat.bewertung){
                 gesamt+=inserat.bewertung;
@@ -36,17 +37,22 @@ export default function UserProfileUserData() {
 
 
     useEffect(() => {
+        console.log(session)
+        if (!session) {
+            return;
+        }
+
 
         const getUser = async () => {
-            const response = await UserAPI.findByName(!router.query.username? "Anna Musterfrau": router.query.username );
+            const response = await UserAPI.findByName(!router.query.username? session.userLoginData.username: router.query.username );
             setUser(response[0])
         }
      /*   const getUser = async () => {
             const response = await UserAPI.findById(2)
             setUser(response)
         }
-
       */
+        console.log(user)
         const getOrt = async () => {
             const response= await OrteAPI.findByUserId(2);
             setOrt(response)
@@ -60,7 +66,7 @@ export default function UserProfileUserData() {
         getInserate()
 
 
-    }, []);
+    }, [session]);
 
     return ort&&user&&inserate ? (
         <>
