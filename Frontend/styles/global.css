@@ -1,0 +1,12 @@
+.leftSide{
+    width:40vw;
+}
+
+.rightSide{
+    width:60vw;
+}
+
+.profilePage{
+    display:flex;
+
+}

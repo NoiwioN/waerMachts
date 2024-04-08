@@ -1,0 +1,12 @@
+.Bewertungsbox{
+    border: solid gray 1px;
+    margin: 10px 5vw;
+    padding: 1em;
+
+}
+
+.Bewertungsbox img {
+    width: 50px;
+    border-radius:50%;
+    display:flex;
+}

@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import InserateAPI from "../lib/api/inserate";
 import UserAPI from "../lib/api/Users";
+import styles from "./UserProfileRechts.module.css"
 import {useGlobalContext} from "../store";
 import {useRouter} from "next/router";
 
@@ -49,7 +50,7 @@ export default function UserProfileRechts() {
         <>
             {inserate.map(inserat => {
                 return (
-                    <div key={inserat.id}>
+                    <div key={inserat.id_inserat} className={styles.Bewertungsbox}>
                         <div>
                             <img src={inserat.auftraggeber_id.user_bild}/>
                             <p>{inserat.auftraggeber_id.username}</p>
