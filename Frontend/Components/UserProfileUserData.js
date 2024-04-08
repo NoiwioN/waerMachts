@@ -37,34 +37,33 @@ export default function UserProfileUserData() {
 
 
     useEffect(() => {
-        console.log(session)
         if (!session) {
             return;
         }
 
+        const getOrt = async () => {
+            const response= await OrteAPI.findByUserId(user.id_user);
+            setOrt(response)
+        }
+        getOrt()
+    }, [user]);
 
+
+
+    useEffect(() => {
+        if (!session) {
+            return;
+        }
         const getUser = async () => {
             const response = await UserAPI.findByName(!router.query.username? session.userLoginData.username: router.query.username );
             setUser(response[0])
         }
-     /*   const getUser = async () => {
-            const response = await UserAPI.findById(4)
-            setUser(response)
-        }
-      */
-        console.log(user)
-        const getOrt = async () => {
-            const response= await OrteAPI.findByUserId(4);
-            setOrt(response)
-        }
         const getInserate=async ()=>{
-            const response= await InserateAPI.findByAuftragnehmerId(!router.query.username? 2: null)
+            const response= await InserateAPI.findByAuftragnehmerId(!router.query.username? session.userLoginData.id_user: null)
             setInserate(response)
         }
-        getOrt()
         getUser()
         getInserate()
-
 
     }, [session]);
 
