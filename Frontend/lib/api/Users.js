@@ -22,7 +22,11 @@ const UserAPI = {
     },
     findByEmail(email){
         return getJSON(`${USER_URL}?email=${email}`)
+    },
+    findByName(username){
+        return getJSON(`${USER_URL}?username=${username}`);
     }
+
 
 }
 

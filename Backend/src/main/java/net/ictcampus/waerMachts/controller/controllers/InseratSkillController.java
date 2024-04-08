@@ -35,7 +35,7 @@ public class InseratSkillController {
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Alle inseratSkill-Einträge anzeigen oder skills nach inseraten suchen")
     public Iterable<?> findAll(@RequestParam(required = false) Integer inseratId) {
         try {
