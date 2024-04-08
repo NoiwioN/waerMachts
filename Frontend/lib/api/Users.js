@@ -6,7 +6,7 @@ const UserAPI = {
         return postJSON(`${BASE_URL}/login`, {body: user})
     },
     create (user){
-        return postJSON(USER_URL, {body:user},true)
+        return postJSON(`${USER_URL}/sign-up`, {body:user},true)
     },
     update(user,userId, token){
         return putJSON(`${USER_URL}/${userId}`,{body:user, token}, true)
@@ -19,6 +19,9 @@ const UserAPI = {
     },
     findById(userId){
         return getJSON(`${USER_URL}/${userId}`);
+    },
+    findByEmail(email){
+        return getJSON(`${USER_URL}?email=${email}`)
     }
 
 }
