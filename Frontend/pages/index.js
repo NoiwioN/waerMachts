@@ -13,7 +13,7 @@ export default function homePage({inserate}) {
                     <div key={`inserat-${inserat.id_inserat}`} className={"inserat-container"}>
                         <Link href={`${inseratURL}/${inserat.id_inserat}`}><Inserat props={inserat}/></Link>
 
-                        {/*<p>{JSON.stringify(inserat)}</p>*/}
+
 
                     </div>
                 )
