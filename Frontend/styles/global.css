@@ -1,7 +1,6 @@
-/*.left-side{*/
-/*    width:40vw;*/
-/*    color:red;*/
-/*}*/
+.leftSide{
+    width:40vw;
+}
 
 .rightSide{
     width:60vw;
@@ -11,4 +10,3 @@
     display:flex;
 
 }
-

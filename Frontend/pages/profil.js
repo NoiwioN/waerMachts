@@ -1,17 +1,17 @@
 import UserProfileUserData from "../Components/UserProfileUserData";
-import styles from "../styles/profil.module.css"
+
 
 import UserProfileRechts from "../Components/UserProfileRechts";
 
 export default function profilPage() {
     return (
-        <div className={styles.profilePage}>
-            <div className={styles.leftSide}>
+        <div className={"profilePage"}>
+            <div className={"leftSide"}>
 
                 <UserProfileUserData/>
 
             </div>
-            <div className={styles.rightSide}><UserProfileRechts/></div>
+            <div className={"rightSide"}><UserProfileRechts/></div>
 
         </div>
     )
