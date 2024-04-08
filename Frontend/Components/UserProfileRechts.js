@@ -4,7 +4,7 @@ import UserAPI from "../lib/api/Users";
 
 
 export default function UserProfileRechts(){
-    const defaultInserat = {
+   /* const defaultInserat = {
         auftraggeber_id: {
             id_user: 0
         },
@@ -13,11 +13,13 @@ export default function UserProfileRechts(){
         bewertungstext: ""
 
     }
+*/
+
 
 
 
     const [inserate, setInserate] = useState([])
-    const [auftragGeberId, setAuftragGeberId] = useState({})
+
 
 
 
