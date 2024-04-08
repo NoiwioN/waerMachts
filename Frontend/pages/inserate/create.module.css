@@ -1,40 +1,81 @@
-.dropdown {
-    position: relative;
+.gridContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
 }
 
-.all{
-    background-color: deeppink;
+.form {
+    grid-column: 2;
 }
 
-.menu {
-    position: absolute;
-    list-style-type: none;
-    margin: 5px 0;
-    padding: 0;
-    border: 1px solid grey;
-    width: 150px;
+.buttonContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
 }
 
-.menu > li {
-    margin: 0;
-
-    background-color: deeppink;
+.textarea {
+    width: 90%
 }
 
-.menu > li:hover {
-    background-color: lightgray;
+.title {
+    width: 90%
 }
 
-.menu > li > button {
-    width: 100%;
-    height: 100%;
-    text-align: left;
-
-    background: none;
-    color: inherit;
+.button {
+    width: 60%;
+    text-align: center;
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #4CAF50;
+    color: white;
     border: none;
-    padding: 5px;
-    margin: 0;
-    font: inherit;
+    border-radius: 25px;
     cursor: pointer;
+    font-size: 16px;
+}
+
+.button:hover {
+    background-color: #45a049;
+}
+
+.button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.zuruckButton {
+    background-color: lightgray;
+    color: black;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 120px;
+}
+
+.zuruckButton:hover {
+    background-color: darkgray;
+}
+
+.erstellenButton {
+    position: absolute;
+    bottom: 0;
+    right: 16%;
+    width: 120px;
+}
+
+.inlineFields {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 10px;
+}
+
+.label {
+    margin-bottom: 5px;
+}
+
+.bild{
+    grid-column: 1;
+    width: 94%;
+    margin: 4%;
 }
