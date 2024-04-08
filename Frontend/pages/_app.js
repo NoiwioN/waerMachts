@@ -7,7 +7,7 @@ export default function App({Component, pageProps}) {
             //<h1>Hello world</h1>
           //  <Component {...pageProps} /></>
         <GlobalContextProvider>
-            <h1>Hello world</h1>
+
             <Component {...pageProps} />
         </GlobalContextProvider>
 
