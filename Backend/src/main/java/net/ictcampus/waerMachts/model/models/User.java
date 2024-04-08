@@ -22,8 +22,7 @@ public class User {
     @NotBlank
     @NotNull
     private String email;
-    @NotBlank
-    @NotNull
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 

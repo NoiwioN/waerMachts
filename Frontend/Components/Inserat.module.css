@@ -1,0 +1,15 @@
+.inserat-container{
+
+
+
+}
+
+.inserat-text-container{
+    background-color: black;
+    opacity: .5;
+
+}
+
+.inserat-text-container p {
+    color:red;
+}

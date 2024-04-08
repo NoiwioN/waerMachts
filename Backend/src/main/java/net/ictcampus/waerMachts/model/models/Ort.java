@@ -19,12 +19,10 @@ public class Ort {
     @NotNull
     private String ort;
 
-    @OneToMany
+    @OneToMany(mappedBy ="ort")
     @JsonBackReference(value = "ort_users")
     private Set<User> users = new HashSet<>();
 
-    @NotBlank
-    @NotNull
     private Integer PLZ;
 
 
