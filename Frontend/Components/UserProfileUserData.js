@@ -2,6 +2,8 @@ import {useEffect, useState} from "react";
 import UserAPI from "../lib/api/Users";
 import OrteAPI from "../lib/api/orte";
 import InserateAPI from "../lib/api/inserate";
+import {useRouter} from "next/router";
+import {useGlobalContext} from "../store";
 
 
 export default function UserProfileUserData() {
@@ -9,6 +11,10 @@ export default function UserProfileUserData() {
     const [ort, setOrt] = useState(null)
     const [inserate, setInserate] = useState(null)
     const [bewertung, setBewertung] = useState({durchschnitt:0,anzahl:0})
+    const router = useRouter()
+    const {session} = useGlobalContext()
+
+
     useEffect(() => {
         let gesamt=0;
         if(!inserate) return;
@@ -31,15 +37,15 @@ export default function UserProfileUserData() {
 
     useEffect(() => {
         const getUser = async () => {
-            const response = await UserAPI.findById(2)
+            const response = await UserAPI.findByName(router.query.username? router.query.username : session.user.username);
             setUser(response)
         }
         const getOrt = async () => {
-            const response= await OrteAPI.findByUserId(2);
+            const response= await OrteAPI.findByUserId(user.id);
             setOrt(response)
         }
         const getInserate=async ()=>{
-            const response= await InserateAPI.findByAuftragnehmerId(2)
+            const response= await InserateAPI.findByAuftragnehmerId(!router.query.username? session.user.id: null)
             setInserate(response)
         }
         getOrt()
