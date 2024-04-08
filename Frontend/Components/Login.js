@@ -4,7 +4,6 @@ import UserAPI from "../lib/api/Users";
 import {useGlobalContext} from "../store";
 import UsersAPI from "../lib/api/Users";
 import {useRouter} from "next/router";
-import validator from 'validator'
 export default function Login() {
     const {login} = useGlobalContext();
     const [isLoading, setIsLoading] = useState(false)
@@ -64,14 +63,8 @@ export default function Login() {
     const validateUser = () => {
         if (!user.email) setErrors("Keine E-Mail angegeben")
         else if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(user.email)) setErrors("Ungültige E-Mail Angaben")
-        if(validator.isStrongPassword( user.password, {
-            minLength: 8, minLowercase: 1,
-            minUppercase: 1, minNumbers: 1, minSymbols: 1
-        })) {
-            setErrors("Gutes Passwort")
-        }else {
-            setErrors("Zu wenig kompliziertes Passwort")
-        }
+        if (!user.password) setErrors("Kein Passwort eingegeben")
+        else if(user.password.length()< 8) setErrors("Password muss mindestens 8 Zeichen lang sein")
     }
 
     return (
