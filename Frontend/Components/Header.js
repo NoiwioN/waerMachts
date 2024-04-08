@@ -5,18 +5,17 @@ import styles from "./Header.module.css"
 export default function Header() {
     return (
         <header className={styles.header}>
-            <div className={styles.headerImage}>
+
+            <div className={styles.header_image}>
                 <Image
-                    src="/Vibrant-Cat-Nightcafe.jpg"
+                    src="/logo.png"
                     alt="logo Waermachts"
-                    width={64}
-                    height={120}
+                    width={160}
+                    height={60}
                 />
             </div>
-            <div>
-                <h1 className={styles.header_title}>CAMPUS NEWS</h1>
-            </div>
             <Navigation />
+
         </header>
     );
 }
