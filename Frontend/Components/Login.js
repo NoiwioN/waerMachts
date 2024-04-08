@@ -4,10 +4,12 @@ import UserAPI from "../lib/api/Users";
 import {useGlobalContext} from "../store";
 import UsersAPI from "../lib/api/Users";
 import {useRouter} from "next/router";
+import validator from 'validator'
 export default function Login() {
     const {login} = useGlobalContext();
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
+    const [Errors, setErrors] = useState("Ungültige Angaben")
 
     const defaultLogin = {
         email: "",
@@ -61,7 +63,15 @@ export default function Login() {
 
     const validateUser = () => {
         if (!user.email) setErrors("Keine E-Mail angegeben")
-        if (!user.password) setErrors("Kein Passwort eingegeben")
+        else if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(user.email)) setErrors("Ungültige E-Mail Angaben")
+        if(validator.isStrongPassword( user.password, {
+            minLength: 8, minLowercase: 1,
+            minUppercase: 1, minNumbers: 1, minSymbols: 1
+        })) {
+            setErrors("Gutes Passwort")
+        }else {
+            setErrors("Zu wenig kompliziertes Passwort")
+        }
     }
 
     return (
