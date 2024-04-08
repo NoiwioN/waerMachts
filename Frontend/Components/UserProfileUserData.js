@@ -5,9 +5,9 @@ import InserateAPI from "../lib/api/inserate";
 import {useRouter} from "next/router";
 import {useGlobalContext} from "../store";
 import styles from "./UserProfileUserData.module.css"
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faStar} from "@fortawesome/free-regular-svg-icons"
-import {faStarHalf} from "@fortawesome/free-solid-svg-icons"
+// import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+// import {faStar} from "@fortawesome/free-regular-svg-icons"
+// import {faStarHalf} from "@fortawesome/free-solid-svg-icons"
 import ReactStars from "react-rating-stars-component";
 import Link from "next/link";
 
