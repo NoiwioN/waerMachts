@@ -21,10 +21,7 @@ const UserAPI = {
         return getJSON(`${USER_URL}/${userId}`);
     },
     findByEmail(email){
-        const user = getJSON(`${USER_URL}?email=${email}`);
-        console.log("User:");
-        console.log(JSON.stringify(user));
-        return user
+        return getJSON(`${USER_URL}?email=${email}`)
     },
     findByName(username){
         return getJSON(`${USER_URL}?username=${username}`);

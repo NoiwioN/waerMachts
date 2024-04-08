@@ -31,8 +31,8 @@ public class UserController {
     }
 
     @GetMapping
-    public Iterable<User> findAll(@RequestParam(required = false) String email,@RequestParam(required = false) String name) {
-        if ((email!=null&&name!=null)||(email==null&&name==null)) {
+    public Iterable<User> findAll(@RequestParam(required = false) String email,@RequestParam(required = false) String username) {
+        if ((email!=null&&username!=null)||(email==null&&username==null)) {
             try {
                 return userService.findAll();
             } catch (EntityNotFoundException e) {
@@ -41,10 +41,7 @@ public class UserController {
         }
         if (email != null) {
             try {
-                System.out.println("UserMail:");
-                System.out.println(email);
                 User user = userService.findByEmail(email);
-                System.out.println(user.getUsername());
                 ArrayList<User> u = new ArrayList<>();
                 u.add(user);
                 return u;
@@ -53,7 +50,7 @@ public class UserController {
             }
         }else  {
             try {
-                User user = userService.findByName(name);
+                User user = userService.findByName(username);
                 ArrayList<User> u = new ArrayList<>();
                 u.add(user);
                 return u;
