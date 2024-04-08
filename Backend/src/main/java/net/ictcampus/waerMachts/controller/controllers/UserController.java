@@ -31,7 +31,14 @@ public class UserController {
     }
 
     @GetMapping
-    public Iterable<User> findAll(@RequestParam(required = false) String email) {
+    public Iterable<User> findAll(@RequestParam(required = false) String email,@RequestParam(required = false) String username) {
+        if ((email!=null&&username!=null)||(email==null&&username==null)) {
+            try {
+                return userService.findAll();
+            } catch (EntityNotFoundException e) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Benutzer wurde nicht gefunden");
+            }
+        }
         if (email != null) {
             try {
                 User user = userService.findByEmail(email);
@@ -41,15 +48,18 @@ public class UserController {
             } catch (EntityNotFoundException e) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Benutzer wurde nicht gefunden");
             }
-        } else {
+        }else  {
             try {
-                return userService.findAll();
+                User user = userService.findByName(username);
+                ArrayList<User> u = new ArrayList<>();
+                u.add(user);
+                return u;
             } catch (EntityNotFoundException e) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Benutzer wurde nicht gefunden");
             }
         }
-
     }
+
 
     @PutMapping(consumes = "application/json", path = "{id}")
     public void update(@Valid @RequestBody User user, @PathVariable Integer id) {
