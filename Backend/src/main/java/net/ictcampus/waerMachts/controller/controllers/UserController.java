@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping(path = "/users")
-public class UserController {
+public class  UserController {
     private final UserService userService;
 
     public UserController(UserService userService) {
