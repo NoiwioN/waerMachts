@@ -12,8 +12,11 @@ const OrteAPI = {
     findByUserId(userId){
       return getJSON(`${URL}?userId=${userId}`)
     },
-    create(ort, token) {
-        const data = postJSON(`${URL}`, { body: ort, token }, true)
+    findOrtByOrtAndPLZ(ort, plz){
+      return getJSON(`${URL}?PLZ=${plz}&ort=${ort}`)
+    },
+    create(ort) {
+        return postJSON(`${URL}`, { body: ort })
     },
     update(ort, token) {
         const data = putJSON(`${URL}`, { body: ort, token }, true)

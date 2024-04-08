@@ -29,6 +29,9 @@ public class InseratService {
         Optional<Inserat> genre = inseratRepository.findById(id);
         return genre.orElseThrow(EntityNotFoundException::new);
     }
+    public Iterable<Inserat> findInserateByUserId(Integer userId){
+        return inseratRepository.findInseratsByAuftragnehmer_id(userId);
+    }
     public void update(Inserat inserat){
         inseratRepository.save(inserat);
     }
