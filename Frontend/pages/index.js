@@ -1,18 +1,20 @@
 import React from 'react';
 import InserateAPI from "../lib/api/inserate";
 import Inserat from "../Components/Inserat";
+import Link from "next/link";
 
 
 export default function homePage({inserate}) {
+    const inseratURL='/inserat/'
     return (
         <div className={"grid"}>
             {inserate.map((inserat)=>{
                 return(
                     <div key={`inserat-${inserat.id_inserat}`} className={"inserat-container"}>
-
+                        <Link href={`${inseratURL}/${inserat.id_inserat}`}><Inserat props={inserat}/></Link>
 
                         {/*<p>{JSON.stringify(inserat)}</p>*/}
-                        <Inserat props={inserat}/>
+
                     </div>
                 )
             })}
