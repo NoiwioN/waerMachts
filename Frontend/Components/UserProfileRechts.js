@@ -4,6 +4,7 @@ import UserAPI from "../lib/api/Users";
 import styles from "./UserProfileRechts.module.css"
 import {useGlobalContext} from "../store";
 import {useRouter} from "next/router";
+import ReactStars from "react-rating-stars-component";
 
 
 export default function UserProfileRechts() {
@@ -51,13 +52,19 @@ export default function UserProfileRechts() {
             {inserate.map(inserat => {
                 return (
                     <div key={inserat.id_inserat} className={styles.Bewertungsbox}>
-                        <div>
+                        <div className={styles.user_and_pic}>
                             <img src={inserat.auftraggeber_id.user_bild}/>
                             <p>{inserat.auftraggeber_id.username}</p>
                         </div>
-                        <div>
+                        <div className={styles.bewertungsbox_rechts}>
                             <p>{inserat.bewertungstext}</p>
-                            <p>{inserat.bewertung}</p>
+                            <p className={styles.Bewertung}><ReactStars
+                                count={5}
+                                edit={false}
+                                size={24}
+                                value={inserat.bewertung}
+                            /></p>
+                            {/*<p>{inserat.bewertung}</p>*/}
                         </div>
 
                     </div>

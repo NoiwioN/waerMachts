@@ -96,6 +96,12 @@ export default function UserProfileUserData() {
 
     return ort && user && inserate ? (
         <div className={styles.UPD}>
+
+            {/*<Image*/}
+            {/*alt={"Profilbild"}*/}
+            {/*src={user.user_bild}*/}
+            {/*width={{documentElement.clientWidth;}}*/}
+            {/*/>*/}
             <img alt={"Profilbild"} src={user.user_bild}/>
             <p>Anzahl Bewertungen: {bewertung.anzahl}</p>
 
