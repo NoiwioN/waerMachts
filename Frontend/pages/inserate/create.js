@@ -5,8 +5,13 @@ import {useRouter} from 'next/router';
 import InserateAPI from "../../lib/api/inserate";
 import SkillAPI from "../../lib/api/Skill";
 import {useGlobalContext} from "../../store";
+import OrteAPI from "../../lib/api/orte";
 
-
+const emptyOrt = {
+    id_ort: 0,
+    ort: "",
+    plz: 0,
+}
 const emptyInserat = {
     darstellung_bild: '',
     titel: '',
@@ -14,9 +19,14 @@ const emptyInserat = {
     skill: '',
     art_der_arbeit: '',
     chf: '',
-    ort: '',
+    ort: {
+        id_ort: 0,
+        ort: "",
+        plz: 0,
+    },
     plz: '',
-    strasse: ''
+    strasse: '',
+    erstellt_am: "25.10.2000"
 }
 
 
@@ -24,18 +34,31 @@ export default function createInseratePage({skill}) {
 
     const {session} = useGlobalContext()
     const [errors, setErrors] = useState("Form needs to be filled in")
+    const [file, setFile] = useState()
     const [inserat, setInserat] = useState(emptyInserat)
+    const [ortLokal, setOrtLokal] = useState(emptyOrt)
     const [isLoading, setIsLoading] = useState(false);
 
     const router = useRouter();
 
-    const handleChange = (e) => {
+    const handleChangeInserat = (e) => {
         const name = e.target.name
         const value = e.target.value
-        inserat[name] = value;
-        setInserat(inserat);
+        setInserat(prevState => ({
+            ...prevState,
+            [name]: value
+        }))
         validateUser()
     }
+    const handleChangeOrt = (e) => {
+        const {name, value} = e.target
+        setOrtLokal(prevState => ({
+            ...prevState,
+            [name]: value
+        }))
+
+    }
+
 
     const validateUser = () => {
         if (!inserat.titel) {
@@ -62,39 +85,60 @@ export default function createInseratePage({skill}) {
     }
 
     const handleSubmit = async (e) => {
+        console.log("Okay der Submit startet")
         e.preventDefault();
         setIsLoading(true);
-
-        try {
-            inserat.erstellt_am = new Date().toString()
-            console.log(inserat)
-            await InserateAPI.create(inserat, session.accessToken);
-            await router.push("/");
-        } catch (e) {
-            console.error(e);
-            setIsLoading(false);
+        const prepareOrt = async () => {
+            try {
+                console.log("Gibt es den Ort?")
+                return await OrteAPI.findOrtByOrtAndPLZ(ortLokal.ort, ortLokal.plz)
+            } catch (e) {
+                console.log("Nein, ein neuer wird erstellt.")
+                return await OrteAPI.create(ortLokal);
+            }
         }
-        setIsLoading(false);
+        const prepareInserat = async (ortResponse) => {
+            const currentDate = new Date().toString()
+            const inseratLokal = inserat;
+            inseratLokal.ort.ort = ortResponse.ort;
+            inseratLokal.ort.plz = ortResponse.plz;
+            inseratLokal.ort.id_ort = ortResponse.id_ort;
+            inseratLokal.erstellt_am = currentDate;
+            return inseratLokal;
+        }
+        const createInserat = async () => {
+            prepareOrt(ortLokal => {
+                prepareInserat(ortLokal).then(inseratLokal => {
+                    console.log("Mein Inserat:" + JSON.stringify(inseratLokal))
+                    InserateAPI.create(inseratLokal, session.accessToken)
+                })
+            })
+        }
+        createInserat().then(() => {
+            setIsLoading(false)
+        })
     };
 
     return (
         <div className={styles.gridContainer}>
-            <img src={"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fvia-log.com%2Fwp%2Fwp-content%2Fuploads%2F2021%2F09%2Fplatzhalter-bild-300x300-2.png&f=1&nofb=1&ipt=0488b8e06b1c7f80e879b2866ca4a54f1b48696a6c8dbec7297ce4be7d8ae377&ipo=images"} alt={"kein bild"} className={styles.bild}/>
+            <img
+                src={"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fvia-log.com%2Fwp%2Fwp-content%2Fuploads%2F2021%2F09%2Fplatzhalter-bild-300x300-2.png&f=1&nofb=1&ipt=0488b8e06b1c7f80e879b2866ca4a54f1b48696a6c8dbec7297ce4be7d8ae377&ipo=images"}
+                alt={"kein bild"} className={styles.bild}/>
             <form className={styles.form}>
-                <label htmlFor="title" className={styles.label}>Titel</label>
+                <label htmlFor="title" className={styles.label}>Titel:</label>
                 <div>
                     <input
-                        onChange={handleChange}
+                        onChange={handleChangeInserat}
                         type="text"
                         name="titel"
                         placeholder="Titel"
                         className={styles.title}
                     />
                 </div>
-                <label htmlFor="beschreibung" className={styles.label}>Beschreibung</label>
+                <label htmlFor="beschreibung" className={styles.label}>Beschreibung:</label>
                 <div>
                 <textarea
-                    onChange={handleChange}
+                    onChange={handleChangeInserat}
                     name="beschreibung"
                     placeholder="Beschreibung"
                     className={styles.textarea}
@@ -103,8 +147,14 @@ export default function createInseratePage({skill}) {
                 <div className={styles.inlineFields}>
                     <div className={styles.inlineFields}>
                         <div>
-                            <label htmlFor="skill" className={styles.label}>Skill</label>
-                            <input list="skills" name="skill" id="skill" placeholder="Skill"/>
+                            <label htmlFor="skill" className={styles.label}>Skill:</label>
+                            <input
+                                list="skills"
+                                name="skill"
+                                id="skill"
+                                placeholder="Skill"
+                                className={styles.input}
+                            />
                             <datalist id="skills">
                                 {skill.map((skill) => {
                                     return (
@@ -116,12 +166,13 @@ export default function createInseratePage({skill}) {
                     </div>
                     <div className={styles.inlineFields}>
                         <div>
-                            <label htmlFor="ort" className={styles.label}>Ort</label>
+                            <label htmlFor="ort" className={styles.label}>Ort:</label>
                             <input
-                                onChange={handleChange}
+                                onChange={handleChangeOrt}
                                 type="text"
                                 name="ort"
                                 placeholder="Ort"
+                                className={styles.input}
                             />
                         </div>
                     </div>
@@ -129,23 +180,25 @@ export default function createInseratePage({skill}) {
                 <div className={styles.inlineFields}>
                     <div className={styles.inlineFields}>
                         <div>
-                            <label htmlFor="art_der_arbeit" className={styles.label}>Art der Arbeit</label>
+                            <label htmlFor="art_der_arbeit" className={styles.label}>Art der Arbeit:</label>
                             <input
-                                onChange={handleChange}
+                                onChange={handleChangeInserat}
                                 type="text"
                                 name="art_der_arbeit"
                                 placeholder="Art der Arbeit"
+                                className={styles.input}
                             />
                         </div>
                     </div>
                     <div className={styles.inlineFields}>
                         <div>
-                            <label htmlFor="plz" className={styles.label}>PLZ</label>
+                            <label htmlFor="plz" className={styles.label}>PLZ:</label>
                             <input
-                                onChange={handleChange}
+                                onChange={handleChangeOrt}
                                 type="number"
                                 name="plz"
                                 placeholder="PLZ"
+                                className={styles.input}
                             />
                         </div>
                     </div>
@@ -153,34 +206,35 @@ export default function createInseratePage({skill}) {
                 <div className={styles.inlineFields}>
                     <div className={styles.inlineFields}>
                         <div>
-                            <label htmlFor="chf" className={styles.label}>CHF</label>
+                            <label htmlFor="chf" className={styles.label}>CHF:</label>
                             <input
-                                onChange={handleChange}
+                                onChange={handleChangeInserat}
                                 type="number"
                                 name="chf"
                                 placeholder="CHF"
+                                className={styles.input}
                             />
                         </div>
                     </div>
                     <div className={styles.inlineFields}>
                         <div>
-                            <label htmlFor="strasse" className={styles.label}>Strasse</label>
+                            <label htmlFor="strasse" className={styles.label}>Strasse:</label>
                             <input
-                                onChange={handleChange}
+                                onChange={handleChangeInserat}
                                 type="text"
                                 name="strasse"
                                 placeholder="Strasse"
+                                className={styles.input}
                             />
                         </div>
                     </div>
                 </div>
 
                 <div className={styles.buttonContainer}>
-                    <button className={`${styles.button} ${styles.erstellenButton}`} disabled={isLoading} onClick={handleSubmit}>
-                        {isLoading ? "...Loading" : "Erstellen"}
+                    <button disabled={isLoading} onClick={handleSubmit}>
+                        {isLoading ? "...Loading" : "Login"}
                     </button>
-                    <button className={`${styles.button} ${styles.zuruckButton}`} disabled={isLoading}
-                            onClick={"/"}>
+                    <button className={`${styles.button} ${styles.zuruckButton}`}>Zurück
                     </button>
                 </div>
             </form>

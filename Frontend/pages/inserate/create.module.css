@@ -6,6 +6,7 @@
 
 .form {
     grid-column: 2;
+    margin-right: 5%;
 }
 
 .buttonContainer {
@@ -19,7 +20,8 @@
 }
 
 .title {
-    width: 90%
+    width: 90%;
+    margin: 10px;
 }
 
 .button {
@@ -33,10 +35,6 @@
     border-radius: 25px;
     cursor: pointer;
     font-size: 16px;
-}
-
-.button:hover {
-    background-color: #45a049;
 }
 
 .button:disabled {
@@ -54,7 +52,7 @@
 }
 
 .zuruckButton:hover {
-    background-color: darkgray;
+    background-color: grey;
 }
 
 .erstellenButton {
@@ -64,18 +62,30 @@
     width: 120px;
 }
 
+.erstellenButton:hover {
+    background-color: #45a049;
+}
+
 .inlineFields {
     display: grid;
     grid-template-columns: 50% 50%;
-    gap: 10px;
+    gap: 20px;
+    font-size: 18px;
 }
 
 .label {
-    margin-bottom: 5px;
+    margin: 10px;
 }
 
 .bild{
     grid-column: 1;
-    width: 94%;
-    margin: 4%;
+    width: 85%;
+    margin-top: 4%;
+    margin-bottom: 4%;
+    margin-left: 4%;
+}
+
+.input {
+    font-size: 16px;
+    padding: 5px;
 }
