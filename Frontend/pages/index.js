@@ -11,7 +11,7 @@ export default function homePage({inserate}) {
             {inserate.map((inserat)=>{
                 return(
                     <div key={`inserat-${inserat.id_inserat}`} className={"inserat-container"}>
-                        <Link href={`${inseratURL}/${inserat.id_inserat}`}><Inserat props={inserat}/></Link>
+                        <Link href={`${inseratURL}${inserat.id_inserat}`}><Inserat props={inserat}/></Link>
 
 
 
