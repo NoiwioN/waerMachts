@@ -42,7 +42,6 @@ const inseratSkill = {
 
 
 export default function createInseratePage({skill}) {
-
     const {session} = useGlobalContext()
     const [errors, setErrors] = useState("Form needs to be filled in")
     const [file, setFile] = useState()
@@ -64,6 +63,19 @@ export default function createInseratePage({skill}) {
             [name]: value
         }))
         validateUser()
+    }
+    const handleChangeFile = (e)=>{
+        const localFile= e.target.files[0]
+        setFile(localFile)
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const base64Image = event.target.result;
+            setInserat(prevState => ({
+                ...prevState,
+                darstellungs_bild: base64Image
+            }))
+        }
+        reader.readAsDataURL(localFile);
     }
     const handleChangeDropdown = (e) => {
         setSkills(e.map(s => (s.value)))
@@ -177,9 +189,15 @@ export default function createInseratePage({skill}) {
 
     return (
         <div className={styles.gridContainer}>
-            <img
-                src={"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fvia-log.com%2Fwp%2Fwp-content%2Fuploads%2F2021%2F09%2Fplatzhalter-bild-300x300-2.png&f=1&nofb=1&ipt=0488b8e06b1c7f80e879b2866ca4a54f1b48696a6c8dbec7297ce4be7d8ae377&ipo=images"}
-                alt={"kein bild"} className={styles.bild}/>
+            <div>
+                <label htmlFor={"darstellungs_bild"}>Profilbild: </label>
+                <input
+                    onChange={handleChangeFile}
+                    type={"file"}
+                    name={"darstellungs_bild"}
+
+                />
+            </div>
             <form className={styles.form}>
                 <label htmlFor="title" className={styles.label}>Titel:</label>
                 <div>
