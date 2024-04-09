@@ -1,8 +1,8 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import orte from "../lib/api/orte";
 import OrteAPI from "../lib/api/orte";
 import UserAPI from "../lib/api/Users";
-import users from "../lib/api/Users";
+import styles from "./UserRegistration.module.css";
 
 
 const emptyOrt = {
@@ -29,6 +29,8 @@ export default function UserRegistration() {
     const [user, setUser] = useState(emptyUser)
     const [ortLokal, setOrtLokal] = useState(emptyOrt)
     const [loading, setLoading] = useState(false)
+    const [dataReady, setDataReady] = useState()
+    let myTempOrt;
     const handleChangeUser = (e) => {
         const {name, value} = e.target
         setUser(prevState => ({
@@ -36,8 +38,8 @@ export default function UserRegistration() {
             [name]: value
         }))
     }
-    const handleChangeFile = (e)=>{
-        const localFile= e.target.files[0]
+    const handleChangeFile = (e) => {
+        const localFile = e.target.files[0]
         setFile(localFile)
         const reader = new FileReader();
         reader.onload = (event) => {
@@ -47,7 +49,7 @@ export default function UserRegistration() {
                 user_bild: base64Image
             }))
         }
-       reader.readAsDataURL(localFile);
+        reader.readAsDataURL(localFile);
     }
     const handleChangeOrt = (e) => {
         const {name, value} = e.target
@@ -63,9 +65,12 @@ export default function UserRegistration() {
             try {
                 const returnedOrt = await OrteAPI.findOrtByOrtAndPLZ(ortLokal.ort, ortLokal.plz)
                 setOrtLokal(returnedOrt)
+                myTempOrt=returnedOrt
             } catch (e) {
+                console.log("Der Ort musste neu erstellt werden")
                 const createdOrt = await OrteAPI.create(ortLokal);
                 setOrtLokal(createdOrt)
+                myTempOrt=createdOrt;
             }
             setOrtLokal(prevState => ({
                 ...prevState,
@@ -74,91 +79,109 @@ export default function UserRegistration() {
             }))
         }
         const prepareUser = () => {
-            console.log("Das ist der Ort")
-            console.log(JSON.stringify(ortLokal))
+            console.log(JSON.stringify(myTempOrt))
             setUser(prevState => ({
                 ...prevState,
                 ort: {
-                    id_ort: ortLokal.id_ort,
-                    ort: ortLokal.ort,
-                    plz: ortLokal.plz
+                    id_ort: myTempOrt.id_ort,
+                    ort: myTempOrt.ort,
+                    plz: myTempOrt.plz
                 }
             }))
         }
-        const signUp = async () => {
-            await UserAPI.create(user)
+        const prepareData = async () => {
+            await prepareOrt();
+            await prepareUser();
+            setDataReady(true)
         }
-        const doLogin = async () => {
-           await prepareOrt();
-           await prepareUser();
-           await signUp();
-        }
-        doLogin().then(() => {
-            setLoading(false)
-            console.log(user.user_bild)
+        prepareData().then(() => {
+
+            // console.log(user.user_bild)
         }, () => {
-            console.log("Nope")
+            // console.log("Nope")
         })
 
     }
+    useEffect(() => {
+        if(!dataReady) return
+        console.log("Current User:" + JSON.stringify(user))
+        UserAPI.create(user)
+        setDataReady(false)
+        setLoading(false)
+    }, [dataReady]);
     return (
-        <div>
-            <form>
-                <h2>Register</h2>
-                <div>
-                    <label htmlFor={"user_bild"}>Profilbild: </label>
+        <div className={styles.main}>
+            <form className={styles.form}>
+                <div className={styles.img}>
+                    <span className={styles.circle}>
+                    {!user ? <img src={"default_Profil.jpg"} alt={"Profilbild"} className={styles.pic}/> :
+                        <img src={user.user_bild} alt={"Profilbild"} className={styles.pic}/>}
+                    </span>
+
                     <input
                         onChange={handleChangeFile}
                         type={"file"}
                         name={"user_bild"}
-
+                        className={styles.input}
                     />
-                    <img src={file} alt={"Profilbild"}/>
                 </div>
-                <div>
+
+                <div className={styles.col1}>
+                    <p>Username:</p>
+
                     <input onChange={handleChangeUser} type="text"
                            name="username"
                            placeholder="Username"
                            value={user.username}
                            defaultValue={"Username"}/>
                 </div>
-                <div>
-                    <input onChange={handleChangeUser} type="text"
+                <div className={styles.col1}>
+                    <p>E-Mail:</p>
+                    <input onChange={handleChangeUser} type="email"
                            name="email"
                            placeholder="E-Mail"
                            value={user.email}
                            defaultValue={"E-Mail"}/>
                 </div>
-                <div>
-                    <input onChange={handleChangeUser} type="text"
+                <div className={styles.col1}>
+                    <p>Passwort:</p>
+                    <input onChange={handleChangeUser} type="password"
                            name="password"
                            placeholder="Passwort"
                            value={user.password}
                            defaultValue={"Passwort"}/>
                 </div>
-                <div>
+
+
+                <div className={styles.col21}>
+                    <p>Strasse:</p>
                     <input onChange={handleChangeUser} type="text"
                            name="strasse"
                            placeholder="Strasse"
                            value={user.strasse}
                            defaultValue={"Strasse"}/>
                 </div>
-                <div>
+                <div className={styles.col22}>
+                    <p>Ort:</p>
                     <input onChange={handleChangeOrt} type="text"
                            name="ort"
                            placeholder="Ort"
                            value={ortLokal.ort}
                            defaultValue={"Ort"}/>
                 </div>
-                <div>
+                <div className={styles.col23}>
+                    <p>PLZ:</p>
                     <input onChange={handleChangeOrt} type="number"
                            name="plz"
                            placeholder="1234"
                            value={ortLokal.plz}
-                           defaultValue={1234}/>
+                           // defaultValue={1234}
+                    />
                 </div>
-                <button disabled={loading} onClick={handleSubmit}>
-                    {loading ? "...Loading" : "Login"}
+
+
+                <button disabled={loading} onClick={handleSubmit} className={styles.button}>
+                    {loading ? "...Loading" : "Registrieren"}
                 </button>
             </form>
         </div>
