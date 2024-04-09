@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import orte from "../lib/api/orte";
 import OrteAPI from "../lib/api/orte";
 import UserAPI from "../lib/api/Users";
@@ -29,6 +29,8 @@ export default function UserRegistration() {
     const [user, setUser] = useState(emptyUser)
     const [ortLokal, setOrtLokal] = useState(emptyOrt)
     const [loading, setLoading] = useState(false)
+    const [dataReady, setDataReady] = useState()
+    let myTempOrt;
     const handleChangeUser = (e) => {
         const {name, value} = e.target
         setUser(prevState => ({
@@ -63,9 +65,12 @@ export default function UserRegistration() {
             try {
                 const returnedOrt = await OrteAPI.findOrtByOrtAndPLZ(ortLokal.ort, ortLokal.plz)
                 setOrtLokal(returnedOrt)
+                myTempOrt=returnedOrt
             } catch (e) {
+                console.log("Der Ort musste neu erstellt werden")
                 const createdOrt = await OrteAPI.create(ortLokal);
                 setOrtLokal(createdOrt)
+                myTempOrt=createdOrt;
             }
             setOrtLokal(prevState => ({
                 ...prevState,
@@ -74,33 +79,36 @@ export default function UserRegistration() {
             }))
         }
         const prepareUser = () => {
-            console.log("Das ist der Ort")
-            console.log(JSON.stringify(ortLokal))
+            console.log(JSON.stringify(myTempOrt))
             setUser(prevState => ({
                 ...prevState,
                 ort: {
-                    id_ort: ortLokal.id_ort,
-                    ort: ortLokal.ort,
-                    plz: ortLokal.plz
+                    id_ort: myTempOrt.id_ort,
+                    ort: myTempOrt.ort,
+                    plz: myTempOrt.plz
                 }
             }))
         }
-        const signUp = async () => {
-            await UserAPI.create(user)
-        }
-        const doLogin = async () => {
+        const prepareData = async () => {
             await prepareOrt();
             await prepareUser();
-            await signUp();
+            setDataReady(true)
         }
-        doRegistration().then(() => {
-            setLoading(false)
+        prepareData().then(() => {
+
             // console.log(user.user_bild)
         }, () => {
             // console.log("Nope")
         })
 
     }
+    useEffect(() => {
+        if(!dataReady) return
+        console.log("Current User:" + JSON.stringify(user))
+        UserAPI.create(user)
+        setDataReady(false)
+        setLoading(false)
+    }, [dataReady]);
     return (
         <div className={styles.main}>
             <form className={styles.form}>
