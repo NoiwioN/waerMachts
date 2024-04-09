@@ -54,8 +54,11 @@ export default function UserProfileUserData() {
             return;
         }
         const getOrt = async () => {
-            const response = await OrteAPI.findByUserId(user.id_user);
-            setOrt(response)
+            if(user){
+                const response = await OrteAPI.findByUserId(user.id_user);
+                setOrt(response)
+            }
+
         }
         getOrt()
     }, [user]);
