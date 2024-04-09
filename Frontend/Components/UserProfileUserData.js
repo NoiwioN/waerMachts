@@ -5,11 +5,9 @@ import InserateAPI from "../lib/api/inserate";
 import {useRouter} from "next/router";
 import {useGlobalContext} from "../store";
 import styles from "./UserProfileUserData.module.css"
-// import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-// import {faStar} from "@fortawesome/free-regular-svg-icons"
-// import {faStarHalf} from "@fortawesome/free-solid-svg-icons"
-import ReactStars from "react-rating-stars-component";
 import Link from "next/link";
+import Image from "next/image";
+import Rating from "@mui/material/Rating";
 
 
 
@@ -83,7 +81,7 @@ export default function UserProfileUserData() {
         }
         const getInserate = async (responseUser) => {
             console.log("Response User " + JSON.stringify(responseUser))
-                const response = await InserateAPI.findByAuftragnehmerId(2)
+            const response = await InserateAPI.findByAuftragnehmerId(2)
             setInserate(response)
         }
         getUser().then((responseUser)=>{
@@ -102,26 +100,39 @@ export default function UserProfileUserData() {
             {/*src={user.user_bild}*/}
             {/*width={{documentElement.clientWidth;}}*/}
             {/*/>*/}
+            <div className={styles.avatarContainer}>
+                {/*<Image*/}
+                {/*    src={user.user_bild}*/}
+                {/*    alt={"Profilbild"}*/}
+                {/*    fill*/}
+
+                {/*/>*/}
+
+            </div>
+
             <img alt={"Profilbild"} src={user.user_bild}/>
             <p>Anzahl Bewertungen: {bewertung.anzahl}</p>
 
-            {(!bewertung.durchschnitt>0) ? null:
-                <ReactStars
-                    edit={false}
-                    count={5}
-                    size={24}
-                    color2={'#ffd700'}
+            {(!bewertung.durchschnitt > 0) ? null :
+
+                <p className={styles.Bewertung}><Rating
+
+                    readOnly
+                    size={"medium"}
                     value={bewertung.durchschnitt}
-                />
-            }
+                    precision={0.5}
+                /></p>
+}
 
-            {console.log(bewertung.durchschnitt)}
-            <p className={styles.bewertung}>({bewertung.anzahl})</p>
-            <p>{user.username}</p>
-            <p>{user.email}</p>
+{
+    console.log(bewertung.durchschnitt)
+}
+    <p className={styles.bewertung}>({bewertung.anzahl})</p>
+    <p>{user.username}</p>
+    <p>{user.email}</p>
 
-            <p>{ort.plz} {ort.ort}</p>
-            <p>{user.strasse}</p>
+    <p>{ort.plz} {ort.ort}</p>
+    <p>{user.strasse}</p>
             <Link className={"button-back"} href={"/"}>Zurück</Link>
 
         </div>

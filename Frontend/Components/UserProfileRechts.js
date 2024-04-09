@@ -4,23 +4,12 @@ import UserAPI from "../lib/api/Users";
 import styles from "./UserProfileRechts.module.css"
 import {useGlobalContext} from "../store";
 import {useRouter} from "next/router";
-import ReactStars from "react-rating-stars-component";
 import Rating from '@mui/material/Rating';
 
 
 export default function UserProfileRechts() {
     const {session} = useGlobalContext();
     const router = useRouter()
-    /* const defaultInserat = {
-         auftraggeber_id: {
-             id_user: 0
-         },
-         auftragnemher_id: {},
-         bewertung: 0,
-         bewertungstext: ""
-
-     }
- */
 
 
     const [inserate, setInserate] = useState([])
@@ -67,7 +56,7 @@ export default function UserProfileRechts() {
                                 precision={0.5}
                             /></p>
 
-                            {/*<p>{inserat.bewertung}</p>*/}
+
                         </div>
 
                     </div>
