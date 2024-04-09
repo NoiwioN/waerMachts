@@ -18,9 +18,11 @@
 
 .Bewertung{
     align-self: end;
+    text-align:end;
 }
 
 .bewertungsbox_rechts{
-    display:flex;
-    flex-grow: 1;
+    display:grid;
+
+    width:100%;
 }

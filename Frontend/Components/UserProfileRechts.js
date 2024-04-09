@@ -5,6 +5,7 @@ import styles from "./UserProfileRechts.module.css"
 import {useGlobalContext} from "../store";
 import {useRouter} from "next/router";
 import ReactStars from "react-rating-stars-component";
+import Rating from '@mui/material/Rating';
 
 
 export default function UserProfileRechts() {
@@ -58,12 +59,14 @@ export default function UserProfileRechts() {
                         </div>
                         <div className={styles.bewertungsbox_rechts}>
                             <p>{inserat.bewertungstext}</p>
-                            <p className={styles.Bewertung}><ReactStars
-                                count={5}
-                                edit={false}
-                                size={24}
+                            <p className={styles.Bewertung}><Rating
+
+                                readOnly
+                                size={"medium"}
                                 value={inserat.bewertung}
+                                precision={0.5}
                             /></p>
+
                             {/*<p>{inserat.bewertung}</p>*/}
                         </div>
 
