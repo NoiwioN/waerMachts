@@ -104,16 +104,17 @@ export default function UserProfileUserData() {
             {/*width={{documentElement.clientWidth;}}*/}
             {/*/>*/}
             <div className={styles.avatarContainer}>
-                {/*<Image*/}
-                {/*    src={user.user_bild}*/}
-                {/*    alt={"Profilbild"}*/}
-                {/*    fill*/}
+                <Image
+                    src={user.user_bild}
+                    alt={"Profilbild"}
+                    fill
+                    // style={"object-fit:cover;"}
 
-                {/*/>*/}
+                />
 
             </div>
 
-            <img alt={"Profilbild"} src={user.user_bild}/>
+            {/*<img alt={"Profilbild"} src={user.user_bild}/>*/}
             <p>Anzahl Bewertungen: {bewertung.anzahl}</p>
 
             {(!bewertung.durchschnitt > 0) ? null :
