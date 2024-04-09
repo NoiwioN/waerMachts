@@ -61,9 +61,9 @@ public class SkillController {
             @ApiResponse(responseCode = "201", description = "Skill was created successfully", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Skill.class)) }),
             @ApiResponse(responseCode = "409", description = "Skill could not be created", content = @Content) })
-    public void insert(@Valid @RequestBody Skill newSkill) {
+    public Skill insert(@Valid @RequestBody Skill newSkill) {
         try {
-            skillService.insert(newSkill);
+            return skillService.insert(newSkill);
         } catch (RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, " Skill could not be added");
         }

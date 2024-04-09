@@ -25,9 +25,9 @@ public class InseratController {
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "New Genre Created")
-    public void signUp(@Valid @RequestBody Inserat Inserat) {
+    public Inserat create(@Valid @RequestBody Inserat Inserat) {
         try {
-            inseratService.signUp(Inserat);
+            return inseratService.create(Inserat);
         } catch (RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Conflict occurred");
         }
@@ -37,17 +37,15 @@ public class InseratController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get alle Inserate")
     public Iterable<?> findAllByIdentifier(@RequestParam(required = false) Integer auftragnehmerId,
-                                                 @RequestParam(required = false) Integer inseratId) {
+                                           @RequestParam(required = false) Integer inseratId) {
         if (auftragnehmerId != null && inseratId != null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
         }
         try {
             if (auftragnehmerId != null) {
-                System.out.println("A ID: "+ auftragnehmerId);
                 return inseratService.findInserateByUserId(auftragnehmerId);
             }
             if (inseratId != null) {
-                System.out.println("Inserat ID: "+ inseratId);
                 return inseratService.findUserByInseratId(inseratId);
             }
             return inseratService.findAll();
@@ -88,7 +86,6 @@ public class InseratController {
         try {
             inseratService.deleteById(id);
         } catch (RuntimeException e) {
-            System.out.println(e);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Genre Id not found");
         }
     }

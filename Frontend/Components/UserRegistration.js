@@ -61,9 +61,11 @@ export default function UserRegistration() {
         const prepareOrt = async () => {
             try {
                 const returnedOrt = await OrteAPI.findOrtByOrtAndPLZ(ortLokal.ort, ortLokal.plz)
+                console.log("abgleich-ort:" + JSON.stringify(returnedOrt))
                 setOrtLokal(returnedOrt)
             } catch (e) {
                 const createdOrt = await OrteAPI.create(ortLokal);
+                console.log("created ort:" + JSON.stringify(createdOrt))
                 setOrtLokal(createdOrt)
             }
             setOrtLokal(prevState => ({
@@ -87,16 +89,16 @@ export default function UserRegistration() {
         const signUp = async () => {
             await UserAPI.create(user)
         }
-        const doLogin = async () => {
+        const doRegistration = async () => {
            await prepareOrt();
            await prepareUser();
            await signUp();
         }
-        doLogin().then(() => {
+        doRegistration().then(() => {
             setLoading(false)
-            console.log(user.user_bild)
+            // console.log(user.user_bild)
         }, () => {
-            console.log("Nope")
+            // console.log("Nope")
         })
 
     }
@@ -166,7 +168,8 @@ export default function UserRegistration() {
                            name="plz"
                            placeholder="1234"
                            value={ortLokal.plz}
-                           defaultValue={1234}/>
+                           // defaultValue={1234}
+                    />
                 </div>
 
 
