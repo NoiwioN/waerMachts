@@ -7,24 +7,15 @@
 .form {
     grid-column: 2;
     margin-right: 5%;
+    margin-top: 5%;
+    margin-left: 5%;
+    width: 80%;
 }
 
 .buttonContainer {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 10px;
-}
-
-.textarea {
-    width: 90%
-}
-
-.title {
-    width: 90%;
-    font-size: 16px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 5px;
 }
 
 .button {
@@ -38,6 +29,7 @@
     border-radius: 25px;
     cursor: pointer;
     font-size: 16px;
+    bottom: 19%;
 }
 
 .button:disabled {
@@ -49,7 +41,6 @@
     background-color: lightgray;
     color: black;
     position: absolute;
-    bottom: 0;
     right: 0;
     width: 120px;
 }
@@ -60,7 +51,6 @@
 
 .erstellenButton {
     position: absolute;
-    bottom: 0;
     right: 16%;
     width: 120px;
 }
@@ -69,18 +59,7 @@
     background-color: #45a049;
 }
 
-.inlineFields {
-    display: grid;
-    grid-template-columns: 50% 50%;
-    gap: 20px;
-    font-size: 18px;
-}
-
-.label {
-    margin: 10px;
-}
-
-.bild{
+.bild {
     grid-column: 1;
     width: 85%;
     margin-top: 4%;
@@ -88,7 +67,49 @@
     margin-left: 4%;
 }
 
+.pic {
+    width: 92%;
+    height: 75%;
+    object-fit: cover;
+    margin-top: 3%;
+    margin-left: 2%;
+}
+
+.textarea {
+    width: 99%;
+    height: 80px;
+    font-size: 16px;
+}
+
+.inlineFields {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 30px;
+    font-size: 19px;
+}
+
+.label {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 19px;
+}
+
 .input {
     font-size: 16px;
     padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.title {
+    width: 97%;
+    font-size: 16px;
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.skill {
+    width: 215px;
+    height: 30px;
 }
