@@ -231,7 +231,7 @@ export default function createInseratePage({skill}) {
                 </div>
 
                 <div className={styles.buttonContainer}>
-                    <button disabled={isLoading} onClick={handleSubmit}>
+                    <button className={`${styles.button} ${styles.erstellenButton}`} disabled={isLoading} onClick={handleSubmit}>
                         {isLoading ? "...Loading" : "Login"}
                     </button>
                     <button className={`${styles.button} ${styles.zuruckButton}`}>Zurück
