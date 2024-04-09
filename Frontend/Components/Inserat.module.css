@@ -1,15 +1,28 @@
-.inserat-container{
-
-
-
+.inseratTextContainer{
+    background-color: rgba(0,0,0,0.7);
+    opacity: 0.9;
+    color: #ffffff;
+    padding: 2px 2px 2px 2px;
+    position: absolute;
+    bottom: 0;
+    width: 99%;
+    height: 150px;
+    font-size: x-large;
+}
+.bold{
+    font-weight: bolder;
+    color: #ffffff;
 }
 
-.inserat-text-container{
-    background-color: black;
-    opacity: .5;
-
+.inseratContainerImg{
+    max-width: 100%;
+    max-height: 400px;
+    overflow: hidden;
 }
 
-.inserat-text-container p {
-    color:red;
+.inseratContainer{
+    width:300px;
+    height:400px;
+    position:relative;
+    overflow:hidden;
 }
