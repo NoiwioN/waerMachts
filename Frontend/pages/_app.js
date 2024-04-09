@@ -18,7 +18,7 @@ export default function App({Component, pageProps}) {
 
         <GlobalContextProvider>
             <Layout>
-                <Link href={"/users/PeterParker"}>Yo Peter </Link>
+
                 <Component {...pageProps} />
                 <ToastContainer/>
             </Layout>
