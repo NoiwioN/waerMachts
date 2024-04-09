@@ -26,9 +26,9 @@ public class InseratSkillController {
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Neuer Eintrag in Zwischentabelle Inserat_Skill")
-       public void signUp(@Valid @RequestBody InseratSkill inseratSkill) {
+       public InseratSkill signUp(@Valid @RequestBody InseratSkill inseratSkill) {
         try {
-            inseratSkillService.create(inseratSkill);
+            return inseratSkillService.create(inseratSkill);
         } catch (RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Konflikt erkannt");
         }
@@ -82,7 +82,6 @@ public class InseratSkillController {
         try {
             inseratSkillService.deleteById(id);
         } catch (RuntimeException e) {
-            System.out.println(e);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Inserat_Skill nicht gefunden");
         }
     }
