@@ -114,8 +114,8 @@ export default function UserRegistration() {
             <form className={styles.form}>
                 <div className={styles.img}>
                     <span className={styles.circle}>
-                    {!user ? <img src={"default_Profil.jpg"} alt={"Profilbild"} className={styles.pic}/> :
-                        <img src={user.user_bild} alt={"Profilbild"} className={styles.pic}/>}
+                    {!user.user_bild ? <img src={"default.jpg"} alt={"default Profilbild"} className={styles.pic}/> :
+                        <img src={user.user_bild} alt={"     "} className={styles.pic}/>}
                     </span>
 
                     <input
