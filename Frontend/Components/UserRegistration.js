@@ -2,7 +2,7 @@ import {useState} from "react";
 import orte from "../lib/api/orte";
 import OrteAPI from "../lib/api/orte";
 import UserAPI from "../lib/api/Users";
-import users from "../lib/api/Users";
+import styles from "./UserRegistration.module.css";
 
 
 const emptyOrt = {
@@ -36,8 +36,8 @@ export default function UserRegistration() {
             [name]: value
         }))
     }
-    const handleChangeFile = (e)=>{
-        const localFile= e.target.files[0]
+    const handleChangeFile = (e) => {
+        const localFile = e.target.files[0]
         setFile(localFile)
         const reader = new FileReader();
         reader.onload = (event) => {
@@ -47,7 +47,7 @@ export default function UserRegistration() {
                 user_bild: base64Image
             }))
         }
-       reader.readAsDataURL(localFile);
+        reader.readAsDataURL(localFile);
     }
     const handleChangeOrt = (e) => {
         const {name, value} = e.target
@@ -62,11 +62,9 @@ export default function UserRegistration() {
         const prepareOrt = async () => {
             try {
                 const returnedOrt = await OrteAPI.findOrtByOrtAndPLZ(ortLokal.ort, ortLokal.plz)
-                console.log("abgleich-ort:" + JSON.stringify(returnedOrt))
                 setOrtLokal(returnedOrt)
             } catch (e) {
                 const createdOrt = await OrteAPI.create(ortLokal);
-                console.log("created ort:" + JSON.stringify(createdOrt))
                 setOrtLokal(createdOrt)
             }
             setOrtLokal(prevState => ({
@@ -90,10 +88,10 @@ export default function UserRegistration() {
         const signUp = async () => {
             await UserAPI.create(user)
         }
-        const doRegistration = async () => {
-           await prepareOrt();
-           await prepareUser();
-           await signUp();
+        const doLogin = async () => {
+            await prepareOrt();
+            await prepareUser();
+            await signUp();
         }
         doRegistration().then(() => {
             setLoading(false)
@@ -104,55 +102,67 @@ export default function UserRegistration() {
 
     }
     return (
-        <div>
-            <form>
-                <h2>Register</h2>
-                <div>
-                    <label htmlFor={"user_bild"}>Profilbild: </label>
+        <div className={styles.main}>
+            <form className={styles.form}>
+                <div className={styles.img}>
+                    <span className={styles.circle}>
+                    {!user ? <img src={"default_Profil.jpg"} alt={"Profilbild"} className={styles.pic}/> :
+                        <img src={user.user_bild} alt={"Profilbild"} className={styles.pic}/>}
+                    </span>
+
                     <input
                         onChange={handleChangeFile}
                         type={"file"}
                         name={"user_bild"}
-
+                        className={styles.input}
                     />
-                    <img src={file} alt={"Profilbild"}/>
                 </div>
-                <div>
+
+                <div className={styles.col1}>
+                    <p>Username:</p>
+
                     <input onChange={handleChangeUser} type="text"
                            name="username"
                            placeholder="Username"
                            value={user.username}
                            defaultValue={"Username"}/>
                 </div>
-                <div>
+                <div className={styles.col1}>
+                    <p>E-Mail:</p>
                     <input onChange={handleChangeUser} type="email"
                            name="email"
                            placeholder="E-Mail"
                            value={user.email}
                            defaultValue={"E-Mail"}/>
                 </div>
-                <div>
+                <div className={styles.col1}>
+                    <p>Passwort:</p>
                     <input onChange={handleChangeUser} type="password"
                            name="password"
                            placeholder="Passwort"
                            value={user.password}
                            defaultValue={"Passwort"}/>
                 </div>
-                <div>
+
+
+                <div className={styles.col21}>
+                    <p>Strasse:</p>
                     <input onChange={handleChangeUser} type="text"
                            name="strasse"
                            placeholder="Strasse"
                            value={user.strasse}
                            defaultValue={"Strasse"}/>
                 </div>
-                <div>
+                <div className={styles.col22}>
+                    <p>Ort:</p>
                     <input onChange={handleChangeOrt} type="text"
                            name="ort"
                            placeholder="Ort"
                            value={ortLokal.ort}
                            defaultValue={"Ort"}/>
                 </div>
-                <div>
+                <div className={styles.col23}>
+                    <p>PLZ:</p>
                     <input onChange={handleChangeOrt} type="number"
                            name="plz"
                            placeholder="1234"
@@ -160,7 +170,9 @@ export default function UserRegistration() {
                            // defaultValue={1234}
                     />
                 </div>
-                <button disabled={loading} onClick={handleSubmit}>
+
+
+                <button disabled={loading} onClick={handleSubmit} className={styles.button}>
                     {loading ? "...Loading" : "Registrieren"}
                 </button>
             </form>
