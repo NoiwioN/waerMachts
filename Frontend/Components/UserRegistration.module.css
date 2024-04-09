@@ -1,0 +1,24 @@
+.body {
+    display: flex;
+    height: 60vh;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+}
+
+.background {
+    background-image: url("../public/Baum1.jpg");
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    filter: blur(5px);
+}
+
+.card-wrapper {
+
+}
+
+.card-content {
+
+}

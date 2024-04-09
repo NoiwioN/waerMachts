@@ -62,11 +62,9 @@ export default function UserRegistration() {
         const prepareOrt = async () => {
             try {
                 const returnedOrt = await OrteAPI.findOrtByOrtAndPLZ(ortLokal.ort, ortLokal.plz)
-                console.log("abgleich-ort:" + JSON.stringify(returnedOrt))
                 setOrtLokal(returnedOrt)
             } catch (e) {
                 const createdOrt = await OrteAPI.create(ortLokal);
-                console.log("created ort:" + JSON.stringify(createdOrt))
                 setOrtLokal(createdOrt)
             }
             setOrtLokal(prevState => ({
@@ -90,16 +88,16 @@ export default function UserRegistration() {
         const signUp = async () => {
             await UserAPI.create(user)
         }
-        const doRegistration = async () => {
+        const doLogin = async () => {
            await prepareOrt();
            await prepareUser();
            await signUp();
         }
-        doRegistration().then(() => {
+        doLogin().then(() => {
             setLoading(false)
-            // console.log(user.user_bild)
+            console.log(user.user_bild)
         }, () => {
-            // console.log("Nope")
+            console.log("Nope")
         })
 
     }
@@ -125,14 +123,14 @@ export default function UserRegistration() {
                            defaultValue={"Username"}/>
                 </div>
                 <div>
-                    <input onChange={handleChangeUser} type="email"
+                    <input onChange={handleChangeUser} type="text"
                            name="email"
                            placeholder="E-Mail"
                            value={user.email}
                            defaultValue={"E-Mail"}/>
                 </div>
                 <div>
-                    <input onChange={handleChangeUser} type="password"
+                    <input onChange={handleChangeUser} type="text"
                            name="password"
                            placeholder="Passwort"
                            value={user.password}
@@ -157,11 +155,10 @@ export default function UserRegistration() {
                            name="plz"
                            placeholder="1234"
                            value={ortLokal.plz}
-                           // defaultValue={1234}
-                    />
+                           defaultValue={1234}/>
                 </div>
                 <button disabled={loading} onClick={handleSubmit}>
-                    {loading ? "...Loading" : "Registrieren"}
+                    {loading ? "...Loading" : "Login"}
                 </button>
             </form>
         </div>

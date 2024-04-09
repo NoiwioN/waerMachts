@@ -218,27 +218,13 @@ export default function createInseratePage({skill}) {
                     className={styles.textarea}
                 />
                 </div>
-                <Select options={options} name="skill" onChange={handleChangeDropdown} isMulti/>
                 <div className={styles.inlineFields}>
-                    {/* <div className={styles.inlineFields}>
+                    <div className={styles.inlineFields}>
+                        <Select options={options} name="skill" onChange={handleChangeDropdown} isMulti/>
                         <div>
                             <label htmlFor="skill" className={styles.label}>Skill:</label>
-                            <input
-                                list="skills"
-                                name="skill"
-                                id="skill"
-                                placeholder="Skill"
-                                className={styles.input}
-                            />
-                            <datalist id="skills">
-                                {skill.map((skill) => {
-                                    return (
-                                        <option key={skill.id}>{skill.name}</option>
-                                    );
-                                })}
-                            </datalist>
                         </div>
-                    </div>*/}
+                    </div>
                     <div className={styles.inlineFields}>
                         <div>
                             <label htmlFor="ort" className={styles.label}>Ort:</label>
