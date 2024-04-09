@@ -1,19 +1,15 @@
 import InserateAPI from "../../../lib/api/inserate";
 import UserAPI from "../../../lib/api/Users";
 import {useEffect, useState} from "react";
+import InseratDetail from "../../../Components/InseratDetail";
 
 export default function inseratDetail({inserat, auftraggeber}) {
-    return auftraggeber?(
-        <>
-            <p>{JSON.stringify(inserat)}</p>
-            <p>{JSON.stringify(auftraggeber)}</p>
-        </>
-    ):<p>Loading</p>
+    return <InseratDetail auftraggeber={auftraggeber} inserat={inserat}></InseratDetail>
 }
 
 export async function getStaticProps(context) {
     const inserat = await InserateAPI.findById(context.params.id)
-    const auftraggeber= await  InserateAPI.findAuftraggeberByInseratId(context.params.id)
+    const auftraggeber= await  UserAPI.findById(context.params.id)
     return {
         props: {
             inserat,
