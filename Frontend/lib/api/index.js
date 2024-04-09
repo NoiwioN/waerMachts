@@ -7,6 +7,7 @@
  *
  *
  */
+import 'react-toastify/dist/ReactToastify.css'
 function createFetchFunction(method) {
     return async (url, params, expectNoBody = false) => {
         const _params = {
@@ -44,7 +45,6 @@ function createFetchFunction(method) {
         if (expectNoBody) {
             return response
         }
-        console.log(method)
         let data = await response.json();
         return data
     }

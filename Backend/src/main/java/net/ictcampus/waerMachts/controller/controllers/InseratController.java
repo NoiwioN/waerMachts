@@ -25,7 +25,7 @@ public class InseratController {
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "New Genre Created")
-       public void signUp(@Valid @RequestBody Inserat Inserat) {
+    public void signUp(@Valid @RequestBody Inserat Inserat) {
         try {
             inseratService.signUp(Inserat);
         } catch (RuntimeException e) {
@@ -36,23 +36,33 @@ public class InseratController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get alle Inserate")
-    public Iterable<Inserat> findAllByIdentifier(@RequestParam(required = false)Integer auftragnehmerId) {
+    public Iterable<?> findAllByIdentifier(@RequestParam(required = false) Integer auftragnehmerId,
+                                                 @RequestParam(required = false) Integer inseratId) {
+        if (auftragnehmerId != null && inseratId != null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
+        }
         try {
-            if(auftragnehmerId!=null){
+            if (auftragnehmerId != null) {
+                System.out.println("A ID: "+ auftragnehmerId);
                 return inseratService.findInserateByUserId(auftragnehmerId);
-            }else{
-                return inseratService.findAll();
             }
+            if (inseratId != null) {
+                System.out.println("Inserat ID: "+ inseratId);
+                return inseratService.findUserByInseratId(inseratId);
+            }
+            return inseratService.findAll();
+
 
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
         }
+
     }
 
     @GetMapping(path = "{id}")
     @Operation(summary = "Suche nach ID")
     @ResponseStatus(HttpStatus.OK)
-       public Inserat findById(@Valid @PathVariable Integer id) {
+    public Inserat findById(@Valid @PathVariable Integer id) {
         try {
             return inseratService.findById(id);
         } catch (EntityNotFoundException e) {
@@ -74,7 +84,7 @@ public class InseratController {
     @DeleteMapping(path = "{id}")
     @Operation(summary = "Delete a Genre")
     @ResponseStatus(HttpStatus.OK)
-        public void deleteById(@Valid @PathVariable Integer id) {
+    public void deleteById(@Valid @PathVariable Integer id) {
         try {
             inseratService.deleteById(id);
         } catch (RuntimeException e) {
