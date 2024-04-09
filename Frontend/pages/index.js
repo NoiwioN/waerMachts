@@ -5,13 +5,15 @@ import Link from "next/link";
 
 
 export default function homePage({inserate}) {
-    const inseratURL='/inserat/'
+    const inseratURL='/inserate/'
     return (
         <div className={"grid"}>
             {inserate.map((inserat)=>{
                 return(
                     <div key={`inserat-${inserat.id_inserat}`} className={"inserat-container"}>
-                        <Link href={`${inseratURL}${inserat.id_inserat}`}><Inserat props={inserat}/></Link>
+                        <Link href={`${inseratURL}${inserat.id_inserat}`}>
+                            <Inserat props={inserat}/>
+                        </Link>
 
 
 
