@@ -45,9 +45,10 @@
 .translation{
     margin-top: 20px;
     margin-bottom: 20px;
-    background: #e1e1e1;
+    background: #c4c4c4;
     color: black;
     padding: 10px;
     text-align: center;
     font-weight: bold;
+    border: none;
 }
