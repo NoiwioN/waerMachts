@@ -9,6 +9,7 @@ config.autoAddCss = false;
 import "@fortawesome/free-solid-svg-icons"
 import Link from "next/link";
 import Layout from "../Components/Layout";
+import {ToastContainer} from "react-toastify";
 
 
 export default function App({Component, pageProps}) {

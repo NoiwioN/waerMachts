@@ -7,14 +7,14 @@ import styles from "./Inserat.module.css"
 export default function Inserat({props}) {
 
     const darstellungsBildStyle = {objectFit: "cover", zIndex: -1}
-    const bildURL= `/${props.darstellungs_bild}`
+
 
     return (
         <div >
             <div className={"inserat-container"}>
                 <Image
                     // src={"/cats_lake-nc.jpg"}
-                    src={bildURL}
+                    src={props.darstellung_bild}
                     alt={"standard"}
                     // placeholder={"blur"}
                     quality={100}
