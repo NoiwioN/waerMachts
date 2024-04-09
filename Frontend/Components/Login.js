@@ -61,7 +61,6 @@ export default function Login() {
             }catch(e){
                 //catches error
                 console.error(e);
-                if (e)
                 //gets the exact error which occurred
                 toast.error(errors);
                 setIsLoading(false);

@@ -1,18 +1,19 @@
-.grid{
-    display:grid;
-    grid-template-columns: auto auto auto auto;
-    column-gap: 4em;
-    row-gap: 1.5em;
-    overflow-y: scroll;
-    grid-auto-rows: 45vh;
-    justify-content: center;
-}
-
 .inserat-container{
     position: relative;
     border-color: #000000;
     border-width: 0.01mm;
     border-style: solid;
+    height: 400px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns: auto auto auto auto;
+    column-gap: 6em;
+    row-gap: 2em;
+    justify-content: center;
+    margin-left: 80px;
+    margin-right: 80px;
 }
 
 body {

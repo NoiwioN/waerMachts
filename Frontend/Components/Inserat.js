@@ -6,21 +6,19 @@ import styles from "./Inserat.module.css"
 // todo mit
 export default function Inserat({props}) {
 
-    const darstellungsBildStyle = {objectFit: "cover", zIndex: -1}
-    const bildURL= `/${props.darstellungs_bild}`
+    const darstellungsBildStyle = {objectFit: "contain", zIndex: -1}
 
     return (
         <div >
             {
                 console.log(`${props.darstellungs_bild}    ${props.id_inserat}`)
             }
-            <div className={"inserat-container"}>
-                <Image
+                <img className={styles.inseratContainerImg}
                     // src={"/cats_lake-nc.jpg"}
-                    src={bildURL}
+                    src={props.darstellungs_bild}
                     alt={"standard"}
                     // placeholder={"blur"}
-                    quality={100}
+                    //quality={100}
                     // width={"100"}
                     // height={"100"}
                     // sizes={"50%"}
@@ -30,7 +28,7 @@ export default function Inserat({props}) {
                     <p className={styles.bold}>Art: {props.art}</p>
                     <p>CHF: {props.preis}</p>
                 </div>
-            </div>
+
         </div>
     );
 }
