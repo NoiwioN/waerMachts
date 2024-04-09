@@ -21,8 +21,8 @@ public class InseratSkillService {
         this.skillRepository = skillRepository;
     }
 
-    public void create(InseratSkill inseratSkill){
-        inseratSkillRepository.save(inseratSkill);
+    public InseratSkill create(InseratSkill inseratSkill){
+        return inseratSkillRepository.save(inseratSkill);
     }
 
     public Iterable<Skill> findSkillsByInseratId(Integer id){

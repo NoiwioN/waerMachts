@@ -4,12 +4,12 @@ import {useEffect, useState} from "react";
 import InseratDetail from "../../../Components/InseratDetail";
 
 export default function inseratDetail({inserat, auftraggeber}) {
-    return <InseratDetail auftraggeber={auftraggeber} inserat={inserat}></InseratDetail>
+    return <InseratDetail auftraggeber={auftraggeber[0]} inserat={inserat}></InseratDetail>
 }
 
 export async function getStaticProps(context) {
     const inserat = await InserateAPI.findById(context.params.id)
-    const auftraggeber= await  UserAPI.findById(context.params.id)
+    const auftraggeber= await  InserateAPI.findAuftraggeberByInseratId(context.params.id)
     return {
         props: {
             inserat,
@@ -25,7 +25,7 @@ export async function getStaticPaths() {
         (
             {
                 params: {
-                    id: inserat.id_inserat.toString()
+                    id: inserat.id_inserat.toString(),
                 }
             })
     )
