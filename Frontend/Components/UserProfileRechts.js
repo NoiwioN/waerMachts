@@ -4,21 +4,12 @@ import UserAPI from "../lib/api/Users";
 import styles from "./UserProfileRechts.module.css"
 import {useGlobalContext} from "../store";
 import {useRouter} from "next/router";
+import Rating from '@mui/material/Rating';
 
 
 export default function UserProfileRechts() {
     const {session} = useGlobalContext();
     const router = useRouter()
-    /* const defaultInserat = {
-         auftraggeber_id: {
-             id_user: 0
-         },
-         auftragnemher_id: {},
-         bewertung: 0,
-         bewertungstext: ""
-
-     }
- */
 
 
     const [inserate, setInserate] = useState([])
@@ -51,13 +42,21 @@ export default function UserProfileRechts() {
             {inserate.map(inserat => {
                 return (
                     <div key={inserat.id_inserat} className={styles.Bewertungsbox}>
-                        <div>
+                        <div className={styles.user_and_pic}>
                             <img src={inserat.auftraggeber_id.user_bild}/>
                             <p>{inserat.auftraggeber_id.username}</p>
                         </div>
-                        <div>
+                        <div className={styles.bewertungsbox_rechts}>
                             <p>{inserat.bewertungstext}</p>
-                            <p>{inserat.bewertung}</p>
+                            <p className={styles.Bewertung}><Rating
+
+                                readOnly
+                                size={"medium"}
+                                value={inserat.bewertung}
+                                precision={0.5}
+                            /></p>
+
+
                         </div>
 
                     </div>
