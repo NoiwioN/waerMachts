@@ -1,4 +1,5 @@
 import {useState} from "react";
+import orte from "../lib/api/orte";
 import OrteAPI from "../lib/api/orte";
 import UserAPI from "../lib/api/Users";
 import styles from "./UserRegistration.module.css";
@@ -35,8 +36,8 @@ export default function UserRegistration() {
             [name]: value
         }))
     }
-    const handleChangeFile = (e)=>{
-        const localFile= e.target.files[0]
+    const handleChangeFile = (e) => {
+        const localFile = e.target.files[0]
         setFile(localFile)
         const reader = new FileReader();
         reader.onload = (event) => {
@@ -46,7 +47,7 @@ export default function UserRegistration() {
                 user_bild: base64Image
             }))
         }
-       reader.readAsDataURL(localFile);
+        reader.readAsDataURL(localFile);
     }
     const handleChangeOrt = (e) => {
         const {name, value} = e.target
@@ -61,11 +62,9 @@ export default function UserRegistration() {
         const prepareOrt = async () => {
             try {
                 const returnedOrt = await OrteAPI.findOrtByOrtAndPLZ(ortLokal.ort, ortLokal.plz)
-                console.log("abgleich-ort:" + JSON.stringify(returnedOrt))
                 setOrtLokal(returnedOrt)
             } catch (e) {
                 const createdOrt = await OrteAPI.create(ortLokal);
-                console.log("created ort:" + JSON.stringify(createdOrt))
                 setOrtLokal(createdOrt)
             }
             setOrtLokal(prevState => ({
@@ -89,10 +88,10 @@ export default function UserRegistration() {
         const signUp = async () => {
             await UserAPI.create(user)
         }
-        const doRegistration = async () => {
-           await prepareOrt();
-           await prepareUser();
-           await signUp();
+        const doLogin = async () => {
+            await prepareOrt();
+            await prepareUser();
+            await signUp();
         }
         doRegistration().then(() => {
             setLoading(false)
