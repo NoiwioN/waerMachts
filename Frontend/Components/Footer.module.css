@@ -23,6 +23,10 @@ Logo dürfen nicht zu gross sein
 
     background-color: #c4c4c4;
 
+    font-family: Arial,sans-serif;
+
+
+
 
 }
 
@@ -34,10 +38,12 @@ damit child element in einer reihe sind
     display: flex;
     flex-direction: row;
 
+
 }
 
 .container{
     padding: 0 40px;
+
 }
 
 .container div{
@@ -53,7 +59,8 @@ damit child element in einer reihe sind
 .container p{
     margin: 0;
     text-decoration: none;
-    color: black;
+    color: #282828;
+
 }
 
 .impressum{
