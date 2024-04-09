@@ -5,6 +5,7 @@ import styles from "./UserProfileRechts.module.css"
 import {useGlobalContext} from "../store";
 import {useRouter} from "next/router";
 import Rating from '@mui/material/Rating';
+import Image from "next/image";
 
 
 export default function UserProfileRechts() {
@@ -21,7 +22,7 @@ export default function UserProfileRechts() {
         const loadInserate = async () => {
             if (!router.isReady) return;
             if (router.query.username) {
-                console.log("Ja ich bin hier")
+
                 userArray = await UserAPI.findByName(router.query.username);
             } else {
                 if (!session) return
@@ -43,7 +44,16 @@ export default function UserProfileRechts() {
                 return (
                     <div key={inserat.id_inserat} className={styles.Bewertungsbox}>
                         <div className={styles.user_and_pic}>
-                            <img src={inserat.auftraggeber_id.user_bild}/>
+                            <div className={styles.avatarContainer}>
+                                <Image
+                                    src={inserat.auftraggeber_id.user_bild}
+                                    alt={"Profilbild"}
+                                    fill
+                                    // style={"object-fit:cover;"}
+
+                                />
+                            </div>
+                            {/*<img src={inserat.auftraggeber_id.user_bild}/>*/}
                             <p>{inserat.auftraggeber_id.username}</p>
                         </div>
                         <div className={styles.bewertungsbox_rechts}>

@@ -22,9 +22,10 @@ public class Inserat {
     @ManyToOne
     @JoinColumn(name = "auftragnehmer_id")
     private User auftragnehmer_id;
-    private boolean fertig_status;
+    private Boolean fertig_auftraggeber;
+    private Boolean fertig_auftragnehmer;
     private String art;
-    private double preis;
+    private Double preis;
     @ManyToOne
     @JoinColumn(name = "ort_id")
     private Ort ort;
@@ -40,8 +41,8 @@ public class Inserat {
         return id_inserat;
     }
 
-    public void setId_inserat(Integer id_inserate) {
-        this.id_inserat = id_inserate;
+    public void setId_inserat(Integer id_inserat) {
+        this.id_inserat = id_inserat;
     }
 
     public String getDarstellungs_bild() {
@@ -50,6 +51,22 @@ public class Inserat {
 
     public void setDarstellungs_bild(String darstellungs_bild) {
         this.darstellungs_bild = darstellungs_bild;
+    }
+
+    public String getTitel() {
+        return titel;
+    }
+
+    public void setTitel(String titel) {
+        this.titel = titel;
+    }
+
+    public String getBeschreibung() {
+        return beschreibung;
+    }
+
+    public void setBeschreibung(String beschreibung) {
+        this.beschreibung = beschreibung;
     }
 
     public User getAuftraggeber_id() {
@@ -68,12 +85,20 @@ public class Inserat {
         this.auftragnehmer_id = auftragnehmer_id;
     }
 
-    public boolean isFertig_status() {
-        return fertig_status;
+    public Boolean getFertig_auftraggeber() {
+        return fertig_auftraggeber;
     }
 
-    public void setFertig_status(boolean fertig_status) {
-        this.fertig_status = fertig_status;
+    public void setFertig_auftraggeber(Boolean fertig_auftraggeber) {
+        this.fertig_auftraggeber = fertig_auftraggeber;
+    }
+
+    public Boolean getFertig_auftragnehmer() {
+        return fertig_auftragnehmer;
+    }
+
+    public void setFertig_auftragnehmer(Boolean fertig_auftragnehmer) {
+        this.fertig_auftragnehmer = fertig_auftragnehmer;
     }
 
     public String getArt() {
@@ -84,11 +109,11 @@ public class Inserat {
         this.art = art;
     }
 
-    public double getPreis() {
+    public Double getPreis() {
         return preis;
     }
 
-    public void setPreis(double preis) {
+    public void setPreis(Double preis) {
         this.preis = preis;
     }
 
@@ -139,21 +164,4 @@ public class Inserat {
     public void setSkills(Set<InseratSkill> skills) {
         this.skills = skills;
     }
-
-    public String getTitel() {
-        return titel;
-    }
-
-    public void setTitel(String titel) {
-        this.titel = titel;
-    }
-
-    public String getBeschreibung() {
-        return beschreibung;
-    }
-
-    public void setBeschreibung(String beschreibung) {
-        this.beschreibung = beschreibung;
-    }
-
 }

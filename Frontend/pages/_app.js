@@ -28,7 +28,6 @@ export default function App({Component, pageProps}) {
         // <GlobalContextProvider>
         //   <Layout>
         //     <Component {...pageProps} />
-        //     <ToastContainer />
         //   </Layout>
         // </GlobalContextProvider>
     )
