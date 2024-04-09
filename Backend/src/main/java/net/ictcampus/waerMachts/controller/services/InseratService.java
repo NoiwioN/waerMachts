@@ -17,8 +17,8 @@ public class InseratService {
         this.inseratRepository = inseratRepository;
     }
 
-    public void signUp(Inserat inserat){
-        inseratRepository.save(inserat);
+    public Inserat create(Inserat inserat){
+        return inseratRepository.save(inserat);
     }
 
     public Iterable<Inserat> findAll(){
