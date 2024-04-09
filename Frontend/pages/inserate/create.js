@@ -29,16 +29,15 @@ const emptyInserat = {
     plz: '',
     strasse: '',
     erstellt_am: "25.10.2000",
-    auftraggeber_id:{}
+    auftraggeber_id: {}
 }
 const inseratSkill = {
-    inserat:emptyInserat,
-    skill:{
-        id_skill:0,
-        name:""
+    inserat: emptyInserat,
+    skill: {
+        id_skill: 0,
+        name: ""
     }
 }
-
 
 
 export default function createInseratePage({skill}) {
@@ -64,15 +63,15 @@ export default function createInseratePage({skill}) {
         }))
         validateUser()
     }
-    const handleChangeFile = (e)=>{
-        const localFile= e.target.files[0]
+    const handleChangeFile = (e) => {
+        const localFile = e.target.files[0]
         setFile(localFile)
         const reader = new FileReader();
         reader.onload = (event) => {
             const base64Image = event.target.result;
             setInserat(prevState => ({
                 ...prevState,
-                darstellungs_bild: base64Image
+                darstellung_bild: base64Image
             }))
         }
         reader.readAsDataURL(localFile);
@@ -132,24 +131,24 @@ export default function createInseratePage({skill}) {
             let monat = ('0' + (heute.getMonth() + 1)).slice(-2); // Monat von 0 bis 11, daher +1 und führende Nullen hinzufügen
             let tag = ('0' + heute.getDate()).slice(-2); // Führende Nullen hinzufügen, falls der Tag einstellig ist
             let formatiertesDatum = jahr + '-' + monat + '-' + tag;
-            const auftraggeber= await UserAPI.findById(session.userLoginData.id_user)
+            const auftraggeber = await UserAPI.findById(session.userLoginData.id_user)
             console.log(formatiertesDatum);
             const inseratLokal = inserat;
             inseratLokal.ort.ort = ortResponse.ort;
             inseratLokal.ort.plz = ortResponse.plz;
             inseratLokal.ort.id_ort = ortResponse.id_ort;
             inseratLokal.erstellt_am = formatiertesDatum;
-            inseratLokal.auftraggeber_id=auftraggeber;
+            inseratLokal.auftraggeber_id = auftraggeber;
             return inseratLokal;
         }
-        const prepareSkill = () =>{
-            for(let skillName of skills){
-               for(let skillObject of skill){
-                   if(skillName===skillObject.name){
-                       skillObjectArrayLokal.push(skillObject)
-                   }
-               }
-               setSkillObjectArray(skillObjectArrayLokal)
+        const prepareSkill = () => {
+            for (let skillName of skills) {
+                for (let skillObject of skill) {
+                    if (skillName === skillObject.name) {
+                        skillObjectArrayLokal.push(skillObject)
+                    }
+                }
+                setSkillObjectArray(skillObjectArrayLokal)
 
             }
         }
@@ -170,16 +169,16 @@ export default function createInseratePage({skill}) {
     useEffect(() => {
         const handleApi = async () => {
             if (!dataReady) return;
-            const myInserat= await InserateAPI.create(inserat, session.accessToken)
-            console.log("Mein Inserat nach speichern:" +JSON.stringify(myInserat) )
-            for(let skillObjekt of skillObjectArray){
+            const myInserat = await InserateAPI.create(inserat, session.accessToken)
+            console.log("Mein Inserat nach speichern:" + JSON.stringify(myInserat))
+            for (let skillObjekt of skillObjectArray) {
                 let myInseratSkill = {
-                    inserat:myInserat,
-                    skill:skillObjekt
+                    inserat: myInserat,
+                    skill: skillObjekt
                 }
-                console.log("Das Objekt: "+JSON.stringify(myInseratSkill))
-                myInseratSkill= await InseratskillsAPI.create(myInseratSkill,session.accessToken)
-                console.log("Mein InseratSkill: "+JSON.stringify(myInseratSkill))
+                console.log("Das Objekt: " + JSON.stringify(myInseratSkill))
+                myInseratSkill = await InseratskillsAPI.create(myInseratSkill, session.accessToken)
+                console.log("Mein InseratSkill: " + JSON.stringify(myInseratSkill))
             }
             setDataReady(false)
             setIsLoading(false)
@@ -189,13 +188,18 @@ export default function createInseratePage({skill}) {
 
     return (
         <div className={styles.gridContainer}>
-            <div>
-                <label htmlFor={"darstellungs_bild"}>Profilbild: </label>
+            <div className={styles.img}>
+                    <span className={styles.circle}>
+                    {!inserat.darstellung_bild ?
+                        <img src={"../../public/default.jpg"} alt={"Kein Bild gefunden"} className={styles.pic}/> :
+                        <img src={inserat.darstellung_bild} alt={"Bild konnte nicht geladen werden."}
+                             className={styles.pic}/>}
+                    </span>
                 <input
                     onChange={handleChangeFile}
                     type={"file"}
-                    name={"darstellungs_bild"}
-
+                    name={"darstellung_bild"}
+                    className={styles.input}
                 />
             </div>
             <form className={styles.form}>
@@ -218,27 +222,18 @@ export default function createInseratePage({skill}) {
                     className={styles.textarea}
                 />
                 </div>
-                <Select options={options} name="skill" onChange={handleChangeDropdown} isMulti/>
                 <div className={styles.inlineFields}>
-                    {/* <div className={styles.inlineFields}>
+                    <div className={styles.inlineFields}>
                         <div>
                             <label htmlFor="skill" className={styles.label}>Skill:</label>
-                            <input
-                                list="skills"
-                                name="skill"
-                                id="skill"
-                                placeholder="Skill"
-                                className={styles.input}
+                            <Select
+                                options={options}
+                                name="skill" onChange={handleChangeDropdown}
+                                isMulti
+                                className={styles.skill}
                             />
-                            <datalist id="skills">
-                                {skill.map((skill) => {
-                                    return (
-                                        <option key={skill.id}>{skill.name}</option>
-                                    );
-                                })}
-                            </datalist>
                         </div>
-                    </div>*/}
+                    </div>
                     <div className={styles.inlineFields}>
                         <div>
                             <label htmlFor="ort" className={styles.label}>Ort:</label>
