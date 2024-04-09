@@ -42,3 +42,12 @@
 .active{
     background-color:darkgray;
 }
+.translation{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background: #e1e1e1;
+    color: black;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}
