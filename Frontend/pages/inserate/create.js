@@ -1,167 +1,321 @@
-// import styles from "./create.module.css"
-import {useState} from "react";
+import styles from "./create.module.css"
+import {useEffect, useState} from "react";
 import * as React from 'react';
-import {useRouter} from 'next/router';
+import Select from 'react-select'
 import InserateAPI from "../../lib/api/inserate";
 import SkillAPI from "../../lib/api/Skill";
+import {useGlobalContext} from "../../store";
+import OrteAPI from "../../lib/api/orte";
+import InseratskillsAPI from "../../lib/api/Inseratskills";
+import UserAPI from "../../lib/api/Users";
 
-
-const defaultModel = {
+const emptyOrt = {
+    id_ort: 0,
+    ort: "",
+    plz: 0,
+}
+const emptyInserat = {
     darstellung_bild: '',
     titel: '',
     beschreibung: '',
     skill: '',
-    art_der_arbeit: '',
-    chf: '',
-    ort: '',
+    art: '',
+    preis: '',
+    ort: {
+        id_ort: 0,
+        ort: "",
+        plz: 0,
+    },
     plz: '',
-    strasse: ''
+    strasse: '',
+    erstellt_am: "25.10.2000",
+    auftraggeber_id:{}
+}
+const inseratSkill = {
+    inserat:emptyInserat,
+    skill:{
+        id_skill:0,
+        name:""
+    }
 }
 
 
+
 export default function createInseratePage({skill}) {
-
+    const {session} = useGlobalContext()
     const [errors, setErrors] = useState("Form needs to be filled in")
-    const [inserat, setInserat] = useState(defaultModel)
+    const [file, setFile] = useState()
+    const [inserat, setInserat] = useState(emptyInserat)
+    const [ortLokal, setOrtLokal] = useState(emptyOrt)
     const [isLoading, setIsLoading] = useState(false);
-    const [open, setOpen] = React.useState(false);
+    const [dataReady, setDataReady] = useState()
+    const [skills, setSkills] = useState([""])
+    const [skillObjectArray, setSkillObjectArray] = useState([])
+    let skillObjectArrayLokal = []
 
-    const router = useRouter();
 
-    const handleChange = (e) => {
+    const options = skill.map(s => ({value: s.name, label: s.name}))
+    const handleChangeInserat = (e) => {
         const name = e.target.name
         const value = e.target.value
-        inserat[name] = value;
-        setInserat(inserat)
-        validateInserat()
+        setInserat(prevState => ({
+            ...prevState,
+            [name]: value
+        }))
+        validateUser()
+    }
+    const handleChangeFile = (e)=>{
+        const localFile= e.target.files[0]
+        setFile(localFile)
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const base64Image = event.target.result;
+            setInserat(prevState => ({
+                ...prevState,
+                darstellungs_bild: base64Image
+            }))
+        }
+        reader.readAsDataURL(localFile);
+    }
+    const handleChangeDropdown = (e) => {
+        setSkills(e.map(s => (s.value)))
+        validateUser()
     }
 
-    const validateInserat = () => {
-        if (!inserat.darstellung_bild) {
-            setErrors("Password is needed")
-        }
+    const handleChangeOrt = (e) => {
+        const {name, value} = e.target
+        setOrtLokal(prevState => ({
+            ...prevState,
+            [name]: value
+        }))
+
+    }
+
+
+    const validateUser = () => {
         if (!inserat.titel) {
-            setErrors("Password is needed")
+            setErrors("Titel wird benötigt")
         }
         if (!inserat.beschreibung) {
-            setErrors("Password is needed")
+            setErrors("beschreibung wird benötigt")
         }
-        if (!inserat.art_der_arbeit) {
-            setErrors("Password is needed")
+        if (!inserat.skill) {
+            setErrors("Skill wird benötigt")
         }
-        if (!inserat.chf) {
-            setErrors("E-Mail is needed")
+        if (!inserat.art) {
+            setErrors("Art der Arbeit wird benötigt")
         }
         if (!inserat.ort) {
-            setErrors("Password is needed")
+            setErrors("Ort wird benötigt")
         }
         if (!inserat.plz) {
-            setErrors("Password is needed")
+            setErrors("PLZ wird benötigt")
         }
         if (!inserat.strasse) {
-            setErrors("Username is needed")
+            setErrors("Strasse wird benötigt")
         }
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-
-        try {
-            inserat.erstellt_am = new Date().toString()
-            await InserateAPI.create(inserat);
-            await router.push("/");
-        } catch (e) {
-            console.error(e);
-            setIsLoading(false);
+        const prepareOrt = async () => {
+            try {
+                return await OrteAPI.findOrtByOrtAndPLZ(ortLokal.ort, ortLokal.plz)
+            } catch (e) {
+                return await OrteAPI.create(ortLokal);
+            }
         }
-        setIsLoading(false);
+        const prepareInserat = async (ortResponse) => {
+            let heute = new Date();
+            let jahr = heute.getFullYear();
+            let monat = ('0' + (heute.getMonth() + 1)).slice(-2); // Monat von 0 bis 11, daher +1 und führende Nullen hinzufügen
+            let tag = ('0' + heute.getDate()).slice(-2); // Führende Nullen hinzufügen, falls der Tag einstellig ist
+            let formatiertesDatum = jahr + '-' + monat + '-' + tag;
+            const auftraggeber= await UserAPI.findById(session.userLoginData.id_user)
+            console.log(formatiertesDatum);
+            const inseratLokal = inserat;
+            inseratLokal.ort.ort = ortResponse.ort;
+            inseratLokal.ort.plz = ortResponse.plz;
+            inseratLokal.ort.id_ort = ortResponse.id_ort;
+            inseratLokal.erstellt_am = formatiertesDatum;
+            inseratLokal.auftraggeber_id=auftraggeber;
+            return inseratLokal;
+        }
+        const prepareSkill = () =>{
+            for(let skillName of skills){
+               for(let skillObject of skill){
+                   if(skillName===skillObject.name){
+                       skillObjectArrayLokal.push(skillObject)
+                   }
+               }
+               setSkillObjectArray(skillObjectArrayLokal)
+
+            }
+        }
+
+        const prepareData = async () => {
+            const ortLokal = await prepareOrt()
+            const inseratLokal = await prepareInserat(ortLokal)
+            prepareSkill()
+            setOrtLokal(ortLokal)
+            setInserat(inseratLokal)
+
+        }
+        prepareData().then(() => {
+            setDataReady(true)
+
+        })
     };
+    useEffect(() => {
+        const handleApi = async () => {
+            if (!dataReady) return;
+            const myInserat= await InserateAPI.create(inserat, session.accessToken)
+            console.log("Mein Inserat nach speichern:" +JSON.stringify(myInserat) )
+            for(let skillObjekt of skillObjectArray){
+                let myInseratSkill = {
+                    inserat:myInserat,
+                    skill:skillObjekt
+                }
+                console.log("Das Objekt: "+JSON.stringify(myInseratSkill))
+                myInseratSkill= await InseratskillsAPI.create(myInseratSkill,session.accessToken)
+                console.log("Mein InseratSkill: "+JSON.stringify(myInseratSkill))
+            }
+            setDataReady(false)
+            setIsLoading(false)
+        }
+        handleApi()
+    }, [dataReady]);
 
     return (
-        <div>
-            <form>
-                <h2>Erstelle ein Inserat</h2>
-                <label htmlFor="title">Title</label>
-                <div>
-                    <input
-                        onChange={handleChange}
-                        type="text"
-                        name="Titel"
-                        placeholder="Title"/>
-                </div>
-                <label htmlFor="title">Beschreibung</label>
-                <div>
-                        <textarea
-                            onChange={handleChange}
-                            type="text"
-                            name="beschreibung"
-                            placeholder="Beschreibung"/>
-                </div>
-                <label htmlFor="title">Skill</label>
-                <div>
-                    <select>
-                        {skill.map((skill) => {
-                            return (
-                                <option>
-                                    <div key={skill.id}>
+        <div className={styles.gridContainer}>
+            <div>
+                <label htmlFor={"darstellungs_bild"}>Profilbild: </label>
+                <input
+                    onChange={handleChangeFile}
+                    type={"file"}
+                    name={"darstellungs_bild"}
 
-                                        <p>{skill.name}</p>
+                />
+            </div>
+            <form className={styles.form}>
+                <label htmlFor="title" className={styles.label}>Titel:</label>
+                <div>
+                    <input
+                        onChange={handleChangeInserat}
+                        type="text"
+                        name="titel"
+                        placeholder="Titel"
+                        className={styles.title}
+                    />
+                </div>
+                <label htmlFor="beschreibung" className={styles.label}>Beschreibung:</label>
+                <div>
+                <textarea
+                    onChange={handleChangeInserat}
+                    name="beschreibung"
+                    placeholder="Beschreibung"
+                    className={styles.textarea}
+                />
+                </div>
+                <Select options={options} name="skill" onChange={handleChangeDropdown} isMulti/>
+                <div className={styles.inlineFields}>
+                    {/* <div className={styles.inlineFields}>
+                        <div>
+                            <label htmlFor="skill" className={styles.label}>Skill:</label>
+                            <input
+                                list="skills"
+                                name="skill"
+                                id="skill"
+                                placeholder="Skill"
+                                className={styles.input}
+                            />
+                            <datalist id="skills">
+                                {skill.map((skill) => {
+                                    return (
+                                        <option key={skill.id}>{skill.name}</option>
+                                    );
+                                })}
+                            </datalist>
+                        </div>
+                    </div>*/}
+                    <div className={styles.inlineFields}>
+                        <div>
+                            <label htmlFor="ort" className={styles.label}>Ort:</label>
+                            <input
+                                onChange={handleChangeOrt}
+                                type="text"
+                                name="ort"
+                                placeholder="Ort"
+                                className={styles.input}
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className={styles.inlineFields}>
+                    <div className={styles.inlineFields}>
+                        <div>
+                            <label htmlFor="art_der_arbeit" className={styles.label}>Art der Arbeit:</label>
+                            <input
+                                onChange={handleChangeInserat}
+                                type="text"
+                                name="art"
+                                placeholder="Art der Arbeit"
+                                className={styles.input}
+                            />
+                        </div>
+                    </div>
+                    <div className={styles.inlineFields}>
+                        <div>
+                            <label htmlFor="plz" className={styles.label}>PLZ:</label>
+                            <input
+                                onChange={handleChangeOrt}
+                                type="number"
+                                name="plz"
+                                placeholder="PLZ"
+                                className={styles.input}
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className={styles.inlineFields}>
+                    <div className={styles.inlineFields}>
+                        <div>
+                            <label htmlFor="chf" className={styles.label}>CHF:</label>
+                            <input
+                                onChange={handleChangeInserat}
+                                type="number"
+                                name="preis"
+                                placeholder="CHF"
+                                className={styles.input}
+                            />
+                        </div>
+                    </div>
+                    <div className={styles.inlineFields}>
+                        <div>
+                            <label htmlFor="strasse" className={styles.label}>Strasse:</label>
+                            <input
+                                onChange={handleChangeInserat}
+                                type="text"
+                                name="strasse"
+                                placeholder="Strasse"
+                                className={styles.input}
+                            />
+                        </div>
+                    </div>
+                </div>
 
-                                    </div>
-                                </option>
-                            )
-                        })}
-                        <option><input type={"text"} name="beschreibung" placeholder="Beschreibung"/></option>
-                    </select>
+                <div className={styles.buttonContainer}>
+                    <button className={`${styles.button} ${styles.erstellenButton}`} disabled={isLoading}
+                            onClick={handleSubmit}>
+                        {isLoading ? "...Loading" : "Erstellen"}
+                    </button>
+                    <button className={`${styles.button} ${styles.zuruckButton}`}>Zurück
+                    </button>
                 </div>
-                <label htmlFor="title">Art der Arbeit</label>
-                <div>
-                    <input
-                        onChange={handleChange}
-                        type="text"
-                        name="art_der_arbeit"
-                        placeholder="Art der Arbeit"/>
-                </div>
-                <label htmlFor="title">CHF</label>
-                <div>
-                    <input
-                        onChange={handleChange}
-                        type="text"
-                        name="chf"
-                        placeholder="CHF"/>
-                </div>
-                <label htmlFor="title">Ort</label>
-                <div>
-                    <input
-                        onChange={handleChange}
-                        type="text"
-                        name="ort"
-                        placeholder="Ort"/>
-                </div>
-                <label htmlFor="title">PLZ</label>
-                <div>
-                    <input
-                        onChange={handleChange}
-                        type="text"
-                        name="plz"
-                        placeholder="PLZ"/>
-                </div>
-                <label htmlFor="title">Strasse</label>
-                <div>
-                    <input
-                        onChange={handleChange}
-                        type="text"
-                        name="strasse"
-                        placeholder="Strasse"/>
-                </div>
-
-                <button className={"button"} disabled={isLoading} onClick={handleSubmit}>
-                    {isLoading ? "...Loading" : "register"}
-                </button>
             </form>
         </div>
-    )
+    );
 }
 
 export async function getStaticProps(context) {
