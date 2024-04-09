@@ -21,17 +21,17 @@ export default function Navigation() {
                     </li>
 
 
-
                     {/* Anzeige nur wenn eingeloggt und somit session existiert */}
 
 
-
-
                     <li>
-                        {session ? <Link href="/login" onClick={() => logout()} className="nav-link">Logout</Link> : <Link href="/login" className={`nav-link}`}>Login</Link>}
+                        {session ? <Link href="/login" onClick={() => logout()} className="nav-link">Logout</Link> :
+                            <Link href="/login" className={`nav-link}`}>Login</Link>}
                     </li>
-
-                    {session && <li className={styles.user_img}><Link href={`/profil`}><img src="/user.png"/></Link></li>}
+                    <li className={styles.user_img}>
+                        {session ? <Link href={`/profil`}><img src="/user.png"/></Link>:
+                            <Link href={`/login`}><img src="/user.png"/></Link>}
+                    </li>
                 </ul>
             </div>
         </div>

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styles from "./Footer.module.css"
+import Link from "next/link";
 
 export default function Footer() {
     return (
@@ -28,9 +29,9 @@ export default function Footer() {
 
                 </div>
 
-                <div className={styles.container}>
+                <div className={styles.impressum}>
 
-                    <div><p> Impressum</p></div>
+                    <div ><Link href={`/`}><p> Impressum</p></Link></div>
 
                 </div>
 
