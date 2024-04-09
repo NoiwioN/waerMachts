@@ -1,11 +1,13 @@
 import styles from "./create.module.css"
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import * as React from 'react';
-import {useRouter} from 'next/router';
+import Select from 'react-select'
 import InserateAPI from "../../lib/api/inserate";
 import SkillAPI from "../../lib/api/Skill";
 import {useGlobalContext} from "../../store";
 import OrteAPI from "../../lib/api/orte";
+import InseratskillsAPI from "../../lib/api/Inseratskills";
+import UserAPI from "../../lib/api/Users";
 
 const emptyOrt = {
     id_ort: 0,
@@ -17,8 +19,8 @@ const emptyInserat = {
     titel: '',
     beschreibung: '',
     skill: '',
-    art_der_arbeit: '',
-    chf: '',
+    art: '',
+    preis: '',
     ort: {
         id_ort: 0,
         ort: "",
@@ -26,8 +28,17 @@ const emptyInserat = {
     },
     plz: '',
     strasse: '',
-    erstellt_am: "25.10.2000"
+    erstellt_am: "25.10.2000",
+    auftraggeber_id:{}
 }
+const inseratSkill = {
+    inserat:emptyInserat,
+    skill:{
+        id_skill:0,
+        name:""
+    }
+}
+
 
 
 export default function createInseratePage({skill}) {
@@ -38,9 +49,13 @@ export default function createInseratePage({skill}) {
     const [inserat, setInserat] = useState(emptyInserat)
     const [ortLokal, setOrtLokal] = useState(emptyOrt)
     const [isLoading, setIsLoading] = useState(false);
+    const [dataReady, setDataReady] = useState()
+    const [skills, setSkills] = useState([""])
+    const [skillObjectArray, setSkillObjectArray] = useState([])
+    let skillObjectArrayLokal = []
 
-    const router = useRouter();
 
+    const options = skill.map(s => ({value: s.name, label: s.name}))
     const handleChangeInserat = (e) => {
         const name = e.target.name
         const value = e.target.value
@@ -50,6 +65,11 @@ export default function createInseratePage({skill}) {
         }))
         validateUser()
     }
+    const handleChangeDropdown = (e) => {
+        setSkills(e.map(s => (s.value)))
+        validateUser()
+    }
+
     const handleChangeOrt = (e) => {
         const {name, value} = e.target
         setOrtLokal(prevState => ({
@@ -70,7 +90,7 @@ export default function createInseratePage({skill}) {
         if (!inserat.skill) {
             setErrors("Skill wird benötigt")
         }
-        if (!inserat.art_der_arbeit) {
+        if (!inserat.art) {
             setErrors("Art der Arbeit wird benötigt")
         }
         if (!inserat.ort) {
@@ -85,39 +105,75 @@ export default function createInseratePage({skill}) {
     }
 
     const handleSubmit = async (e) => {
-        console.log("Okay der Submit startet")
         e.preventDefault();
         setIsLoading(true);
         const prepareOrt = async () => {
             try {
-                console.log("Gibt es den Ort?")
                 return await OrteAPI.findOrtByOrtAndPLZ(ortLokal.ort, ortLokal.plz)
             } catch (e) {
-                console.log("Nein, ein neuer wird erstellt.")
                 return await OrteAPI.create(ortLokal);
             }
         }
         const prepareInserat = async (ortResponse) => {
-            const currentDate = new Date().toString()
+            let heute = new Date();
+            let jahr = heute.getFullYear();
+            let monat = ('0' + (heute.getMonth() + 1)).slice(-2); // Monat von 0 bis 11, daher +1 und führende Nullen hinzufügen
+            let tag = ('0' + heute.getDate()).slice(-2); // Führende Nullen hinzufügen, falls der Tag einstellig ist
+            let formatiertesDatum = jahr + '-' + monat + '-' + tag;
+            const auftraggeber= await UserAPI.findById(session.userLoginData.id_user)
+            console.log(formatiertesDatum);
             const inseratLokal = inserat;
             inseratLokal.ort.ort = ortResponse.ort;
             inseratLokal.ort.plz = ortResponse.plz;
             inseratLokal.ort.id_ort = ortResponse.id_ort;
-            inseratLokal.erstellt_am = currentDate;
+            inseratLokal.erstellt_am = formatiertesDatum;
+            inseratLokal.auftraggeber_id=auftraggeber;
             return inseratLokal;
         }
-        const createInserat = async () => {
-            prepareOrt(ortLokal => {
-                prepareInserat(ortLokal).then(inseratLokal => {
-                    console.log("Mein Inserat:" + JSON.stringify(inseratLokal))
-                    InserateAPI.create(inseratLokal, session.accessToken)
-                })
-            })
+        const prepareSkill = () =>{
+            for(let skillName of skills){
+               for(let skillObject of skill){
+                   if(skillName===skillObject.name){
+                       skillObjectArrayLokal.push(skillObject)
+                   }
+               }
+               setSkillObjectArray(skillObjectArrayLokal)
+
+            }
         }
-        createInserat().then(() => {
-            setIsLoading(false)
+
+        const prepareData = async () => {
+            const ortLokal = await prepareOrt()
+            const inseratLokal = await prepareInserat(ortLokal)
+            prepareSkill()
+            setOrtLokal(ortLokal)
+            setInserat(inseratLokal)
+
+        }
+        prepareData().then(() => {
+            setDataReady(true)
+
         })
     };
+    useEffect(() => {
+        const handleApi = async () => {
+            if (!dataReady) return;
+            const myInserat= await InserateAPI.create(inserat, session.accessToken)
+            console.log("Mein Inserat nach speichern:" +JSON.stringify(myInserat) )
+            for(let skillObjekt of skillObjectArray){
+                let myInseratSkill = {
+                    inserat:myInserat,
+                    skill:skillObjekt
+                }
+                console.log("Das Objekt: "+JSON.stringify(myInseratSkill))
+                myInseratSkill= await InseratskillsAPI.create(myInseratSkill,session.accessToken)
+                console.log("Mein InseratSkill: "+JSON.stringify(myInseratSkill))
+            }
+            setDataReady(false)
+            setIsLoading(false)
+        }
+        handleApi()
+    }, [dataReady]);
 
     return (
         <div className={styles.gridContainer}>
@@ -144,8 +200,9 @@ export default function createInseratePage({skill}) {
                     className={styles.textarea}
                 />
                 </div>
+                <Select options={options} name="skill" onChange={handleChangeDropdown} isMulti/>
                 <div className={styles.inlineFields}>
-                    <div className={styles.inlineFields}>
+                    {/* <div className={styles.inlineFields}>
                         <div>
                             <label htmlFor="skill" className={styles.label}>Skill:</label>
                             <input
@@ -163,7 +220,7 @@ export default function createInseratePage({skill}) {
                                 })}
                             </datalist>
                         </div>
-                    </div>
+                    </div>*/}
                     <div className={styles.inlineFields}>
                         <div>
                             <label htmlFor="ort" className={styles.label}>Ort:</label>
@@ -184,7 +241,7 @@ export default function createInseratePage({skill}) {
                             <input
                                 onChange={handleChangeInserat}
                                 type="text"
-                                name="art_der_arbeit"
+                                name="art"
                                 placeholder="Art der Arbeit"
                                 className={styles.input}
                             />
@@ -210,7 +267,7 @@ export default function createInseratePage({skill}) {
                             <input
                                 onChange={handleChangeInserat}
                                 type="number"
-                                name="chf"
+                                name="preis"
                                 placeholder="CHF"
                                 className={styles.input}
                             />
@@ -231,8 +288,9 @@ export default function createInseratePage({skill}) {
                 </div>
 
                 <div className={styles.buttonContainer}>
-                    <button className={`${styles.button} ${styles.erstellenButton}`} disabled={isLoading} onClick={handleSubmit}>
-                        {isLoading ? "...Loading" : "Login"}
+                    <button className={`${styles.button} ${styles.erstellenButton}`} disabled={isLoading}
+                            onClick={handleSubmit}>
+                        {isLoading ? "...Loading" : "Erstellen"}
                     </button>
                     <button className={`${styles.button} ${styles.zuruckButton}`}>Zurück
                     </button>
