@@ -3,7 +3,6 @@ package net.ictcampus.waerMachts.model.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -14,6 +13,9 @@ public class Inserat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_inserat;
     private String darstellungs_bild;
+    private String titel;
+    private String beschreibung;
+
     @ManyToOne
     @JoinColumn(name = "auftraggeber_id")
     private User auftraggeber_id;
@@ -137,4 +139,21 @@ public class Inserat {
     public void setSkills(Set<InseratSkill> skills) {
         this.skills = skills;
     }
+
+    public String getTitel() {
+        return titel;
+    }
+
+    public void setTitel(String titel) {
+        this.titel = titel;
+    }
+
+    public String getBeschreibung() {
+        return beschreibung;
+    }
+
+    public void setBeschreibung(String beschreibung) {
+        this.beschreibung = beschreibung;
+    }
+
 }

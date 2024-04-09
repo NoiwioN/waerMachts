@@ -22,7 +22,9 @@ public SkillService(SkillRepository skillRepository) {
 
     public Optional<Skill> findById(Integer id) {return skillRepository.findById(id);}
 
-    public void insert(Skill newSkill) {skillRepository.save(newSkill);}
+    public Skill insert(Skill newSkill) {
+        return skillRepository.save(newSkill);
+    }
 
     public void update(Skill skill) {skillRepository.save(skill);}
 
