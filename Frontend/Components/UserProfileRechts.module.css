@@ -2,6 +2,7 @@
     border: solid gray 1px;
     margin: 10px 5vw;
     padding: 1em;
+    display:flex;
 
 }
 
@@ -9,4 +10,24 @@
     width: 50px;
     border-radius:50%;
     display:flex;
+}
+
+.user_and_pic{
+    width:20%;
+}
+
+.Bewertung{
+    align-self: end;
+    text-align:end;
+}
+
+.bewertungsbox_rechts{
+    display:grid;
+
+    width:100%;
+}
+
+.avatarContainer{
+    width:50px;
+    height:50px;
 }
