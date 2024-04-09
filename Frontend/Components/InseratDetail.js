@@ -1,19 +1,89 @@
 import {useGlobalContext} from "../store";
+import {useRouter} from "next/router";
+import {useEffect, useState} from "react";
+import UserAPI from "../lib/api/Users";
+import InserateAPI from "../lib/api/inserate";
 
 export default function InseratDetail({inserat, auftraggeber, skills}) {
     const {session} = useGlobalContext();
-    let akzeptierbar
-    let abschliessbar
-    if (session) {
-        console.log("Der User ist nicht der Auftraggeber: " + session.userLoginData.id_user !== auftraggeber.id_user)
-        console.log("Das Inserat wurde nicht bereits angenommen: " + inserat.auftragnehmer_id.id_user === null );
-        akzeptierbar = (session.userLoginData.id_user !== auftraggeber.id_user) && (
-            inserat.auftragnehmer_id.id_user === null
+    const router = useRouter();
+    const [inseratLokal, setInseratLokal] = useState(inserat)
+    const [refresh, setRefresh] = useState(false)
+    const [updateWanted, setUpdateWanted] = useState(false)
+    const [buttonDisplay, setButtonDisplay] = useState({
+        akzeptierbar: false,
+        abschliessbar: false,
+    })
+    const evaluateButtonDisplay = () => {
+        const userIstAuftraggeber = session.userLoginData.id_user === auftraggeber.id_user
+        const inseratAngenommen = !!inserat.auftragnehmer_id
+        const akzeptierbar = !userIstAuftraggeber && !inseratAngenommen
+        //console.log("Der User ist der Auftraggeber: " + userIstAuftraggeber)
+        //console.log("Das Inserat wurde bereits angenommen " + inseratAngenommen );
+        //console.log("Das inserat ist akzeptierbar "+ akzeptierbar)
+        const userIstAuftragnehmer = inserat.auftragnehmer_id ? (session.userLoginData.id_user === inserat.auftragnehmer_id.id_user) : false
+        const inseratNichtabgeschlossen = !inserat.fertig_auftraggeber || !inserat.fertig_auftragnehmer;
+        const istAbschliessbar = (userIstAuftragnehmer || userIstAuftraggeber) && inseratNichtabgeschlossen;
+
+          console.log("userIstAuftraggeber: " +userIstAuftraggeber)
+          console.log("userIstAuftragnehmer: " +userIstAuftragnehmer)
+          console.log("inseratNichtabgeschlossen: " +inseratNichtabgeschlossen)
+          console.log("istAbschliessbar: " +istAbschliessbar)
+        setButtonDisplay({
+                akzeptierbar: akzeptierbar,
+                abschliessbar: istAbschliessbar
+            }
         )
-        abschliessbar = ((session.userLoginData.id_user === inserat.auftragnehmer_id.id_user) || (
-            session.userLoginData.id_user === inserat.auftraggeber_id.id_user
-        )) && (inserat.fertig_auftraggeber === null || inserat.fertig_auftragnehmer === null)
+        //console.log("Das Inserat kann durch den Auftragnehmer abgeschlossen werden:"+ (inserat.auftragnehmer_id?(session.userLoginData.id_user === inserat.auftragnehmer_id.id_user):false))
+        //console.log("Das Inserat kann durch den Auftragnehmer abgeschlossen werden:"+ (session.userLoginData.id_user === inserat.auftraggeber_id.id_user))
     }
+
+
+    const handleTerminate = () => {
+        let name
+        if (inserat.auftraggeber_id.id_user === session.userLoginData.id_user) {
+            name = "fertig_auftraggeber"
+        } else {
+            name = "fertig_auftragnehmer"
+        }
+        setInseratLokal(prev => ({
+            ...prev,
+            [name]: true
+        }))
+        setUpdateWanted(true)
+    }
+    const handleAccept = () => {
+        const getUser = async () => {
+            return await UserAPI.findById(session.userLoginData.id_user);
+        }
+        getUser().then(user => {
+            setInseratLokal(prev => ({
+                ...prev,
+                auftragnehmer_id: user
+            }))
+        })
+        setUpdateWanted(true)
+    }
+    useEffect(() => {
+        if (!session) return;
+        if (!updateWanted) return;
+        const postInserat = async () => {
+            const ins = inseratLokal
+            ins.auftragnehmer_id = {
+                id_user: session.userLoginData.id_user
+            }
+            await InserateAPI.update(ins, inserat.id_inserat, session.accessToken)
+        }
+        postInserat().then(() => {
+            setUpdateWanted(false)
+            evaluateButtonDisplay()
+            router.reload()
+        })
+    }, [updateWanted]);
+    useEffect(() => {
+        if (!session) return
+        evaluateButtonDisplay()
+    }, [session]);
 
     return (
         <>
@@ -22,6 +92,7 @@ export default function InseratDetail({inserat, auftraggeber, skills}) {
             <div>
                 <p>Erstellt von:</p>
                 <img src={auftraggeber.user_bild} alt={"Profilbild"}/>
+                <p>{auftraggeber.username} | {inserat.erstellt_am} </p>
             </div>
             <h2>Beschreibung:</h2>
             <p>{inserat.beschreibung}</p>
@@ -30,18 +101,19 @@ export default function InseratDetail({inserat, auftraggeber, skills}) {
                 skills.map(skill => {
                     return (
                         <span key={skill.id_skill}>
-                            {skill.name}
+                            {`${skill.name}     `}
                         </span>
                     )
                 })
             }</p>
             <p>Art der Arbeit: {inserat.art}</p>
             <p>{inserat.preis} CHF</p>
-            session&&(
-            {akzeptierbar && <button>Akzeptieren</button>}
-            {abschliessbar && <button>Abschliessen</button>}
-            )
-            <button>Zurück</button>
+            {buttonDisplay.akzeptierbar && <button onClick={handleAccept}>Akzeptieren</button>}
+            {buttonDisplay.abschliessbar && <button onClick={handleTerminate}>Abschliessen</button>}
+            <button onClick={() => {
+                router.push("/")
+            }}>Zurück
+            </button>
 
         </>
     )
