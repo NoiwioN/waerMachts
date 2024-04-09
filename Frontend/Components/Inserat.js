@@ -14,7 +14,7 @@ export default function Inserat({props}) {
             <div className={"inserat-container"}>
                 <Image
                     // src={"/cats_lake-nc.jpg"}
-                    src={props.darstellung_bild}
+                    src={props.darstellungs_bild}
                     alt={"standard"}
                     // placeholder={"blur"}
                     quality={100}
