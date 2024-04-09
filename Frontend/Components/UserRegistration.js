@@ -4,6 +4,8 @@ import OrteAPI from "../lib/api/orte";
 import UserAPI from "../lib/api/Users";
 import styles from "./UserRegistration.module.css";
 import {useRouter} from "next/router";
+import {toast} from "react-toastify";
+import {error} from "next/dist/build/output/log";
 
 
 const emptyOrt = {
@@ -31,6 +33,8 @@ export default function UserRegistration() {
     const [ortLokal, setOrtLokal] = useState(emptyOrt)
     const [loading, setLoading] = useState(false)
     const [dataReady, setDataReady] = useState()
+    const[errors,setErrors]=useState("Formularmussausgefülltwerden")
+
     const router = useRouter()
     let myTempOrt;
     const handleChangeUser = (e) => {
@@ -39,6 +43,7 @@ export default function UserRegistration() {
             ...prevState,
             [name]: value
         }))
+        validateUser()
     }
     const handleChangeFile = (e) => {
         const localFile = e.target.files[0]
@@ -59,6 +64,7 @@ export default function UserRegistration() {
             ...prevState,
             [name]: value
         }))
+        validateUser()
     }
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -104,10 +110,44 @@ export default function UserRegistration() {
         })
 
     }
-    useEffect(() => {
+    const validateUser=()=> {
+//MakessurethatInputfieldisn'tempty
+        if (ortLokal.plz > 9999 || ortLokal.plz < 1000) {
+            setErrors("PLZ isn'tvalid")
+        }
+        if (ortLokal.plz === 0) {
+            setErrors("PLZ isneeded")
+        }
+        if (!ortLokal.ort || ortLokal.ort === "") {
+            setErrors("Place       isneeded")
+        }
+        console.log(ortLokal.plz)
+        if (!user.strasse || user.strasse === "") {
+            setErrors("Streetname  isneeded")
+        }
+        if (!user.password || user.password === "") {
+            setErrors("Password isneeded")
+        }
+        if (!user.email || user.email === "") {
+            setErrors("E-Mail isneeded")
+        }
+        if (!user.username || user.username !== "") {
+            setErrors("Usernameisneeded")
+        }
+        if (!user.user_bild || user.user_bild !== "") {
+            setErrors("pictureisneeded")
+        }
+    }
+
+        useEffect(() => {
         if(!dataReady) return
         console.log("Current User:" + JSON.stringify(user))
+            try{
         UserAPI.create(user)
+        toast.success("well done")} catch (e) {
+            console.error(e)
+                toast.error(errors)
+            }
         setDataReady(false)
         setLoading(false)
         router.push("/")
