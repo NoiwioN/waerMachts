@@ -1,6 +1,7 @@
 package net.ictcampus.waerMachts.controller.services;
 
 import net.ictcampus.waerMachts.model.models.Inserat;
+import net.ictcampus.waerMachts.model.models.User;
 import net.ictcampus.waerMachts.model.repositories.InseratRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,9 @@ public class InseratService {
     public Inserat findById(Integer id){
         Optional<Inserat> genre = inseratRepository.findById(id);
         return genre.orElseThrow(EntityNotFoundException::new);
+    }
+    public Iterable<User> findUserByInseratId (Integer inseratId){
+        return inseratRepository.findAuftraggeberByInseratId(inseratId);
     }
     public Iterable<Inserat> findInserateByUserId(Integer userId){
         return inseratRepository.findInseratsByAuftragnehmer_id(userId);
