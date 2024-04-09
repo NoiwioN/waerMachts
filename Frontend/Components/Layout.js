@@ -7,7 +7,7 @@ export default function Layout({children}) {
         <>
 
             <Header />
-            <main style={{ minHeight: '100vh', position: 'relative' , paddingTop:'40px'}}>
+            <main style={{ minHeight: '100vh', position: 'relative'}}>
                 <div>
                     {children}
                 </div>
