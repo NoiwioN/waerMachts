@@ -17,7 +17,7 @@ export default function Navigation() {
                         <Link href="/">Home</Link>
                     </li>
                     <li>
-                        <Link href="/about">User</Link>
+                        <Link href="/">User</Link>
                     </li>
 
 
