@@ -11,6 +11,9 @@ export default function Inserat({props}) {
 
     return (
         <div >
+            {
+                console.log(`${props.darstellungs_bild}    ${props.id_inserat}`)
+            }
             <div className={"inserat-container"}>
                 <Image
                     // src={"/cats_lake-nc.jpg"}
@@ -21,17 +24,12 @@ export default function Inserat({props}) {
                     // width={"100"}
                     // height={"100"}
                     // sizes={"50%"}
-                    fill
-                    style={darstellungsBildStyle}
+                    fill style={darstellungsBildStyle}
                 />
-                <p>Art: {props.art}</p>
-                <p>CHF/h: {props.preis}</p>
-            </div>
-            <p>{props.id}</p>
-            {/*<img src={props.darstellung_bild}/>*/}
-            <div>
-
-            {/*<img src={props.darstellungs_bild}/>*/}
+                <div className={styles.inseratTextContainer}>
+                    <p className={styles.bold}>Art: {props.art}</p>
+                    <p>CHF: {props.preis}</p>
+                </div>
             </div>
         </div>
     );

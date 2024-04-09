@@ -78,8 +78,8 @@ export default function Login() {
     }
 
     const validateUser = () => {
-        if (!user.email) setErrors("Keine E-Mail angegeben")
-        if (!user.password) setErrors("Kein Passwort eingegeben")
+        if (!user.email || user.email == "") setErrors("Keine E-Mail angegeben")
+        if (!user.password || user.password == "") setErrors("Kein Passwort eingegeben")
     }
 
     return (

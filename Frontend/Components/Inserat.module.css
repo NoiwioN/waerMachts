@@ -1,15 +1,9 @@
-.inserat-container{
-
-
-
-}
-
-.inserat-text-container{
+.inseratTextContainer{
     background-color: black;
-    opacity: .5;
-
+    opacity: .4;
+    color: #ffffff;
+    padding: 2px 2px 2px 2px;
 }
-
-.inserat-text-container p {
-    color:red;
+.bold{
+    font-weight: bolder;
 }

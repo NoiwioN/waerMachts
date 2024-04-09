@@ -1,20 +1,18 @@
 .grid{
-    height: 80vh;
-    /*margin: auto;*/
-    width: 100vw;
     display:grid;
     grid-template-columns: auto auto auto auto;
-    gap: 1em;
+    column-gap: 4em;
+    row-gap: 1.5em;
     overflow-y: scroll;
-    grid-auto-rows: 35vh;
+    grid-auto-rows: 45vh;
     justify-content: center;
-
-
 }
 
 .inserat-container{
-    position:relative;
-    height: 35vh;
+    position: relative;
+    border-color: #000000;
+    border-width: 0.01mm;
+    border-style: solid;
 }
 
 body {
