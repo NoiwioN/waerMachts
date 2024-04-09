@@ -16,7 +16,7 @@ const InserateAPI = {
         return getJSON(`${INSERATE_URL}/${inseratId}`)
     },
     create(inserat, token) {
-        const data = postJSON(INSERATE_URL, { body: inserat, token }, true)
+        const data = postJSON(INSERATE_URL, { body: inserat, token })
         return data
     },
     update(inserat, inseratId, token) {

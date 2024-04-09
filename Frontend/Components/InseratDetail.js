@@ -3,6 +3,7 @@ export default function InseratDetail ({inserat, auftraggeber}){
         <>
         <p>{JSON.stringify(inserat)}</p>
         <p>{JSON.stringify(auftraggeber)}</p>
+            <img src={inserat.darstellungs_bild} alt={"a"}/>
         </>
     )
 }
