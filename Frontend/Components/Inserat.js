@@ -8,31 +8,25 @@ export default function Inserat({props}) {
 
     const darstellungsBildStyle = {objectFit: "cover", zIndex: -1}
 
-
     return (
-        <div >
-            <div className={"inserat-container"}>
-                <Image
-                    // src={"/cats_lake-nc.jpg"}
-                    src={props.darstellungs_bild}
-                    alt={"standard"}
-                    // placeholder={"blur"}
-                    quality={100}
-                    // width={"100"}
-                    // height={"100"}
-                    // sizes={"50%"}
-                    fill
-                    style={darstellungsBildStyle}
-                />
-                <p>Art: {props.art}</p>
-                <p>CHF/h: {props.preis}</p>
-            </div>
-            <p>{props.id}</p>
-            {/*<img src={props.darstellung_bild}/>*/}
-            <div>
+        <div className={styles.inseratContainer}>
+            <Image
+                src={props.darstellungs_bild}
+                alt={"Inserat-Bild"}
+                fill
+                style={darstellungsBildStyle}
 
-            {/*<img src={props.darstellungs_bild}/>*/}
-            </div>
+            />
+
+                {/*<img className={styles.inseratContainerImg}*/}
+                {/*    src={props.darstellungs_bild}*/}
+                {/*    alt={"standard"}*/}
+                {/*/>*/}
+                <div className={styles.inseratTextContainer}>
+                    <p className={styles.bold}>Art: {props.art}</p>
+                    <p>CHF: {props.preis}</p>
+                </div>
+
         </div>
     );
 }
