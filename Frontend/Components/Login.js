@@ -4,10 +4,12 @@ import UserAPI from "../lib/api/Users";
 import {useGlobalContext} from "../store";
 import UsersAPI from "../lib/api/Users";
 import {useRouter} from "next/router";
+import {toast} from "react-toastify";
 export default function Login() {
     const {login} = useGlobalContext();
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
+    const [errors, setErrors] = useState("Formular muss ausgefüllt werden")
 
     const defaultLogin = {
         email: "",
@@ -31,32 +33,48 @@ export default function Login() {
             ...prevState,
             [name]: value
         }))
+        validateUser()
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
         const prepareUser = async () => {
             setIsLoading(true)
-            validateUser()
-            const response = await UsersAPI.findByEmail(user.email)
-            const responseUser = await response[0]
-            responseUser.password = user.password;
-            return responseUser;
+            try{
+                const response = await UsersAPI.findByEmail(user.email)
+                const responseUser = await response[0]
+                responseUser.password = user.password;
+                return responseUser;
+            }catch(e){
+                //catches error
+                console.error(e);
+            }
 
         }
         const handleLogin = async (userLoginData) => {
-            const response = await UserAPI.login(userLoginData)
-            const accessToken = response.accessToken
-            login({accessToken, userLoginData})
+            try{
+                const response = await UserAPI.login(userLoginData)
+                const accessToken = response.accessToken
+                login({accessToken, userLoginData})
+                toast.success("Erfolgreich eingeloggt")
+                await router.push("/")
+            }catch(e){
+                //catches error
+                console.error(e);
+                if (e)
+                //gets the exact error which occurred
+                toast.error(errors);
+                setIsLoading(false);
+            }
+
         }
         const doItAll = async () => {
             const myUser = await prepareUser();
-            await handleLogin(myUser)
-            setIsLoading(false)
-            await router.push("/")
+            await handleLogin(myUser).then(() => {
+                setIsLoading(false)
+            })
         }
         doItAll()
-
     }
 
     const validateUser = () => {
@@ -80,7 +98,7 @@ export default function Login() {
                 </div>
                 <div>
                     <p>Noch keinen Accoount?</p>
-                    <Link href="/">Registrieren</Link>
+                    <Link href="/registrieren">Registrieren</Link>
                 </div>
                 <button disabled={isLoading}>
                     {isLoading ? "...Loading" : "Login"}
