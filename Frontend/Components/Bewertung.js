@@ -41,7 +41,9 @@ export default function Bewertung() {
         const evaluateUnratedInserate = (ins) => {
             for (let i of ins) {
                 let inserateIsFinishedBidirectionally = !!i.fertig_auftraggeber && !!i.fertig_auftragnehmer;
+                console.log(inserateIsFinishedBidirectionally)
                 let inseratHasNotBeenReviewed = !i.bewertungstext
+                console.log("Noch kein Bewertungstext:" +inseratHasNotBeenReviewed)
                 if (inserateIsFinishedBidirectionally && inseratHasNotBeenReviewed) {
                     /*console.log("Inserat gefunden")*/
                     setInserate(i)
