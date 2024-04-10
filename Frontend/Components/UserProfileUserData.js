@@ -75,7 +75,6 @@ export default function UserProfileUserData() {
             let responseUser
             if (router.query.username) {
                 responseUser = await UserAPI.findByName(router.query.username)
-                console.log("response with router: " + responseUser.username)
             } else {
                 responseUser = await UserAPI.findByName(session.userLoginData.username)
             }
@@ -84,8 +83,7 @@ export default function UserProfileUserData() {
 
         }
         const getInserate = async (responseUser) => {
-            console.log("Response User " + JSON.stringify(responseUser))
-            const response = await InserateAPI.findByAuftragnehmerId(2)
+            const response = await InserateAPI.findByAuftragnehmerId(responseUser[0].id_user)
             setInserate(response)
         }
         getUser().then((responseUser)=>{
@@ -130,7 +128,6 @@ export default function UserProfileUserData() {
             }
 
             {
-                console.log(bewertung.durchschnitt)
             }
             <p className={styles.bewertung}>({bewertung.anzahl})</p>
             <p>{user.username}</p>
