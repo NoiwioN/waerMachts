@@ -1,14 +1,15 @@
 import Link from "next/link"
 // import { useRouter } from 'next/router'
-import { useGlobalContext } from "../store"
+import {useGlobalContext} from "../store"
 
 import styles from "./Navigation.module.css"
 import React from "react";
 import {useTranslation} from "react-i18next";
 import i18n from "../i18n";
+
 export default function Navigation() {
 
-    const { session, logout } = useGlobalContext()
+    const {session, logout} = useGlobalContext()
     // const router = useRouter()
     const {t} = useTranslation()
     const handleChangeLanguage = (lng) => {
@@ -22,10 +23,15 @@ export default function Navigation() {
                     <li>
                         <Link href="/">{t("home")}</Link>
                     </li>
+                    {
+                        session && <li><Link href="/inserate/create">Inserat erstellen</Link></li>
+                    }
+
 
                     {/* Anzeige nur wenn eingeloggt und somit session existiert */}
                     <li>
-                        {session ? <Link href="/login" onClick={() => logout()} className="nav-link">{t("logout")}</Link> :
+                        {session ?
+                            <Link href="/login" onClick={() => logout()} className="nav-link">{t("logout")}</Link> :
                             <Link href="/login" className={`nav-link}`}>{t("login")}</Link>}
                     </li>
                     <button className={styles.translation} onClick={() => handleChangeLanguage("de")}>DE</button>

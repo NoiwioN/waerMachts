@@ -9,6 +9,7 @@ import OrteAPI from "../../lib/api/orte";
 import InseratskillsAPI from "../../lib/api/Inseratskills";
 import UserAPI from "../../lib/api/Users";
 import {useTranslation} from "react-i18next";
+import {useRouter} from "next/router";
 
 const emptyOrt = {
     id_ort: 0,
@@ -53,6 +54,7 @@ export default function createInseratePage({skill}) {
     const [skillObjectArray, setSkillObjectArray] = useState([])
     let skillObjectArrayLokal = []
     const {t} = useTranslation()
+    const router = useRouter()
 
     const options = skill.map(s => ({value: s.name, label: s.name}))
     const handleChangeInserat = (e) => {
