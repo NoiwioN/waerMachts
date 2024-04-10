@@ -61,23 +61,27 @@ export default function InseratDetail({inserat, auftraggeber, skills}) {
         console.log("Es wird akzeptiert")
         const getAndSetUser = async () => {
             const response = await getUser()
-
+            setInseratLokal(prev => ({
+                ...prev,
+                auftragnehmer_id:response
+            }))
         }
-        setUpdateWanted(true)
+        getAndSetUser().then(()=>{
+            setUpdateWanted(true)
+        })
     }
     useEffect(() => {
         if (!session) return;
         if (!updateWanted) return;
         const postInserat = async () => {
             const ins = inseratLokal
-            console.log(ins.auftragnehmer_id.id_user)
+            console.log("Der User: " + ins.auftragnehmer_id.id_user)
             const responseInserat = await InserateAPI.update(ins, inserat.id_inserat, session.accessToken)
             setInseratLokal(responseInserat)
         }
         postInserat().then(() => {
             setUpdateWanted(false)
             evaluateButtonDisplay()
-            //router.reload()
         })
     }, [updateWanted]);
     useEffect(() => {
