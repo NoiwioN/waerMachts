@@ -9,6 +9,7 @@ import OrteAPI from "../../lib/api/orte";
 import InseratskillsAPI from "../../lib/api/Inseratskills";
 import UserAPI from "../../lib/api/Users";
 import {useTranslation} from "react-i18next";
+import {useRouter} from "next/router";
 
 const emptyOrt = {
     id_ort: 0,
@@ -51,6 +52,7 @@ export default function createInseratePage({skill}) {
     const [dataReady, setDataReady] = useState()
     const [skills, setSkills] = useState([""])
     const [skillObjectArray, setSkillObjectArray] = useState([])
+    const router = useRouter();
     let skillObjectArrayLokal = []
     const {t} = useTranslation()
 
@@ -177,9 +179,8 @@ export default function createInseratePage({skill}) {
                     inserat: myInserat,
                     skill: skillObjekt
                 }
-                console.log("Das Objekt: " + JSON.stringify(myInseratSkill))
                 myInseratSkill = await InseratskillsAPI.create(myInseratSkill, session.accessToken)
-                console.log("Mein InseratSkill: " + JSON.stringify(myInseratSkill))
+                router.push("/")
             }
             setDataReady(false)
             setIsLoading(false)
@@ -192,7 +193,7 @@ export default function createInseratePage({skill}) {
             <div className={styles.img}>
                     <span className={styles.circle}>
                     {!inserat.darstellungs_bild ?
-                        <img src={"/default_inserate.png"} alt={"Kein Bild gefunden"} className={styles.pic}/> :
+                        <img src={"/default.jpg"} alt={"Kein Bild gefunden"} className={styles.pic}/> :
                         <img src={inserat.darstellungs_bild} alt={"Bild konnte nicht geladen werden."}
                              className={styles.pic}/>}
                     </span>

@@ -7,6 +7,7 @@ import {useRouter} from "next/router";
 import {toast} from "react-toastify";
 import {error} from "next/dist/build/output/log";
 import {useGlobalContext} from "../store";
+import {useTranslation} from "react-i18next";
 
 
 const emptyOrt = {
@@ -36,7 +37,8 @@ export default function UserRegistration() {
     const [dataReady, setDataReady] = useState()
     const [errors, setErrors] = useState("")
     const [valid, setValid] = useState(false)
-const {login} = useGlobalContext()
+    const {t} = useTranslation()
+    const {login} = useGlobalContext()
     const router = useRouter()
     let myTempOrt;
     const handleChangeUser = (e) => {
@@ -164,7 +166,7 @@ if(!dataReady)return
                 <div className={styles.img}>
                     <span className={styles.circle}>
                     {!user.user_bild ? <img src={"default.jpg"} alt={"default Profilbild"} className={styles.pic}/> :
-                        <img src={user.user_bild} alt={"     "} className={styles.pic}/>}
+                        <img src={user.user_bild} alt={"zugulg"} className={styles.pic}/>}
                     </span>
                     <input
                         onChange={handleChangeFile}
@@ -175,12 +177,12 @@ if(!dataReady)return
                 </div>
 
                 <div className={styles.col1}>
-                    <p>Username:</p>
+                    <p>{t("username")}:</p>
 
                     <input onChange={handleChangeUser}
                            type="text"
                            name="username"
-                           placeholder="Username"
+                           placeholder={t("username")}
                     />
                 </div>
                 <div className={styles.col1}>
@@ -202,11 +204,11 @@ if(!dataReady)return
 
 
                 <div className={styles.col21}>
-                    <p>Strasse:</p>
+                    <p>{t("str")}:</p>
                     <input onChange={handleChangeUser}
                            type="text"
                            name="strasse"
-                           placeholder="Strasse"
+                           placeholder={t("str")}
                     />
                 </div>
                 <div className={styles.col22}>
@@ -228,7 +230,7 @@ if(!dataReady)return
 
 
                 <button disabled={loading} onClick={handleSubmit} className={styles.button}>
-                    {loading ? "...Loading" : "Registrieren"}
+                    {loading ? "...Loading" : t("registrieren")}
                 </button>
             </form>
         </div>

@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import UserAPI from "../lib/api/Users";
 import InserateAPI from "../lib/api/inserate";
 import styles from "./InseratDetail.module.css";
+import {useTranslation} from "react-i18next";
 
 export default function InseratDetail({inserat, auftraggeber, skills}) {
     const {session} = useGlobalContext();
@@ -15,24 +16,26 @@ export default function InseratDetail({inserat, auftraggeber, skills}) {
         akzeptierbar: false,
         abschliessbar: false,
     })
+    const {t} = useTranslation()
+
     const evaluateButtonDisplay = () => {
         const userIstAuftraggeber = session.userLoginData.id_user === auftraggeber.id_user
         const inseratAngenommen = !!inserat.auftragnehmer_id
         const akzeptierbar = !userIstAuftraggeber && !inseratAngenommen
-        console.log("Der User ist der Auftraggeber: " + userIstAuftraggeber)
+/*        console.log("Der User ist der Auftraggeber: " + userIstAuftraggeber)
         console.log("Das Inserat wurde bereits angenommen " + inseratAngenommen );
-        console.log("Das inserat ist akzeptierbar "+ akzeptierbar)
+        console.log("Das inserat ist akzeptierbar "+ akzeptierbar)*/
         const userIstAuftragnehmer = inserat.auftragnehmer_id ? (session.userLoginData.id_user === inserat.auftragnehmer_id.id_user) : false
         const inseratNichtabgeschlossen = !inserat.fertig_auftraggeber && !inserat.fertig_auftragnehmer;
         const istAbschliessbar = userIstAuftragnehmer?!inseratLokal.fertig_auftragnehmer:!inseratLokal.fertig_auftraggeber
 
-     /*   console.log("userIstAuftraggeber: " + userIstAuftraggeber)
+        console.log("userIstAuftraggeber: " + userIstAuftraggeber)
         console.log("userIstAuftragnehmer: " + userIstAuftragnehmer)
         console.log("inseratNichtabgeschlossen: " + inseratNichtabgeschlossen)
-        console.log("istAbschliessbar: " + istAbschliessbar)*/
+        console.log("istAbschliessbar: " + istAbschliessbar)
         setButtonDisplay({
                 akzeptierbar: akzeptierbar,
-                abschliessbar: istAbschliessbar&&inseratLokal.auftragnehmer_id
+                abschliessbar: istAbschliessbar&&(userIstAuftragnehmer||userIstAuftraggeber)
             }
         )
         //console.log("Das Inserat kann durch den Auftragnehmer abgeschlossen werden:"+ (inserat.auftragnehmer_id?(session.userLoginData.id_user === inserat.auftragnehmer_id.id_user):false))
@@ -74,7 +77,7 @@ export default function InseratDetail({inserat, auftraggeber, skills}) {
         if (!updateWanted) return;
         const postInserat = async () => {
             const ins = inseratLokal
-            console.log("Der User: " + ins.auftragnehmer_id.id_user)
+            /*console.log("Der User: " + ins.auftragnehmer_id.id_user)*/
             const responseInserat = await InserateAPI.update(ins, inserat.id_inserat, session.accessToken)
             setInseratLokal(responseInserat)
         }
@@ -97,17 +100,18 @@ export default function InseratDetail({inserat, auftraggeber, skills}) {
             <div className={styles.haupt2}>
                 <h1>{inserat.titel}</h1>
                 <div className={styles.ersteller}>
-                    <p className={styles.erstellerChilde}>Erstellt von:</p>
+                    <p className={styles.erstellerChilde}>{t("erstellt")}</p>
                     <div className={styles.erstellerBild}>
                         <img className={styles.erstellerChilde}
                              src={auftraggeber.user_bild} alt={"Profilbild"}/>
                     </div>
                     <p className={styles.erstellerChilde}>
-                        <strong>{auftraggeber.username} </strong> <em className={styles.datum}>  {inserat.erstellt_am} </em> </p>
+                        <strong>{auftraggeber.username} </strong> <em
+                        className={styles.datum}>  {inserat.erstellt_am} </em></p>
                 </div>
 
                 <div className={styles.beschreibung}>
-                    <h2>Beschreibung:</h2>
+                    <h2>{t("Beschreibung")}</h2>
                     <p>{inserat.beschreibung}</p>
                 </div>
                 <div className={styles.diverses}>
@@ -121,7 +125,7 @@ export default function InseratDetail({inserat, auftraggeber, skills}) {
                             )
                         })
                     }</p>
-                    <p>Art der Arbeit: {inserat.art}</p>
+                    <p>{t("art")}{inserat.art}</p>
                     <p className={styles.preis}>{inserat.preis} CHF</p>
                 </div>
                 <div className={styles.buttonContainer}>
@@ -132,7 +136,6 @@ export default function InseratDetail({inserat, auftraggeber, skills}) {
                         <button className={`${styles.button} ${styles.erstellenButton}`}
                                 onClick={handleTerminate}>Abschliessen</button>}
                     <button className={`${styles.button} ${styles.zuruckButton}`} onClick={() => {
-                        router.push("/")
                     }}>Zurück
                     </button>
                 </div>
