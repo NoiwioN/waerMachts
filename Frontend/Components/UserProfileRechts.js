@@ -30,8 +30,14 @@ export default function UserProfileRechts() {
             }
 
             const response = await InserateAPI.findByAuftragnehmerId(router.query.username ? userArray[0].id_user : session.userLoginData.id_user)
-
-            setInserate(response)
+            let abgeschlosseneInserate = []
+            for(let ins of response){
+                console.log(JSON.stringify(ins))
+                if(ins.bewertungstext){
+                    abgeschlosseneInserate.push(ins)
+                }
+            }
+            setInserate(abgeschlosseneInserate)
         }
         if (!loadInserate()) console.log("uhm es gibt iwo ein fehler")
 

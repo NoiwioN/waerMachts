@@ -19,20 +19,20 @@ export default function InseratDetail({inserat, auftraggeber, skills}) {
         const userIstAuftraggeber = session.userLoginData.id_user === auftraggeber.id_user
         const inseratAngenommen = !!inserat.auftragnehmer_id
         const akzeptierbar = !userIstAuftraggeber && !inseratAngenommen
-        console.log("Der User ist der Auftraggeber: " + userIstAuftraggeber)
+/*        console.log("Der User ist der Auftraggeber: " + userIstAuftraggeber)
         console.log("Das Inserat wurde bereits angenommen " + inseratAngenommen );
-        console.log("Das inserat ist akzeptierbar "+ akzeptierbar)
+        console.log("Das inserat ist akzeptierbar "+ akzeptierbar)*/
         const userIstAuftragnehmer = inserat.auftragnehmer_id ? (session.userLoginData.id_user === inserat.auftragnehmer_id.id_user) : false
         const inseratNichtabgeschlossen = !inserat.fertig_auftraggeber && !inserat.fertig_auftragnehmer;
         const istAbschliessbar = userIstAuftragnehmer?!inseratLokal.fertig_auftragnehmer:!inseratLokal.fertig_auftraggeber
 
-     /*   console.log("userIstAuftraggeber: " + userIstAuftraggeber)
+        console.log("userIstAuftraggeber: " + userIstAuftraggeber)
         console.log("userIstAuftragnehmer: " + userIstAuftragnehmer)
         console.log("inseratNichtabgeschlossen: " + inseratNichtabgeschlossen)
-        console.log("istAbschliessbar: " + istAbschliessbar)*/
+        console.log("istAbschliessbar: " + istAbschliessbar)
         setButtonDisplay({
                 akzeptierbar: akzeptierbar,
-                abschliessbar: istAbschliessbar&&inseratLokal.auftragnehmer_id
+                abschliessbar: istAbschliessbar&&(userIstAuftragnehmer||userIstAuftraggeber)
             }
         )
         //console.log("Das Inserat kann durch den Auftragnehmer abgeschlossen werden:"+ (inserat.auftragnehmer_id?(session.userLoginData.id_user === inserat.auftragnehmer_id.id_user):false))
@@ -74,7 +74,7 @@ export default function InseratDetail({inserat, auftraggeber, skills}) {
         if (!updateWanted) return;
         const postInserat = async () => {
             const ins = inseratLokal
-            console.log("Der User: " + ins.auftragnehmer_id.id_user)
+            /*console.log("Der User: " + ins.auftragnehmer_id.id_user)*/
             const responseInserat = await InserateAPI.update(ins, inserat.id_inserat, session.accessToken)
             setInseratLokal(responseInserat)
         }
