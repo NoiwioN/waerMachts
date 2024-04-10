@@ -1,0 +1,143 @@
+.main {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: grid;
+    grid-template-columns: 33vw 67vw;
+    grid-template-rows: auto;
+    column-gap: 20px;
+    grid-template-areas:
+        "h1 h2";
+    font-size: 1.3em  ;
+}
+
+.haupt2 {
+    grid-area: h2;
+    padding-left: 80px;
+    padding-top: 50px;
+}
+
+.haupt1 {
+    grid-area: h1;
+    margin: 0;
+    height: 100vh;
+    width: 33vw;
+    object-fit: cover;
+    box-shadow: 5px 0 5px rgb(0 0 0 / 40%);
+}
+
+.ersteller {
+    display: flex;
+}
+
+/*
+  erstellerBild und img= runde profilBild
+ */
+.erstellerBild {
+    display: inline-block;
+    position: relative;
+    width: 65px;
+    height: 65px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-right: 20px;
+
+}
+
+.erstellerBild img {
+    width:100%;
+    height: 100%;
+    object-fit: cover}
+
+
+/*
+.ersteller img {
+   height: 500px;
+    width: 500px;
+    object-fit: cover;
+    overflow: hidden;
+    border-radius: 50%;
+    padding-right: 20px;
+}
+
+ */
+
+.ersteller p{
+    padding-right: 50px;
+}
+
+.buttonContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+
+}
+
+.button {
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.9em;
+    bottom: 19%;
+}
+
+.button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.zuruckButton {
+    background-color: lightgray;
+    color: black;
+    position: absolute;
+    right: 50px;
+    min-width: 150px;
+}
+
+.zuruckButton:hover {
+    background-color: grey;
+}
+
+.erstellenButton {
+    position: absolute;
+    right: 250px;
+    min-width: 150px;
+
+}
+
+.erstellenButton:hover {
+    background-color: #45a049;
+}
+
+.location{
+    width: 30px;
+    padding-right: 20px;
+}
+
+.beschreibung  {
+    margin: 0;
+    padding-top: 20px;
+
+}
+
+.diverses{
+    font-size: 1.1em;
+
+}
+
+.diverses p{
+    padding-top: 5px;
+}
+
+.preis{
+    font-size: 1.5em;
+}
+.datum{
+    font-size: 0.8em;
+    margin-left: 20px ;
+    padding-left: 10px  ;
+    border-left: 1px solid;
+}
