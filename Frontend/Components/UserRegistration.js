@@ -6,6 +6,7 @@ import styles from "./UserRegistration.module.css";
 import {useRouter} from "next/router";
 import {toast} from "react-toastify";
 import {error} from "next/dist/build/output/log";
+import {useGlobalContext} from "../store";
 
 
 const emptyOrt = {
@@ -33,8 +34,9 @@ export default function UserRegistration() {
     const [ortLokal, setOrtLokal] = useState(emptyOrt)
     const [loading, setLoading] = useState(false)
     const [dataReady, setDataReady] = useState()
-    const[errors,setErrors]=useState("Formularmussausgefülltwerden")
-
+    const [errors, setErrors] = useState("")
+    const [valid, setValid] = useState(false)
+const {login} = useGlobalContext()
     const router = useRouter()
     let myTempOrt;
     const handleChangeUser = (e) => {
@@ -57,6 +59,7 @@ export default function UserRegistration() {
             }))
         }
         reader.readAsDataURL(localFile);
+        validateUser()
     }
     const handleChangeOrt = (e) => {
         const {name, value} = e.target
@@ -69,16 +72,23 @@ export default function UserRegistration() {
     const handleSubmit = (e) => {
         e.preventDefault()
         setLoading(true)
+        validateUser()
         const prepareOrt = async () => {
+            if (!valid) return
             try {
                 const returnedOrt = await OrteAPI.findOrtByOrtAndPLZ(ortLokal.ort, ortLokal.plz)
                 setOrtLokal(returnedOrt)
-                myTempOrt=returnedOrt
+                myTempOrt = returnedOrt
             } catch (e) {
                 console.log("Der Ort musste neu erstellt werden")
-                const createdOrt = await OrteAPI.create(ortLokal);
-                setOrtLokal(createdOrt)
-                myTempOrt=createdOrt;
+                try {
+                    const createdOrt = await OrteAPI.create(ortLokal);
+                    setOrtLokal(createdOrt)
+                    myTempOrt = createdOrt;
+                } catch (e) {
+                    console.error(e)
+                }
+                console.error(e)
             }
             setOrtLokal(prevState => ({
                 ...prevState,
@@ -87,6 +97,7 @@ export default function UserRegistration() {
             }))
         }
         const prepareUser = () => {
+            if (!valid) return
             console.log(JSON.stringify(myTempOrt))
             setUser(prevState => ({
                 ...prevState,
@@ -101,6 +112,8 @@ export default function UserRegistration() {
             await prepareOrt();
             await prepareUser();
             setDataReady(true)
+            setLoading(false)
+
         }
         prepareData().then(() => {
 
@@ -110,48 +123,41 @@ export default function UserRegistration() {
         })
 
     }
-    const validateUser=()=> {
+    const validateUser = () => {
 //MakessurethatInputfieldisn'tempty
-        if (ortLokal.plz > 9999 || ortLokal.plz < 1000) {
-            setErrors("PLZ isn'tvalid")
+        if (!user.user_bild || user.user_bild === "") {setErrors("pictureisneeded")}
+        else{
+            setErrors("")
         }
-        if (ortLokal.plz === 0) {
-            setErrors("PLZ isneeded")
-        }
-        if (!ortLokal.ort || ortLokal.ort === "") {
-            setErrors("Place       isneeded")
-        }
-        console.log(ortLokal.plz)
-        if (!user.strasse || user.strasse === "") {
-            setErrors("Streetname  isneeded")
-        }
-        if (!user.password || user.password === "") {
-            setErrors("Password isneeded")
-        }
-        if (!user.email || user.email === "") {
-            setErrors("E-Mail isneeded")
-        }
-        if (!user.username || user.username !== "") {
-            setErrors("Usernameisneeded")
-        }
-        if (!user.user_bild || user.user_bild !== "") {
-            setErrors("pictureisneeded")
-        }
+        if (ortLokal.plz > 9999 || ortLokal.plz < 1000) {setErrors("PLZ isn'tvalid")}
+        if (!ortLokal.ort || ortLokal.ort === "") {setErrors("Place  isneeded")}
+        if (!user.strasse || user.strasse === "") {setErrors("Streetname  isneeded")}
+        if (!user.password || user.password === "") {setErrors("Password isneeded")}
+        if (!user.email || user.email === "") {setErrors("E-Mail isneeded")}
+        if (!user.username || user.username === "") {setErrors("Usernameisneeded")}
+
     }
 
-        useEffect(() => {
-        if(!dataReady) return
-        console.log("Current User:" + JSON.stringify(user))
+    useEffect(() => {
+     //
+if(!dataReady)return
+        if (errors) {
+            toast.error(errors)
+        } else {
             try{
-        UserAPI.create(user)
-        toast.success("well done")} catch (e) {
-            console.error(e)
-                toast.error(errors)
+            UserAPI.create(user)
+            toast.success("well done")
+            router.push("/")}
+
+        catch(e) {console.error(e)
             }
+        }
+
         setDataReady(false)
         setLoading(false)
-        router.push("/")
     }, [dataReady]);
+
+
     return (
         <div className={styles.main}>
             <form className={styles.form}>
@@ -160,7 +166,6 @@ export default function UserRegistration() {
                     {!user.user_bild ? <img src={"default.jpg"} alt={"default Profilbild"} className={styles.pic}/> :
                         <img src={user.user_bild} alt={"     "} className={styles.pic}/>}
                     </span>
-
                     <input
                         onChange={handleChangeFile}
                         type={"file"}
@@ -172,53 +177,52 @@ export default function UserRegistration() {
                 <div className={styles.col1}>
                     <p>Username:</p>
 
-                    <input onChange={handleChangeUser} type="text"
+                    <input onChange={handleChangeUser}
+                           type="text"
                            name="username"
                            placeholder="Username"
-                           value={user.username}
-                           defaultValue={"Username"}/>
+                    />
                 </div>
                 <div className={styles.col1}>
                     <p>E-Mail:</p>
-                    <input onChange={handleChangeUser} type="email"
+                    <input onChange={handleChangeUser}
+                           type="email"
                            name="email"
                            placeholder="E-Mail"
-                           value={user.email}
-                           defaultValue={"E-Mail"}/>
+                    />
                 </div>
                 <div className={styles.col1}>
                     <p>Passwort:</p>
-                    <input onChange={handleChangeUser} type="password"
+                    <input onChange={handleChangeUser}
+                           type="password"
                            name="password"
                            placeholder="Passwort"
-                           value={user.password}
-                           defaultValue={"Passwort"}/>
+                    />
                 </div>
 
 
                 <div className={styles.col21}>
                     <p>Strasse:</p>
-                    <input onChange={handleChangeUser} type="text"
+                    <input onChange={handleChangeUser}
+                           type="text"
                            name="strasse"
                            placeholder="Strasse"
-                           value={user.strasse}
-                           defaultValue={"Strasse"}/>
+                    />
                 </div>
                 <div className={styles.col22}>
                     <p>Ort:</p>
-                    <input onChange={handleChangeOrt} type="text"
+                    <input onChange={handleChangeOrt}
+                           type="text"
                            name="ort"
                            placeholder="Ort"
-                           value={ortLokal.ort}
-                           defaultValue={"Ort"}/>
+                    />
                 </div>
                 <div className={styles.col23}>
                     <p>PLZ:</p>
-                    <input onChange={handleChangeOrt} type="number"
+                    <input onChange={handleChangeOrt}
+                           type="number"
                            name="plz"
                            placeholder="1234"
-                           value={ortLokal.plz}
-                           // defaultValue={1234}
                     />
                 </div>
 
@@ -229,5 +233,6 @@ export default function UserRegistration() {
             </form>
         </div>
     )
-
 }
+
+
