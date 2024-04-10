@@ -192,7 +192,7 @@ export default function createInseratePage({skill}) {
             <div className={styles.img}>
                     <span className={styles.circle}>
                     {!inserat.darstellungs_bild ?
-                        <img src={"../../public/default.jpg"} alt={"Kein Bild gefunden"} className={styles.pic}/> :
+                        <img src={"/default_inserate.png"} alt={"Kein Bild gefunden"} className={styles.pic}/> :
                         <img src={inserat.darstellungs_bild} alt={"Bild konnte nicht geladen werden."}
                              className={styles.pic}/>}
                     </span>
