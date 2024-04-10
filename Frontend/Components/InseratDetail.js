@@ -136,7 +136,6 @@ export default function InseratDetail({inserat, auftraggeber, skills}) {
                         <button className={`${styles.button} ${styles.erstellenButton}`}
                                 onClick={handleTerminate}>Abschliessen</button>}
                     <button className={`${styles.button} ${styles.zuruckButton}`} onClick={() => {
-                        router.push("/")
                     }}>Zurück
                     </button>
                 </div>
