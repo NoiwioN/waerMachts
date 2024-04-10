@@ -3,6 +3,7 @@ import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import UserAPI from "../lib/api/Users";
 import InserateAPI from "../lib/api/inserate";
+import styles from "./InseratDetail.module.css";
 
 export default function InseratDetail({inserat, auftraggeber, skills}) {
     const {session} = useGlobalContext();
@@ -25,10 +26,10 @@ export default function InseratDetail({inserat, auftraggeber, skills}) {
         const inseratNichtabgeschlossen = !inserat.fertig_auftraggeber || !inserat.fertig_auftragnehmer;
         const istAbschliessbar = (userIstAuftragnehmer || userIstAuftraggeber) && inseratNichtabgeschlossen;
 
-          console.log("userIstAuftraggeber: " +userIstAuftraggeber)
-          console.log("userIstAuftragnehmer: " +userIstAuftragnehmer)
-          console.log("inseratNichtabgeschlossen: " +inseratNichtabgeschlossen)
-          console.log("istAbschliessbar: " +istAbschliessbar)
+        console.log("userIstAuftraggeber: " + userIstAuftraggeber)
+        console.log("userIstAuftragnehmer: " + userIstAuftragnehmer)
+        console.log("inseratNichtabgeschlossen: " + inseratNichtabgeschlossen)
+        console.log("istAbschliessbar: " + istAbschliessbar)
         setButtonDisplay({
                 akzeptierbar: akzeptierbar,
                 abschliessbar: istAbschliessbar
@@ -86,35 +87,54 @@ export default function InseratDetail({inserat, auftraggeber, skills}) {
     }, [session]);
 
     return (
-        <>
-            <img src={inserat.darstellungs_bild} alt={"InseratBild"}/>
-            <h1>{inserat.titel}</h1>
-            <div>
-                <p>Erstellt von:</p>
-                <img src={auftraggeber.user_bild} alt={"Profilbild"}/>
-                <p>{auftraggeber.username} | {inserat.erstellt_am} </p>
-            </div>
-            <h2>Beschreibung:</h2>
-            <p>{inserat.beschreibung}</p>
-            <p>{inserat.ort.ort} {inserat.ort.plz}</p>
-            <p>Skill: {
-                skills.map(skill => {
-                    return (
-                        <span key={skill.id_skill}>
+        <div className={styles.main}>
+
+            <img className={styles.haupt1} src={inserat.darstellungs_bild} alt={"InseratBild"}/>
+
+            <div className={styles.haupt2}>
+                <h1>{inserat.titel}</h1>
+                <div className={styles.ersteller}>
+                    <p className={styles.erstellerChilde}>Erstellt von:</p>
+                    <div className={styles.erstellerBild}>
+                        <img className={styles.erstellerChilde}
+                             src={auftraggeber.user_bild} alt={"Profilbild"}/>
+                    </div>
+                    <p className={styles.erstellerChilde}>
+                        <strong>{auftraggeber.username} </strong> <em className={styles.datum}>  {inserat.erstellt_am} </em> </p>
+                </div>
+
+                <div className={styles.beschreibung}>
+                    <h2>Beschreibung:</h2>
+                    <p>{inserat.beschreibung}</p>
+                </div>
+                <div className={styles.diverses}>
+                    <p><img className={styles.location} src="/location.png"/> {inserat.ort.ort} {inserat.ort.plz}</p>
+                    <p>Skill: {
+                        skills.map(skill => {
+                            return (
+                                <span key={skill.id_skill}>
                             {`${skill.name}     `}
                         </span>
-                    )
-                })
-            }</p>
-            <p>Art der Arbeit: {inserat.art}</p>
-            <p>{inserat.preis} CHF</p>
-            {buttonDisplay.akzeptierbar && <button onClick={handleAccept}>Akzeptieren</button>}
-            {buttonDisplay.abschliessbar && <button onClick={handleTerminate}>Abschliessen</button>}
-            <button onClick={() => {
-                router.push("/")
-            }}>Zurück
-            </button>
+                            )
+                        })
+                    }</p>
+                    <p>Art der Arbeit: {inserat.art}</p>
+                    <p className={styles.preis}>{inserat.preis} CHF</p>
+                </div>
+                <div className={styles.buttonContainer}>
+                    {buttonDisplay.akzeptierbar &&
+                        <button className={`${styles.button} ${styles.erstellenButton}`}
+                                onClick={handleAccept}>Akzeptieren</button>}
+                    {buttonDisplay.abschliessbar &&
+                        <button className={`${styles.button} ${styles.erstellenButton}`}
+                                onClick={handleTerminate}>Abschliessen</button>}
+                    <button className={`${styles.button} ${styles.zuruckButton}`} onClick={() => {
+                        router.push("/")
+                    }}>Zurück
+                    </button>
+                </div>
+            </div>
 
-        </>
+        </div>
     )
 }
