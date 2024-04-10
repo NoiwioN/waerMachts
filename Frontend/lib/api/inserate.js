@@ -20,7 +20,7 @@ const InserateAPI = {
         return data
     },
     update(inserat, inseratId, token) {
-        const data = putJSON(`${INSERATE_URL}/${inseratId}`, {body: inserat, token}, true);
+        const data = putJSON(`${INSERATE_URL}/${inseratId}`, {body: inserat, token});
         return data;
     },
     delete(inserat, token) {
