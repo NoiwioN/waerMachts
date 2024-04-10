@@ -50,7 +50,7 @@ export default function UserProfileUserData() {
 
 
     useEffect(() => {
-        if (!session) {
+        if (!user) {
             return;
         }
         const getOrt = async () => {
@@ -75,6 +75,7 @@ export default function UserProfileUserData() {
             let responseUser
             if (router.query.username) {
                 responseUser = await UserAPI.findByName(router.query.username)
+                console.log("response with router: " + responseUser.username)
             } else {
                 responseUser = await UserAPI.findByName(session.userLoginData.username)
             }
@@ -126,17 +127,17 @@ export default function UserProfileUserData() {
                     value={bewertung.durchschnitt}
                     precision={0.5}
                 /></p>
-}
+            }
 
-{
-    console.log(bewertung.durchschnitt)
-}
-    <p className={styles.bewertung}>({bewertung.anzahl})</p>
-    <p>{user.username}</p>
-    <p>{user.email}</p>
+            {
+                console.log(bewertung.durchschnitt)
+            }
+            <p className={styles.bewertung}>({bewertung.anzahl})</p>
+            <p>{user.username}</p>
+            <p>{user.email}</p>
 
-    <p>{ort.plz} {ort.ort}</p>
-    <p>{user.strasse}</p>
+            <p>{ort.plz} {ort.ort}</p>
+            {session && <p>{user.strasse}</p>}
             <Link className={"button-back"} href={"/"}>Zurück</Link>
 
         </div>
