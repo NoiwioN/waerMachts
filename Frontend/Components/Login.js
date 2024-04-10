@@ -42,15 +42,19 @@ export default function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        // validateUser()
         const prepareUser = async () => {
             setIsLoading(true)
             try {
                 const response = await UsersAPI.findByEmail(user.email)
                 const responseUser = await response[0]
                 responseUser.password = user.password;
+
                 return responseUser;
             } catch (e) {
                 //catches error
+                setErrors("Login fehlgeschlagen")
+                console.log("error prepare user")
                 console.error(e);
             }
 
@@ -66,6 +70,8 @@ export default function Login() {
                 //catches error
                 console.error(e);
                 //gets the exact error which occurred
+
+                setErrors("Login fehlgeschlagen")
                 toast.error(errors);
                 setIsLoading(false);
             }
@@ -81,8 +87,13 @@ export default function Login() {
     }
 
     const validateUser = () => {
-        if (!user.email || user.email == "") setErrors("Keine E-Mail angegeben")
-        if (!user.password || user.password == "") setErrors("Kein Passwort eingegeben")
+
+        if (!user.email || user.email === "") setErrors("Keine E-Mail angegeben")
+        if (!user.password || user.password === "") {setErrors("Kein Passwort eingegeben")}
+        if ((!user.email || user.email === "")&&(!user.password || user.password === "")) {setErrors("Bitte Formular ausfüllen")}
+        else{
+           setErrors("Login fehlgeschlagen")
+        }
     }
 
     return (
