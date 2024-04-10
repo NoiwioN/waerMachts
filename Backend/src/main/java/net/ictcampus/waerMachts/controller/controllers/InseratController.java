@@ -37,8 +37,9 @@ public class InseratController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get alle Inserate")
     public Iterable<?> findAllByIdentifier(@RequestParam(required = false) Integer auftragnehmerId,
-                                           @RequestParam(required = false) Integer inseratId) {
-        if (auftragnehmerId != null && inseratId != null) {
+                                           @RequestParam(required = false) Integer inseratId,
+                                           @RequestParam(required = false) Integer auftraggeberId){
+        if (auftragnehmerId != null && inseratId != null &&auftraggeberId!=null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
         }
         try {
@@ -47,6 +48,9 @@ public class InseratController {
             }
             if (inseratId != null) {
                 return inseratService.findUserByInseratId(inseratId);
+            }
+            if(auftraggeberId!=null){
+                return inseratService.findInseratByAuftraggeberId(auftraggeberId);
             }
             return inseratService.findAll();
 
@@ -71,9 +75,9 @@ public class InseratController {
     @PutMapping(consumes = "application/json", path = "{id}")
     @Operation(summary = "Update Genre")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@Valid @RequestBody Inserat Inserat) {
+    public Inserat update(@Valid @RequestBody Inserat Inserat) {
         try {
-            inseratService.update(Inserat);
+           return inseratService.update(Inserat);
         } catch (RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Conflict occurred");
         }

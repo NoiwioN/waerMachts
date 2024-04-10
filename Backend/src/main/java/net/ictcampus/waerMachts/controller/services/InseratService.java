@@ -36,8 +36,11 @@ public class InseratService {
     public Iterable<Inserat> findInserateByUserId(Integer userId){
         return inseratRepository.findInseratsByAuftragnehmer_id(userId);
     }
-    public void update(Inserat inserat){
-        inseratRepository.save(inserat);
+    public Iterable<Inserat> findInseratByAuftraggeberId(Integer auftraggeberId){
+        return inseratRepository.findInserateByAuftraggeber_Id(auftraggeberId);
+    }
+    public Inserat update(Inserat inserat){
+        return inseratRepository.save(inserat);
     }
     public void deleteById(Integer id){
         inseratRepository.deleteById(id);

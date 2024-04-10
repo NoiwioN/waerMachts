@@ -1,0 +1,11 @@
+.card{
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    width: 40vw;
+    height: 60vh;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    z-index: 1;
+    text-align: center;
+}
