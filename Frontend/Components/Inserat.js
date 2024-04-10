@@ -23,7 +23,7 @@ export default function Inserat({props}) {
                 {/*    alt={"standard"}*/}
                 {/*/>*/}
                 <div className={styles.inseratTextContainer}>
-                    <p className={styles.bold}>Art: {props.art}</p>
+                    <p className={styles.bold}>{props.titel}</p>
                     <p>CHF: {props.preis}</p>
                 </div>
 
