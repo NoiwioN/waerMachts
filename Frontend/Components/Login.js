@@ -6,12 +6,14 @@ import UsersAPI from "../lib/api/Users";
 import {useRouter} from "next/router";
 import {toast} from "react-toastify";
 import styles from "./Login.module.css";
+import {useTranslation} from "react-i18next";
 
 export default function Login() {
     const {login} = useGlobalContext();
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
     const [errors, setErrors] = useState("Formular muss ausgefüllt werden")
+    const {t} = useTranslation()
 
     const defaultLogin = {
         email: "",
@@ -86,7 +88,7 @@ export default function Login() {
     return (
         <div className={styles.main}>
             <form onSubmit={handleSubmit} className={styles.form}>
-                <h2 className={styles.title}>Login</h2>
+                <h2 className={styles.title}>{t("login")}</h2>
                 <div>
                     <div className={styles.input}>
                         <p>E-Mail:</p>
@@ -110,11 +112,11 @@ export default function Login() {
                     </div>
                 </div>
                 <div className={styles.register}>
-                    <p>Noch keinen Accoount?</p>
-                    <Link href="/registrieren">Registrieren</Link>
+                    <p>{t("acc")}</p>
+                    <Link href="/registrieren">{t("registrieren")}</Link>
                 </div>
                 <button disabled={isLoading} className={styles.button}>
-                    {isLoading ? "...Loading" : "Anmelden"}
+                    {isLoading ? "...Loading" : t("anmelden")}
                 </button>
             </form>
         </div>
