@@ -8,6 +8,7 @@ import {useGlobalContext} from "../../store";
 import OrteAPI from "../../lib/api/orte";
 import InseratskillsAPI from "../../lib/api/Inseratskills";
 import UserAPI from "../../lib/api/Users";
+import {useTranslation} from "react-i18next";
 
 const emptyOrt = {
     id_ort: 0,
@@ -51,7 +52,7 @@ export default function createInseratePage({skill}) {
     const [skills, setSkills] = useState([""])
     const [skillObjectArray, setSkillObjectArray] = useState([])
     let skillObjectArrayLokal = []
-
+    const {t} = useTranslation()
 
     const options = skill.map(s => ({value: s.name, label: s.name}))
     const handleChangeInserat = (e) => {
@@ -203,7 +204,7 @@ export default function createInseratePage({skill}) {
                 />
             </div>
             <form className={styles.form}>
-                <label htmlFor="title" className={styles.label}>Titel:</label>
+                <label htmlFor="title" className={styles.label}>{t("titel")}</label>
                 <div>
                     <input
                         onChange={handleChangeInserat}
@@ -213,7 +214,7 @@ export default function createInseratePage({skill}) {
                         className={styles.title}
                     />
                 </div>
-                <label htmlFor="beschreibung" className={styles.label}>Beschreibung:</label>
+                <label htmlFor="beschreibung" className={styles.label}>{t("beschreibung")}</label>
                 <div>
                 <textarea
                     onChange={handleChangeInserat}
@@ -225,7 +226,7 @@ export default function createInseratePage({skill}) {
                 <div className={styles.inlineFields}>
                     <div className={styles.inlineFields}>
                         <div>
-                            <label htmlFor="skill" className={styles.label}>Skill:</label>
+                            <label htmlFor="skill" className={styles.label}>{t("skill")}</label>
                             <Select
                                 options={options}
                                 name="skill" onChange={handleChangeDropdown}
@@ -250,7 +251,7 @@ export default function createInseratePage({skill}) {
                 <div className={styles.inlineFields}>
                     <div className={styles.inlineFields}>
                         <div>
-                            <label htmlFor="art_der_arbeit" className={styles.label}>Art der Arbeit:</label>
+                            <label htmlFor="art_der_arbeit" className={styles.label}>{t("art")}</label>
                             <input
                                 onChange={handleChangeInserat}
                                 type="text"
@@ -288,7 +289,7 @@ export default function createInseratePage({skill}) {
                     </div>
                     <div className={styles.inlineFields}>
                         <div>
-                            <label htmlFor="strasse" className={styles.label}>Strasse:</label>
+                            <label htmlFor="strasse" className={styles.label}>{t("str")}</label>
                             <input
                                 onChange={handleChangeInserat}
                                 type="text"
