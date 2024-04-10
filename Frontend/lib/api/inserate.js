@@ -15,6 +15,9 @@ const InserateAPI = {
     findById(inseratId) {
         return getJSON(`${INSERATE_URL}/${inseratId}`)
     },
+    findByAuftraggeberId(auftraggeberId){
+        return getJSON((`${INSERATE_URL}?auftraggeberId=${auftraggeberId}`))
+    },
     create(inserat, token) {
         const data = postJSON(INSERATE_URL, { body: inserat, token })
         return data
