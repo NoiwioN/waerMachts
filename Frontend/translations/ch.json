@@ -1,5 +1,14 @@
 {
   "home": "Dehei",
   "logout": "Uslogge",
-  "login": "Ilogge"
+  "login": "Ilogge",
+  "Kein Bild gefunden": "Kes Biud gfundä",
+  "titel": "Titu:",
+  "beschreibung": "Beschribig:",
+  "skill": "Fähigkeit:",
+  "art": "Art vor arbeit:",
+  "str": "Strass:",
+  "acc": "No kes Konto?",
+  "registrieren": "Regischtrierä",
+  "anmelden": "Amäudä"
 }

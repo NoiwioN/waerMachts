@@ -13,4 +13,6 @@ public interface InseratRepository extends CrudRepository<Inserat, Integer> {
     Iterable<Inserat> findInseratsByAuftragnehmer_id(@Param(value = "userId") Integer userId);
     @Query("SELECT u from Inserat  i join  i.auftraggeber_id u WHERE i.id_inserat=:inserat_id")
     Iterable<User> findAuftraggeberByInseratId(@Param(value = "inserat_id")Integer inserat_id);
+    @Query("SELECT i from Inserat i join i.auftraggeber_id u where u.id_user=:auftraggeberId")
+    Iterable<Inserat> findInserateByAuftraggeber_Id(@Param(value = "auftraggeberId") Integer auftraggeberId);
 }
