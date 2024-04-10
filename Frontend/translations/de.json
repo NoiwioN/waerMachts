@@ -7,8 +7,11 @@
   "beschreibung": "Beschreibung:",
   "skill": "Skill:",
   "art": "Art der Arbeit:",
-  "str": "Strasse:",
+  "str": "Strasse",
   "acc": "Noch keinen Accoount?",
   "registrieren": "Registrieren",
-  "anmelden": "Anmelden"
+  "anmelden": "Anmelden",
+  "username": "Username",
+  "Beschreibung": "Beschreibung",
+  "erstellt": "Erstellt von:"
 }

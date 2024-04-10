@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import UserAPI from "../lib/api/Users";
 import InserateAPI from "../lib/api/inserate";
 import styles from "./InseratDetail.module.css";
+import {useTranslation} from "react-i18next";
 
 export default function InseratDetail({inserat, auftraggeber, skills}) {
     const {session} = useGlobalContext();
@@ -15,6 +16,8 @@ export default function InseratDetail({inserat, auftraggeber, skills}) {
         akzeptierbar: false,
         abschliessbar: false,
     })
+    const {t} = useTranslation()
+
     const evaluateButtonDisplay = () => {
         const userIstAuftraggeber = session.userLoginData.id_user === auftraggeber.id_user
         const inseratAngenommen = !!inserat.auftragnehmer_id
@@ -97,17 +100,18 @@ export default function InseratDetail({inserat, auftraggeber, skills}) {
             <div className={styles.haupt2}>
                 <h1>{inserat.titel}</h1>
                 <div className={styles.ersteller}>
-                    <p className={styles.erstellerChilde}>Erstellt von:</p>
+                    <p className={styles.erstellerChilde}>{t("erstellt")}</p>
                     <div className={styles.erstellerBild}>
                         <img className={styles.erstellerChilde}
                              src={auftraggeber.user_bild} alt={"Profilbild"}/>
                     </div>
                     <p className={styles.erstellerChilde}>
-                        <strong>{auftraggeber.username} </strong> <em className={styles.datum}>  {inserat.erstellt_am} </em> </p>
+                        <strong>{auftraggeber.username} </strong> <em
+                        className={styles.datum}>  {inserat.erstellt_am} </em></p>
                 </div>
 
                 <div className={styles.beschreibung}>
-                    <h2>Beschreibung:</h2>
+                    <h2>{t("Beschreibung")}</h2>
                     <p>{inserat.beschreibung}</p>
                 </div>
                 <div className={styles.diverses}>
@@ -121,7 +125,7 @@ export default function InseratDetail({inserat, auftraggeber, skills}) {
                             )
                         })
                     }</p>
-                    <p>Art der Arbeit: {inserat.art}</p>
+                    <p>{t("art")}{inserat.art}</p>
                     <p className={styles.preis}>{inserat.preis} CHF</p>
                 </div>
                 <div className={styles.buttonContainer}>

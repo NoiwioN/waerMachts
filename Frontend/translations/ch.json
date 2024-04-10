@@ -7,8 +7,11 @@
   "beschreibung": "Beschribig:",
   "skill": "Fähigkeit:",
   "art": "Art vor arbeit:",
-  "str": "Strass:",
+  "str": "Strass",
   "acc": "No kes Konto?",
   "registrieren": "Regischtrierä",
-  "anmelden": "Amäudä"
+  "anmelden": "Amäudä",
+  "username": "Benutzernamä",
+  "Beschreibung": "Beschribig",
+  "erstellt": "Erschteut vo:"
 }
