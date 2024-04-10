@@ -3,6 +3,7 @@ import orte from "../lib/api/orte";
 import OrteAPI from "../lib/api/orte";
 import UserAPI from "../lib/api/Users";
 import styles from "./UserRegistration.module.css";
+import {useRouter} from "next/router";
 
 
 const emptyOrt = {
@@ -30,6 +31,7 @@ export default function UserRegistration() {
     const [ortLokal, setOrtLokal] = useState(emptyOrt)
     const [loading, setLoading] = useState(false)
     const [dataReady, setDataReady] = useState()
+    const router = useRouter()
     let myTempOrt;
     const handleChangeUser = (e) => {
         const {name, value} = e.target
@@ -108,6 +110,7 @@ export default function UserRegistration() {
         UserAPI.create(user)
         setDataReady(false)
         setLoading(false)
+        router.push("/")
     }, [dataReady]);
     return (
         <div className={styles.main}>
