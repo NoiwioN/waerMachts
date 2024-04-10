@@ -16,7 +16,7 @@ const emptyOrt = {
     plz: 0,
 }
 const emptyInserat = {
-    darstellung_bild: '',
+    darstellungs_bild: '',
     titel: '',
     beschreibung: '',
     skill: '',
@@ -72,7 +72,7 @@ export default function createInseratePage({skill}) {
             const base64Image = event.target.result;
             setInserat(prevState => ({
                 ...prevState,
-                darstellung_bild: base64Image
+                darstellungs_bild: base64Image
             }))
         }
         reader.readAsDataURL(localFile);
@@ -191,15 +191,15 @@ export default function createInseratePage({skill}) {
         <div className={styles.gridContainer}>
             <div className={styles.img}>
                     <span className={styles.circle}>
-                    {!inserat.darstellung_bild ?
+                    {!inserat.darstellungs_bild ?
                         <img src={"../../public/default.jpg"} alt={"Kein Bild gefunden"} className={styles.pic}/> :
-                        <img src={inserat.darstellung_bild} alt={"Bild konnte nicht geladen werden."}
+                        <img src={inserat.darstellungs_bild} alt={"Bild konnte nicht geladen werden."}
                              className={styles.pic}/>}
                     </span>
                 <input
                     onChange={handleChangeFile}
                     type={"file"}
-                    name={"darstellung_bild"}
+                    name={"darstellungs_bild"}
                     className={styles.input}
                 />
             </div>

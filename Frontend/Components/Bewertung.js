@@ -43,7 +43,7 @@ export default function Bewertung() {
                 let inserateIsFinishedBidirectionally = !!i.fertig_auftraggeber && !!i.fertig_auftragnehmer;
                 let inseratHasNotBeenReviewed = !i.bewertungstext
                 if (inserateIsFinishedBidirectionally && inseratHasNotBeenReviewed) {
-                    console.log("Inserat gefunden")
+                    /*console.log("Inserat gefunden")*/
                     setInserate(i)
                     setCheckNeeded(false)
                 }
