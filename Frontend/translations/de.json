@@ -1,5 +1,14 @@
 {
   "home": "Home",
   "logout": "Logout",
-  "login": "Login"
+  "login": "Login",
+  "Kein Bild gefunden": "Kein Bild gefunden",
+  "titel": "Titel:",
+  "beschreibung": "Beschreibung:",
+  "skill": "Skill:",
+  "art": "Art der Arbeit:",
+  "str": "Strasse:",
+  "acc": "Noch keinen Accoount?",
+  "registrieren": "Registrieren",
+  "anmelden": "Anmelden"
 }
