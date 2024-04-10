@@ -22,6 +22,7 @@ export default function Navigation() {
                     <li>
                         <Link href="/">{t("home")}</Link>
                     </li>
+                    {session && <li><Link href={"/inserat/create"}>Erstellen</Link></li>}
 
                     {/* Anzeige nur wenn eingeloggt und somit session existiert */}
                     <li>
